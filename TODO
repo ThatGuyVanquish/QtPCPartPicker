@@ -1,0 +1,13 @@
+
+1) toString method for every single 'active' class, to be used with the file writer
+2) Figure out which database should I use to keep every single instance. (Probably Hashmap of vectors)
+2) fileWriter -> maybe use threads?
+3) Parser to read the files on startup -> maybe use threads?
+4) App itself
+
+
+CPU, motherboard, ram mapping by price - should be cross product with specific versions?
+That'd be too many hashmaps, also this is a reason to use SQL which I forewent
+
+
+Removal methods for pc parts in database
