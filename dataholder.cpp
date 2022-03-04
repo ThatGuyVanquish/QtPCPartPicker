@@ -83,16 +83,16 @@ void dataHolder::addCPU(CPU* toInsert)
     // Insert into manufacturer QLists
     toInsert->getManu() == "Intel" ? cpuMap["Intel"].push_back(toInsert) : cpuMap["AMD"].push_back(toInsert);
 
-    // Insert into core count QLists
-    int cores = toInsert->getCores();
-    if (cores > 16)
-        cpuMap["Server"].push_back(toInsert);
-    else
-        cpuMap["PC"].push_back(toInsert);
-    if (cores % 2 == 0 && 4 <= cores && cores <= 16)
-        {
-            cpuMap.find(to_string(cores) + " Cores").value().push_back(toInsert);
-        }
+//    // Insert into core count QLists
+//    int cores = toInsert->getCores();
+//    if (cores > 16)
+//        cpuMap["Server"].push_back(toInsert);
+//    else
+//        cpuMap["PC"].push_back(toInsert);
+//    if (cores % 2 == 0 && 4 <= cores && cores <= 16)
+//        {
+//            cpuMap.find(to_string(cores) + " Cores").value().push_back(toInsert);
+//        }
 
     // Insert into a QList which is sorted by price, by insertion sort
     int index = 0;
@@ -108,42 +108,27 @@ void dataHolder::addCPU(CPU* toInsert)
 
 CPU* dataHolder::removeCPU()
 {
-    CPU* toRemove = cpuMap["Price"][0];
+    if (cpuMap["Price"].isEmpty())
+        return nullptr;
+    CPU* toRemove = cpuMap["Price"].takeFirst();
     if (toRemove == nullptr) return nullptr;
-    cpuMap["Price"].pop_back();
-    int cores = toRemove->getCores();
-    QString manu = toRemove->getManu();
-    // Erase from manufacturer QList
-    manu == "Intel" ? eraseFrom(cpuMap["Intel"], toRemove) :
-    eraseFrom(cpuMap["AMD"], toRemove);
-    // Erase from core based QLists
-    cores > 16 ? eraseFrom(cpuMap["Server"], toRemove) :
-    eraseFrom(cpuMap["PC"], toRemove);
-    switch (cores)
-    {
-        case 4:
-            eraseFrom(cpuMap["4 Cores"], toRemove);
-            break;
-        case 6:
-            eraseFrom(cpuMap["6 Cores"], toRemove);
-            break;
-        case 8:
-            eraseFrom(cpuMap["8 Cores"], toRemove);
-            break;
-        case 10:
-            eraseFrom(cpuMap["10 Cores"], toRemove);
-            break;
-        case 12:
-            eraseFrom(cpuMap["12 Cores"], toRemove);
-            break;
-        case 14:
-            eraseFrom(cpuMap["14 Cores"], toRemove);
-            break;
-        case 16:
-            eraseFrom(cpuMap["16 Cores"], toRemove);
-            break;
-    }
     return toRemove;
+}
+
+void dataHolder::clearCPUMaps()
+{
+    cpuMap["Intel"].clear();
+    cpuMap["AMD"].clear();
+    cpuMap["4 Cores"].clear();
+    cpuMap["6 Cores"].clear();
+    cpuMap["8 Cores"].clear();
+    cpuMap["10 Cores"].clear();
+    cpuMap["12 Cores"].clear();
+    cpuMap["14 Cores"].clear();
+    cpuMap["16 Cores"].clear();
+    cpuMap["Server"].clear();
+    cpuMap["PC"].clear();
+    cpuMap["Price"].clear();
 }
 
 void dataHolder::addGPU(GPU* toInsert)

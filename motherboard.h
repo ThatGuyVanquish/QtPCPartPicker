@@ -134,6 +134,7 @@ class motherboard: public QObject
             "Price: " + to_string(_price) + "\n";
         }
 
+    QMap<QString, QString> backup();
     bool cpuFits();
     void resetCPU();
     bool ramFits();

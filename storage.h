@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QString>
+#include <QMap>
 
 using namespace std;
 
@@ -45,6 +46,20 @@ class storage: public QObject
             return -1;
         _price = price;
         return 1;
+        }
+
+        QMap<QString, QString> backup()
+        {
+            QMap<QString, QString> ret;
+            ret["Model"] = _model;
+            ret["Type"] = _type;
+            ret["Port"] = _port;
+            ret["Size"] = _size;
+            ret["Read"] = QString::number(_read);
+            ret["Write"] = QString::number(_write);
+            ret["Cache"] = QString::number(_cache);
+            ret["Price"] = QString::number(_price);
+            return ret;
         }
 
         string toString()

@@ -19,7 +19,7 @@ using namespace std;
 template<typename T>
     void eraseFrom(QList<T> vec, T toRemove)
     {
-        vec.erase(find(vec.begin(), vec.end(), toRemove));
+        vec.erase(std::find(vec.begin(), vec.end(), toRemove));
     }
 
 static void toLower(string str);
@@ -44,6 +44,7 @@ public:
     void initialize();
     void addCPU(CPU *toInsert);
     CPU* removeCPU();
+    void clearCPUMaps();
     void addGPU(GPU *toInsert);
     GPU* removeGPU();
     void addMotherboard(motherboard *toInsert, string purpose = "");

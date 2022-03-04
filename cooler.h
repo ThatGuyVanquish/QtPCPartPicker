@@ -5,6 +5,7 @@
 #include <QObject>
 #include <QList>
 #include <QStringList>
+#include <QMap>
 
 using namespace std;
 
@@ -41,6 +42,12 @@ class cooler: public QObject
         int getHeight() {return _height;}
         QStringList supportedSockets() {return _sockets;}
         int getPrice() {return _price;}
+        QString getType()
+        {
+            if (_radiatorSize > 0)
+                return QString("AIO");
+            return QString("Air");
+        }
 
         int setPrice(int price)
         {
@@ -52,14 +59,29 @@ class cooler: public QObject
 
         bool canMount(QString socket)
         {
-            for (QString sckt : _sockets)
-                if (socket == sckt) return true;
-            return false;
+            return _sockets.contains(socket);
         }
 
         bool canCool(int tdp) {return _tdp > tdp;}
 
         virtual bool canFit(int height, bool rads) {return (*this).canFit(height, rads);} // Can fit in a case
+
+        QMap<QString, QString> backup()
+        {
+            QMap<QString, QString> ret;
+            ret["Model"] = _model;
+            ret["Type"] = getType();
+            ret["TDP"] = QString::number(_tdp);
+            ret["Included Fans"] = QString::number(_includedFans);
+            ret["Maximum Fans"] = QString::number(_maxFans);
+            if (ret["Type"] == "AIO")
+                ret["Radiator Size"] = QString::number(_radiatorSize);
+            else
+                ret["Cooler Height"] = QString::number(_height);
+            ret["Sockets"] = _sockets.join(", ");
+            ret["Price"] = QString::number(_price);
+            return ret;
+        }
 
         string toString()
         {

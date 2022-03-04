@@ -4,6 +4,7 @@
 #include <QString>
 #include <QObject>
 #include <QFuture>
+#include <QMap>
 
 using namespace std;
 
@@ -62,8 +63,8 @@ public:
     int getPrice() {return _price;}
     bool hasGraphics() {return _igpu;}
     bool includesCooler() {return _cooler;}
-    virtual QString getManu() {return (*this).getManu();}
-
+    virtual QString getManu() = 0;
+    virtual bool isUnlocked() = 0;
 
     int setPrice(int price)
     {
@@ -71,6 +72,28 @@ public:
             return -1;
         _price = price;
         return 1;
+    }
+
+    QMap<QString, QString> backup()
+    {
+        QMap<QString, QString> ret;
+        ret["Model"] = _model;
+        ret["Manufacturer"] = getManu();
+        ret["Socket"] = _socket;
+        ret["Cores"] = QString::number(_coreCount);
+        ret["Threads"] = QString::number(_threadCount);
+        ret["BClock"] = QString::number(_baseClock);
+        ret["Boost"] = QString::number(_boostClock);
+        ret["L2"] = QString::number(_l2Cache);
+        ret["L3"] = QString::number(_l3Cache);
+        ret["PCIe"] = QString::number(_lanes);
+        ret["TDP"] = QString::number(_tdp);
+        ret["Price"] = QString::number(_price);
+        ret["iGPU"] = QString::number(_igpu);
+        ret["Cooler"] = QString::number(_cooler);
+        if (ret["Manufacturer"] == "Intel")
+            ret["Unlocked"] = QString::number(isUnlocked());
+        return ret;
     }
 
     virtual string toString() // Is this necessary? especially if I write to JSON

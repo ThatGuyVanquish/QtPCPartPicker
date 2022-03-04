@@ -9,6 +9,7 @@
 #include <QObject>
 #include <QString>
 #include <QStringList>
+#include <QMap>
 
 using namespace std;
 
@@ -80,6 +81,8 @@ public:
     _price = price;
     return 1;
     }
+
+    QMap<QString, QString> backup();
 
     string toString()
     {

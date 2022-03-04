@@ -12,6 +12,28 @@ void pcCase::motherboardCompatibility(motherboard *mobo)
     }
 }
 
+QMap<QString, QString> pcCase::backup()
+{
+    QMap<QString, QString> ret;
+    ret["Model"] = _model;
+    ret["Form Factor"] = _formFactor;
+    ret["Compatible Motherboards"] = _moboFF.join(", ");
+    ret["GPU Length"] = QString::number(_maxGPU);
+    ret["Cooler Height"] = QString::number(_maxCooler);
+    ret["Expansion Slots"] = QString::number(_expansionSlots);
+    ret["Fans"] = QString::number(_fans);
+    ret["Fits Radiators"] = QString::number(_radiators);
+    ret["HDD Slots"] = QString::number(_hdds);
+    ret["SSD Slots"] = QString::number(_ssds);
+    ret["USB Ports"] = QString::number(_usbs);
+    ret["Front Audio"] = QString::number(_audio);
+    ret["Height"] = QString::number(_height);
+    ret["Width"] = QString::number(_width);
+    ret["Length"] = QString::number(_length);
+    ret["Price"] = QString::number(_price);
+    return ret;
+}
+
 bool pcCase::moboFits()
 {
     return _moboFits;

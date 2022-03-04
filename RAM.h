@@ -5,6 +5,7 @@
 #include <QString>
 #include <sstream>
 #include <QList>
+#include <QMap>
 
 using namespace std;
 
@@ -49,6 +50,25 @@ class RAM: public QObject
             return _version == rv;
         }
 
+        QMap<QString, QString> backup()
+        {
+            QMap<QString, QString> ret;
+            ret["Model"] = _model;
+            ret["Version"] = _version;
+            ret["Speed"] = QString::number(_speed);
+            QString timings;
+            for (int i = 0; i < _timing.size(); i++)
+            {
+                timings.append(QString::number(_timing[i]));
+                if (i != _timing.size() -1)
+                    timings.append(", ");
+            }
+            ret["TImings"] = timings;
+            ret["Heatsink"] = QString::number(_heatsink);
+            ret["Price"] = QString::number(_price);
+            return ret;
+        }
+
         string toString()
         {
             stringstream timings;
@@ -57,7 +77,6 @@ class RAM: public QObject
                 timings << _timing[i];
                 if (i != _timing.size() -1)
                     timings << ", ";
-                
             }
             return
             "Model: " + _model.toStdString() + "\n" +

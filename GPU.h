@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QString>
 #include <QStringList>
+#include <QMap>
 
 using namespace std;
 
@@ -71,6 +72,27 @@ class GPU: public QObject
         int canFit(int pcieSlots, int height, int length)
         {
             return (pcieSlots >= _pcieSlots && height >= _height && length >= _length);
+        }
+
+        QMap<QString, QString> backup()
+        {
+            QMap<QString, QString> ret;
+            ret["Model"] = _model;
+            ret["Manufacturer"] = getManu();
+            ret["BClock"] = QString::number(_baseClock);
+            ret["Boost"] = QString::number(_boostClock);
+            ret["Bus"] = QString::number(_busSize);
+            ret["TDP"] = QString::number(_tdp);
+            ret["Slots"] = QString::number(_pcieSlots);
+            ret["Height"] = QString::number(_height);
+            ret["Length"] = QString::number(_length);
+            ret["Price"] = QString::number(_price);
+            ret["Inputs"] = _inputs.join(", ");
+            if (ret["Manufacturer"] != "Intel")
+                ret["Ray Tracing"] = QString::number(hasRT());
+            if (ret["Manufacturer"] == "Nvidia")
+                ret["DLSS"] = QString::number(runsDLSS());
+            return ret;
         }
 
         virtual string toString()
