@@ -111,7 +111,6 @@ CPU* dataHolder::removeCPU()
     if (cpuMap["Price"].isEmpty())
         return nullptr;
     CPU* toRemove = cpuMap["Price"].takeFirst();
-    if (toRemove == nullptr) return nullptr;
     return toRemove;
 }
 
@@ -157,20 +156,20 @@ void dataHolder::addGPU(GPU* toInsert)
 
 GPU* dataHolder::removeGPU()
 {
-    GPU* toRemove = gpuMap["Price"][0];
-    if (toRemove == nullptr) return nullptr;
-    gpuMap["Price"].pop_back();
-    // Remove from manufacturer maps
-    toRemove->getManu() == "Nvidia" ? eraseFrom(gpuMap["Nvidia"], toRemove) :
-    toRemove->getManu() == "AMD" ? eraseFrom(gpuMap["AMD"], toRemove) :
-    eraseFrom(gpuMap["Intel"], toRemove);
-    // Remove from Ray Tracing map
-    if (toRemove->hasRT())
-        eraseFrom(gpuMap["Ray Tracing"], toRemove);
-    // Remove from DLSS map
-    if (toRemove->runsDLSS())
-        eraseFrom(gpuMap["DLSS"], toRemove);
+    if (gpuMap["Price"].isEmpty())
+        return nullptr;
+    GPU* toRemove = gpuMap["Price"].takeFirst();
     return toRemove;
+}
+
+void dataHolder::clearGPUMaps()
+{
+    gpuMap["Intel"].clear();
+    gpuMap["AMD"].clear();
+    gpuMap["Nvidia"].clear();
+    gpuMap["Ray Tracing"].clear();
+    gpuMap["DLSS"].clear();
+    gpuMap["Price"].clear();
 }
 
 void dataHolder::addMotherboard(motherboard* toInsert, string purpose)
@@ -199,36 +198,22 @@ void dataHolder::addMotherboard(motherboard* toInsert, string purpose)
 
 motherboard* dataHolder::removeMobo()
 {
-    motherboard* toRemove = moboMap["Price"][0];
-    if (toRemove == nullptr) return nullptr;
-    moboMap["Price"].pop_back();
-
-    // Remove from CPU Manufacturer map
-    toRemove->getCPUManufacturer() == "Intel" ? eraseFrom(moboMap["Intel"], toRemove) :
-    eraseFrom(moboMap["AMD"], toRemove);
-
-    // Remove from DDR map
-    QString ddr = toRemove->getRAMVersion();
-    ddr == "DDR3" ? eraseFrom(moboMap["DDR3"], toRemove) :
-    ddr == "DDR4" ? eraseFrom(moboMap["DDR4"], toRemove) : eraseFrom(moboMap["DDR5"], toRemove);
-
-    // Remove from purpose map
-    auto iter = find(moboMap["Mining"].begin(), moboMap["Mining"].end(), toRemove);
-    if (iter != moboMap["Mining"].end())
-    {
-        moboMap["Mining"].erase(iter);
-        return toRemove;
-    }
-    iter = find(moboMap["Server"].begin(), moboMap["Server"].end(), toRemove);
-    if (iter != moboMap["Server"].end())
-    {
-        moboMap["Server"].erase(iter);
-        return toRemove;
-    }
-    iter = find(moboMap["Overclocking"].begin(), moboMap["Overclocking"].end(), toRemove);
-    if (iter != moboMap["Overclocking"].end())
-        moboMap["Overclocking"].erase(iter);
+    if (moboMap["Price"].isEmpty()) return nullptr;
+    motherboard* toRemove = moboMap["Price"].takeFirst();
     return toRemove;
+}
+
+void dataHolder::clearMoboMaps()
+{
+    moboMap["Intel"].clear();
+    moboMap["AMD"].clear();
+    moboMap["DDR3"].clear();
+    moboMap["DDR4"].clear();
+    moboMap["DDR5"].clear();
+    moboMap["Server"].clear();
+    moboMap["Mining"].clear();
+    moboMap["Overclocking"].clear();
+    moboMap["Price"].clear();
 }
 
 void dataHolder::addRAM(RAM* toInsert)
@@ -254,14 +239,18 @@ void dataHolder::addRAM(RAM* toInsert)
 
 RAM* dataHolder::removeRAM()
 {
-    RAM* toRemove = ramMap["Price"][0];
-    if (toRemove == nullptr) return nullptr;
-    ramMap["Price"].pop_back();
-    // Remove from DDR version based maps
-    toRemove->getVersion() == "DDR3" ? eraseFrom(ramMap["DDR3"], toRemove) :
-    toRemove->getVersion() == "DDR4" ? eraseFrom(ramMap["DDR4"], toRemove) :
-    eraseFrom(ramMap["DDR5"], toRemove);
+    if (ramMap["Price"].isEmpty())
+        return nullptr;
+    RAM* toRemove = ramMap["Price"].takeFirst();
     return toRemove;
+}
+
+void dataHolder::clearRAMMaps()
+{
+    ramMap["DDR3"].clear();
+    ramMap["DDR4"].clear();
+    ramMap["DDR5"].clear();
+    ramMap["Price"].clear();
 }
 
 void dataHolder::addStorage(storage* toInsert)
@@ -299,18 +288,19 @@ void dataHolder::addStorage(storage* toInsert)
 
 storage* dataHolder::removeStorage()
 {
-    storage* toRemove = storageMap["Price"][0];
-    if (toRemove == nullptr) return nullptr;
-    storageMap["Price"].pop_back();
-
-    // Remove from port/type maps
-    toRemove->getPort() == "M.2" ? eraseFrom(storageMap["M.2"], toRemove) :
-    toRemove->getType() == "SSD" ? eraseFrom(storageMap["SSD"], toRemove) :
-    eraseFrom(storageMap["HDD"], toRemove);
-
-    // Remove from size map
-    storageMap["Size"].erase(find(storageMap["Size"].begin(), storageMap["Size"].end(), toRemove));
+    if (storageMap["Price"].isEmpty())
+        return nullptr;
+    storage* toRemove = storageMap["Price"].takeFirst();
     return toRemove;
+}
+
+void dataHolder::clearStorageMaps()
+{
+    storageMap["HDD"].clear();
+    storageMap["M.2"].clear();
+    storageMap["SSD"].clear();
+    storageMap["Size"].clear();
+    storageMap["Price"].clear();
 }
 
 void dataHolder::addCooler(cooler* toInsert)
@@ -347,18 +337,18 @@ void dataHolder::addCooler(cooler* toInsert)
 
 cooler* dataHolder::removeCooler()
 {
-    cooler* toRemove = coolerMap["Price"][0];
-    if (toRemove == nullptr) return nullptr;
-    coolerMap["Price"].pop_back();
-
-    // Remove from type based maps
-    toRemove->getRadiatorSize() > 0 ? eraseFrom(coolerMap["AIO"], toRemove) :
-    eraseFrom(coolerMap["Air"], toRemove);
-
-    // Remove from TDP map
-    eraseFrom(coolerMap["TDP"], toRemove);
-
+    if (coolerMap["Price"].isEmpty())
+        return nullptr;
+    cooler* toRemove = coolerMap["Price"].takeFirst();
     return toRemove;
+}
+
+void dataHolder::clearCoolerMaps()
+{
+    coolerMap["AIO"].clear();
+    coolerMap["Air"].clear();
+    coolerMap["TDP"].clear();
+    coolerMap["Price"].clear();
 }
 
 void dataHolder::addCase(pcCase* toInsert)
@@ -403,24 +393,20 @@ void dataHolder::addCase(pcCase* toInsert)
 
 pcCase* dataHolder::removeCase()
 {
-    pcCase* toRemove = caseMap["Price"][0];
-    if (toRemove == nullptr) return nullptr;
-    caseMap["Price"].pop_back();
-
-    // Remove from mobo form factor based maps
-    QStringList moboFF = toRemove->getMoboSupport();
-    for (QString ff : moboFF)
-    {
-        ff == "ITX" ? eraseFrom(caseMap["ITX"], toRemove) :
-        ff == "mATX" ? eraseFrom(caseMap["mATX"], toRemove) :
-        ff == "ATX" ? eraseFrom(caseMap["ATX"], toRemove) :
-        eraseFrom(caseMap["E-ATX"], toRemove);
-    }
-
-    // Remove from volume map
-    eraseFrom(caseMap["Volume"], toRemove);
-
+    if (caseMap["Price"].isEmpty())
+        return nullptr;
+    pcCase* toRemove = caseMap["Price"].takeFirst();
     return toRemove;
+}
+
+void dataHolder::clearCaseMaps()
+{
+    caseMap["ITX"].clear();
+    caseMap["mATX"].clear();
+    caseMap["ATX"].clear();
+    caseMap["E-ATX"].clear();
+    caseMap["Volume"].clear();
+    caseMap["Price"].clear();
 }
 
 void dataHolder::testMoboCompatibility(CPU *cpu)

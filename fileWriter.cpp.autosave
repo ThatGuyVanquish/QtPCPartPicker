@@ -166,10 +166,23 @@ public:
         GPU* gpuToWrite = m_db->removeGPU();
         while (gpuToWrite != nullptr)
         {
-            foreach(QString key,)
-            delete gpuToWrite;
+            foreach(QString key, gpuToWrite->backup().keys())
+            {
+                gpuSpecs.insert(key, QVariant(gpuToWrite->backup().value(key)));
+            }
+            if (gpuToWrite->getManu() == "Intel")
+                intelGPUs.insert(gpuToWrite->getModel(), QVariant(gpuSpecs));
+            else if (gpuToWrite->getManu() == "AMD")
+                amdGPUs.insert(gpuToWrite->getModel(), QVariant(gpuSpecs));
+            else 
+                nvidiaGPUs.insert(gpuToWrite->getModel(), QVariant(gpuSpecs));
+            //delete gpuToWrite;
             gpuToWrite = m_db->removeGPU();
         }
+        gpumap.insert("Intel", intelGPUs);
+        gpumap.insert("AMD", amdGPUs);
+        gpumap.insert("NVidia", nvidiaGPUs);
+        doc = QJsonDocument::fromVariant(QVarian)
         gpufile.close();
 
         QFile mobofile("Motherboard.JSON");

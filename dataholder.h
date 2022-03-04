@@ -47,16 +47,22 @@ public:
     void clearCPUMaps();
     void addGPU(GPU *toInsert);
     GPU* removeGPU();
+    void clearGPUMaps();
     void addMotherboard(motherboard *toInsert, string purpose = "");
     motherboard* removeMobo();
+    void clearMoboMaps();
     void addRAM(RAM *toInsert);
     RAM* removeRAM();
+    void clearRAMMaps();
     void addStorage(storage *toInsert);
     storage* removeStorage();
+    void clearStorageMaps();
     void addCooler(cooler *toInsert);
     cooler* removeCooler();
+    void clearCoolerMaps();
     void addCase(pcCase *toInsert);
     pcCase* removeCase();
+    void clearCaseMaps();
 
     void testMoboCompatibility(CPU *cpu);
     void testMoboCompatibility(RAM *ram);
