@@ -33,7 +33,7 @@ public:
         m_ram("/home/nave/Documents/QtProjects/PCPartPicker/database/RAM.JSON"),
         m_storage("/home/nave/Documents/QtProjects/PCPartPicker/database/Storage.JSON"),
         m_case("/home/nave/Documents/QtProjects/PCPartPicker/database/Case.JSON"),
-        m_cooler("/home/nave/Documents/QtProjects/PCPartPicker/database/Coler.JSON")
+        m_cooler("/home/nave/Documents/QtProjects/PCPartPicker/database/Cooler.JSON")
     {}
     ~fileWriter(){}
 
@@ -127,13 +127,8 @@ public:
         return 1;
     }
 
-    bool backUp ()
+    void cpuBackUp()
     {
-        if (openFiles() <= 0)
-        {
-            return false;
-        }
-
         QVariantMap intelCPUs;
         QVariantMap amdCPUs;
         QVariantMap cpumap;
@@ -149,7 +144,6 @@ public:
                 intelCPUs.insert(cpuToWrite->getModel(), QVariant(cpuSpecs));
             else
                 amdCPUs.insert(cpuToWrite->getModel(), QVariant(cpuSpecs));
-            //delete cpuToWrite;
             cpuToWrite = m_db->removeCPU();
         }
         cpumap.insert("Intel", intelCPUs);
@@ -157,7 +151,10 @@ public:
         QJsonDocument doc = QJsonDocument::fromVariant(QVariant(cpumap));
         m_cpu.write(doc.toJson());
         m_db->clearCPUMaps();
+    }
 
+    void gpuBackUp()
+    {
         QVariantMap intelGPUs;
         QVariantMap amdGPUs;
         QVariantMap nvidiaGPUs;
@@ -166,89 +163,157 @@ public:
         GPU* gpuToWrite = m_db->removeGPU();
         while (gpuToWrite != nullptr)
         {
-            foreach(QString key,)
-            delete gpuToWrite;
+            foreach(QString key, gpuToWrite->backup().keys())
+            {
+                gpuSpecs.insert(key, QVariant(gpuToWrite->backup().value(key)));
+            }
+            if (gpuToWrite->getManu() == "Intel")
+                intelGPUs.insert(gpuToWrite->getModel(), QVariant(gpuSpecs));
+            else if (gpuToWrite->getManu() == "AMD")
+                amdGPUs.insert(gpuToWrite->getModel(), QVariant(gpuSpecs));
+            else
+                nvidiaGPUs.insert(gpuToWrite->getModel(), QVariant(gpuSpecs));
             gpuToWrite = m_db->removeGPU();
         }
-        gpufile.close();
+        gpumap.insert("Intel", intelGPUs);
+        gpumap.insert("AMD", amdGPUs);
+        gpumap.insert("NVidia", nvidiaGPUs);
+        QJsonDocument doc = QJsonDocument::fromVariant(QVariant(gpumap));
+        m_gpu.write(doc.toJson());
+        m_db->clearGPUMaps();
+    }
 
-        QFile mobofile("Motherboard.JSON");
-        if (!mobofile.open(QIODevice::WriteOnly))
-        {
-            qCritical() << "Could not write file!";
-            qCritical() << mobofile.errorString();
-            return 0;
-        }
+    void moboBackUp()
+    {
+        QVariantMap mobomap;
+        QVariantMap moboSpecs;
         motherboard* moboToWrite = m_db->removeMobo();
         while (moboToWrite != nullptr)
         {
-            // write to mobo file
+            foreach(QString key, moboToWrite->backup().keys())
+            {
+                moboSpecs.insert(key, QVariant(moboToWrite->backup().value(key)));
+            }
+            mobomap.insert(moboToWrite->getModel(), QVariant(moboSpecs));
             delete moboToWrite;
             moboToWrite = m_db->removeMobo();
         }
-        mobofile.close();
+        QJsonDocument doc = QJsonDocument::fromVariant(QVariant(mobomap));
+        m_mobo.write(doc.toJson());
+        m_db->clearMoboMaps();
+    }
 
-        QFile ramfile("RAM.JSON");
-        if (!ramfile.open(QIODevice::WriteOnly))
-        {
-            qCritical() << "Could not write file!";
-            qCritical() << ramfile.errorString();
-            return 0;
-        }
+    void ramBackUp()
+    {
+        QVariantMap rammap;
+        QVariantMap ramSpecs;
         RAM* ramToWrite = m_db->removeRAM();
         while (ramToWrite != nullptr)
         {
-            // write to ram file
+            foreach(QString key, ramToWrite->backup().keys())
+            {
+                ramSpecs.insert(key, QVariant(ramToWrite->backup().value(key)));
+            }
+            rammap.insert(ramToWrite->getModel(), QVariant(ramSpecs));
             delete ramToWrite;
             ramToWrite = m_db->removeRAM();
         }
-        ramfile.close();
+        QJsonDocument doc = QJsonDocument::fromVariant(QVariant(rammap));
+        m_ram.write(doc.toJson());
+        m_db->clearRAMMaps();
+    }
 
-        QFile storagefile("Storage.JSON");
-        if (!storagefile.open(QIODevice::WriteOnly))
-        {
-            qCritical() << "Could not write file!";
-            qCritical() << storagefile.errorString();
-            return 0;
-        }
+    void storageBackUp()
+    {
+        QVariantMap m2map;
+        QVariantMap hddmap;
+        QVariantMap ssdmap;
+        QVariantMap storageSpecs;
+        QVariantMap storagemap;
         storage* driveToWrite = m_db->removeStorage();
         while (driveToWrite != nullptr)
         {
-            // write to storage file
+            foreach(QString key, driveToWrite->backup().keys())
+            {
+                storageSpecs.insert(key, driveToWrite->backup().value(key));
+            }
+            if (driveToWrite->getType() == "hdd")
+                hddmap.insert(driveToWrite->getModel(), QVariant(storageSpecs));
+            else if (driveToWrite->getPort() == "M.2")
+                m2map.insert(driveToWrite->getModel(), QVariant(storageSpecs));
+            else
+                ssdmap.insert(driveToWrite->getModel(), QVariant(storageSpecs));
             delete driveToWrite;
             driveToWrite = m_db->removeStorage();
         }
-        storagefile.close();
+        storagemap.insert("HDDs", QVariant(hddmap));
+        storagemap.insert("SATA SSDs", QVariant(ssdmap));
+        storagemap.insert("M.2 SSDs", QVariant(m2map));
+        QJsonDocument doc = QJsonDocument::fromVariant(QVariant(storagemap));
+        m_storage.write(doc.toJson());
+        m_db->clearStorageMaps();
+    }
 
-        QFile coolerfile("Cooler.JSON");
-        if (!coolerfile.open(QIODevice::WriteOnly))
-        {
-            qCritical() << "Could not write file!";
-            qCritical() << coolerfile.errorString();
-            return 0;
-        }
+    void coolerBackUp()
+    {
+        QVariantMap aiomap;
+        QVariantMap airmap;
+        QVariantMap coolerSpecs;
+        QVariantMap coolermap;
         cooler* coolerToWrite = m_db->removeCooler();
         while (coolerToWrite != nullptr)
         {
-            // write to cooler filer
+            foreach(QString key, coolerToWrite->backup().keys())
+            {
+                coolerSpecs.insert(key, coolerToWrite->backup().value(key));
+            }
+            if (coolerToWrite->getType() == "AIO")
+                aiomap.insert(coolerToWrite->getModel(), QVariant(coolerSpecs));
+            else
+                airmap.insert(coolerToWrite->getModel(), QVariant(coolerSpecs));
             delete coolerToWrite;
             coolerToWrite = m_db->removeCooler();
         }
-        coolerfile.close();
+        coolermap.insert("AIO", QVariant(aiomap));
+        coolermap.insert("Air Cooler", QVariant(airmap));
+        QJsonDocument doc = QJsonDocument::fromVariant(QVariant(coolermap));
+        m_cooler.write(doc.toJson());
+        m_db->clearCoolerMaps();
+    }
 
-        QFile casefile("Case.JSON");
-        if (!casefile.open(QIODevice::WriteOnly))
-        {
-            qCritical() << "Could not write file!";
-            qCritical() << casefile.errorString();
-            return 0;
-        }
+    void caseBackUp()
+    {
+        QVariantMap casemap;
+        QVariantMap caseSpecs;
         pcCase* caseToWrite = m_db->removeCase();
         while (caseToWrite != nullptr)
         {
+            foreach(QString key, caseToWrite->backup().keys())
+            {
+                caseSpecs.insert(key, caseToWrite->backup().value(key));
+            }
+            casemap.insert(caseToWrite->getModel(), caseSpecs);
             delete caseToWrite;
             caseToWrite = m_db->removeCase();
         }
+        QJsonDocument doc = QJsonDocument::fromVariant(QVariant(casemap));
+        m_case.write(doc.toJson());
+        m_db->clearCaseMaps();
+    }
+
+    bool backUp ()
+    {
+        if (openFiles() <= 0)
+        {
+            return false;
+        }
+        cpuBackUp();
+        gpuBackUp();
+        moboBackUp();
+        ramBackUp();
+        storageBackUp();
+        coolerBackUp();
+        caseBackUp();
 
         closeFiles();
         return true;

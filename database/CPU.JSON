@@ -1,0 +1,57 @@
+{
+    "AMD": {
+        "Ryzen 9 5950X": {
+            "BClock": "3.4",
+            "Boost": "4",
+            "Cooler": "0",
+            "Cores": "8",
+            "L2": "30",
+            "L3": "15",
+            "Manufacturer": "AMD",
+            "Model": "Ryzen 9 5950X",
+            "PCIe": "40",
+            "Price": "800",
+            "Socket": "AM4",
+            "TDP": "150",
+            "Threads": "16",
+            "Unlocked": "1",
+            "iGPU": "0"
+        }
+    },
+    "Intel": {
+        "i5 4670K": {
+            "BClock": "3.4",
+            "Boost": "4.2",
+            "Cooler": "0",
+            "Cores": "4",
+            "L2": "15",
+            "L3": "10",
+            "Manufacturer": "Intel",
+            "Model": "i5 4670K",
+            "PCIe": "20",
+            "Price": "200",
+            "Socket": "LGA1150",
+            "TDP": "90",
+            "Threads": "4",
+            "Unlocked": "1",
+            "iGPU": "1"
+        },
+        "i7 8700K": {
+            "BClock": "3.8",
+            "Boost": "4.5",
+            "Cooler": "0",
+            "Cores": "6",
+            "L2": "25",
+            "L3": "15",
+            "Manufacturer": "Intel",
+            "Model": "i7 8700K",
+            "PCIe": "24",
+            "Price": "300",
+            "Socket": "LGA1151",
+            "TDP": "90",
+            "Threads": "12",
+            "Unlocked": "1",
+            "iGPU": "1"
+        }
+    }
+}

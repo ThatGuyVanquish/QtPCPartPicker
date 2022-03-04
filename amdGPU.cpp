@@ -20,4 +20,5 @@ class amdGPU: public GPU
             "Ray Tracing: " + (_rayAccelerators ? "Yes" : "No") + "\n";
         }
         bool runsDLSS() {return false;}
+
 };

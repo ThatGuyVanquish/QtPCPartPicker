@@ -10,8 +10,11 @@ class amdCPU: public CPU
         ~amdCPU(){};
 
         QString getManu() {return "AMD";}
+        bool isUnlocked() {return true;}
+
         string toString()
         {
             return "Manufacturer: AMD\n" + CPU::toString();
         }
+
 };
