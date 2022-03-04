@@ -42,11 +42,12 @@ add_executable(PCPartPicker
     hdd.cpp
     m2SSD.cpp
     fileWriter.cpp
-    parser.cpp
     dataholder.h
     dataholder.cpp
     compatibility.h
     compatibility.cpp
+    filereader.h
+    filereader.cpp
 )
 
 
