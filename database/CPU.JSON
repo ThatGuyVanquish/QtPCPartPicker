@@ -1,5 +1,22 @@
 {
     "AMD": {
+        "EPYC 7763": {
+            "BClock": "2.45",
+            "Boost": "3.5",
+            "Cooler": "0",
+            "Cores": "64",
+            "L2": "512",
+            "L3": "256",
+            "Manufacturer": "AMD",
+            "Model": "EPYC 7763",
+            "PCIe": "128",
+            "Price": "4000",
+            "Socket": "SP3",
+            "TDP": "280",
+            "Threads": "128",
+            "Unlocked": "1",
+            "iGPU": "0"
+        },
         "Ryzen 9 5950X": {
             "BClock": "3.4",
             "Boost": "4",

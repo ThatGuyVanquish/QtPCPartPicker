@@ -83,16 +83,50 @@ void dataHolder::addCPU(CPU* toInsert)
     // Insert into manufacturer QLists
     toInsert->getManu() == "Intel" ? cpuMap["Intel"].push_back(toInsert) : cpuMap["AMD"].push_back(toInsert);
 
-//    // Insert into core count QLists
-//    int cores = toInsert->getCores();
-//    if (cores > 16)
-//        cpuMap["Server"].push_back(toInsert);
-//    else
-//        cpuMap["PC"].push_back(toInsert);
-//    if (cores % 2 == 0 && 4 <= cores && cores <= 16)
-//        {
-//            cpuMap.find(to_string(cores) + " Cores").value().push_back(toInsert);
-//        }
+    // Insert into core count QLists
+    int cores = toInsert->getCores();
+    if (cores > 16)
+       cpuMap["Server"].push_back(toInsert);
+    else
+        cpuMap["PC"].push_back(toInsert);
+    switch (cores)
+    {
+        case 4:
+        {
+            cpuMap["4 Cores"].push_back(toInsert);
+            break;
+        }
+        case 6:
+        {
+            cpuMap["6 Cores"].push_back(toInsert);
+            break;
+        }
+        case 8:
+        {
+            cpuMap["8 Cores"].push_back(toInsert);
+            break;
+        }
+        case 10:
+        {
+            cpuMap["10 Cores"].push_back(toInsert);
+            break;
+        }
+        case 12:
+        {
+            cpuMap["12 Cores"].push_back(toInsert);
+            break;
+        }
+        case 14:
+        {
+            cpuMap["14 Cores"].push_back(toInsert);
+            break;
+        }
+        case 16:
+        {
+            cpuMap["16 Cores"].push_back(toInsert);
+            break;
+        }
+    }
 
     // Insert into a QList which is sorted by price, by insertion sort
     int index = 0;

@@ -25,6 +25,7 @@ int main(int argc, char *argv[])
     CPU *cpu1 = new intelCPU("i5 4670K", "LGA1150", 4, 3.4, 15, 10, 20, 90, 200, true, false, -1, 4.2, true);
     CPU *cpu2 = new intelCPU("i7 8700K", "LGA1151", 6, 3.8, 25, 15, 24, 90, 300, true, false, 12, 4.5, true);
     CPU *cpu3 = new amdCPU("Ryzen 9 5950X", "AM4", 8, 3.4, 30, 15, 40, 150, 800, false, false, 16, 4.0);
+    CPU *cpu4 = new amdCPU("EPYC 7763", "SP3", 64, 2.45, 512, 256, 128, 280, 4000, false, false, 128, 3.5);
 
     GPU *gpu1 = new intelGPU("Iris XE", 4, 8, 1800, 32, 40, 1, 3, 3, 43, {"HDMI"});
     GPU *gpu2 = new amdGPU("RX6800", 4, 8, 1200, 64, 250, 2, 20, 28, 800, {"DisplayPort 2.1"}, 1450, true);
@@ -50,6 +51,7 @@ int main(int argc, char *argv[])
     h.addCPU(cpu1);
     h.addCPU(cpu2);
     h.addCPU(cpu3);
+    h.addCPU(cpu4);
     h.addGPU(gpu1);
     h.addGPU(gpu2);
     h.addGPU(gpu3);
