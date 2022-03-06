@@ -76,8 +76,7 @@ class cooler: public QObject
             ret["Maximum Fans"] = QString::number(_maxFans);
             if (ret["Type"] == "AIO")
                 ret["Radiator Size"] = QString::number(_radiatorSize);
-            else
-                ret["Cooler Height"] = QString::number(_height);
+            ret["Cooler Height"] = QString::number(_height);
             ret["Sockets"] = _sockets.join(", ");
             ret["Price"] = QString::number(_price);
             return ret;

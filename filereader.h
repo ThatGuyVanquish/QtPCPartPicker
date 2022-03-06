@@ -2,10 +2,30 @@
 #define FILEREADER_H
 
 #include "dataholder.h"
+#include "CPU.h"
+#include "GPU.h"
+#include "intelCPU.cpp"
+#include "intelGPU.cpp"
+#include "amdCPU.cpp"
+#include "amdGPU.cpp"
+#include "nvidiaGPU.cpp"
+#include "motherboard.h"
+#include "RAM.h"
+#include "storage.h"
+#include "hdd.cpp"
+#include "sataSSD.cpp"
+#include "m2SSD.cpp"
+#include "pcCase.h"
+#include "cooler.h"
+#include "AIO.cpp"
+#include "airCooler.cpp"
 
 #include <QObject>
 #include <QJsonDocument>
 #include <QFile>
+#include <QMap>
+#include <QVariantMap>
+#include <QVariant>
 
 
 class fileReader : public QObject

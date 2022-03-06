@@ -9,10 +9,12 @@ QMap<QString, QString> motherboard::backup()
 {
     QMap<QString, QString> ret;
     ret["Model"] = _model;
+    ret["CPU Manufacturer"] = _cpuManu;
     ret["Socket"] = _socket;
     ret["RAM Slots"] = QString::number(_ram);
     ret["RAM Version"] = _ramVersion;
     ret["Max RAM Size"] = QString::number(_maxRAM);
+    ret["RAM Channels"] = QString::number(_memChannels);
     ret["PCIE Slots"] = QString::number(_pcieSlots);
     ret["SATA Slots"] = QString::number(_sataSlots);
     ret["M.2 Slots"] = QString::number(_m2Slots);

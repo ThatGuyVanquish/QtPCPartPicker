@@ -177,7 +177,7 @@ public:
         }
         gpumap.insert("Intel", intelGPUs);
         gpumap.insert("AMD", amdGPUs);
-        gpumap.insert("NVidia", nvidiaGPUs);
+        gpumap.insert("Nvidia", nvidiaGPUs);
         QJsonDocument doc = QJsonDocument::fromVariant(QVariant(gpumap));
         m_gpu.write(doc.toJson());
         m_db->clearGPUMaps();

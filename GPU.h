@@ -80,6 +80,8 @@ class GPU: public QObject
             ret["Model"] = _model;
             ret["Manufacturer"] = getManu();
             ret["BClock"] = QString::number(_baseClock);
+            ret["VRAM"] = QString::number(_vram);
+            ret["PCIE"] = QString::number(_pcieGen);
             ret["Boost"] = QString::number(_boostClock);
             ret["Bus"] = QString::number(_busSize);
             ret["TDP"] = QString::number(_tdp);

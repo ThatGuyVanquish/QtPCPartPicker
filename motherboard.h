@@ -104,7 +104,7 @@ class motherboard: public QObject
         {
             if (getLength() > l || getWidth() > w) // Can't fit due to size limitations
                 return false;
-            for (QString ff : formFactors) // Can't fit due to standoffs not available
+            for (QString &ff : formFactors) // Can't fit due to standoffs not available
                 if (ff == _formFactor)
                     return true;
             return false;
