@@ -88,17 +88,22 @@ static void toLower(string str)
     std::transform(str.begin(), str.end(), str.begin(), [](unsigned char c){ return std::tolower(c);});
 }
 
-static void insertRAMBySpeed(QList<RAM*> v, RAM* toInsert)
+static void insertRAMBySpeed(QList<RAM*> *v, RAM* toInsert)
 {
     int index = 0;
-    for (RAM* ram : v)
+    if (v->isEmpty())
+    {
+        v->append(toInsert);
+        return;
+    }
+    for (RAM* ram : *v)
     {
         if (toInsert->getSpeed() >= ram->getSpeed())
             index++;
         else
             break;
     }
-    v.insert(v.begin() + index, toInsert);
+    v->insert(v->begin() + index, toInsert);
 }
 
 #endif // DATAHOLDER_H

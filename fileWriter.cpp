@@ -197,7 +197,9 @@ public:
             mobomap.insert(moboToWrite->getModel(), QVariant(moboSpecs));
             moboToWrite = m_db->removeMobo();
         }
-        QJsonDocument doc = QJsonDocument::fromVariant(QVariant(mobomap));
+        QVariantMap backupMap;
+        backupMap["Motherboards"] = QVariant(mobomap);
+        QJsonDocument doc = QJsonDocument::fromVariant(backupMap);
         m_mobo.write(doc.toJson());
         m_db->clearMoboMaps();
     }
@@ -216,7 +218,9 @@ public:
             rammap.insert(ramToWrite->getModel(), QVariant(ramSpecs));
             ramToWrite = m_db->removeRAM();
         }
-        QJsonDocument doc = QJsonDocument::fromVariant(QVariant(rammap));
+        QVariantMap backupMap;
+        backupMap["RAM"] = QVariant(rammap);
+        QJsonDocument doc = QJsonDocument::fromVariant(QVariant(backupMap));
         m_ram.write(doc.toJson());
         m_db->clearRAMMaps();
     }
@@ -293,7 +297,9 @@ public:
             delete caseToWrite;
             caseToWrite = m_db->removeCase();
         }
-        QJsonDocument doc = QJsonDocument::fromVariant(QVariant(casemap));
+        QVariantMap backupMap;
+        backupMap["Cases"] = QVariant(casemap);
+        QJsonDocument doc = QJsonDocument::fromVariant(QVariant(backupMap));
         m_case.write(doc.toJson());
         m_db->clearCaseMaps();
     }

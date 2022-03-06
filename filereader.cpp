@@ -208,9 +208,8 @@ void fileReader::restoreMotherboards()
 {
     QByteArray data = m_mobo.readAll();
     QJsonDocument doc = QJsonDocument::fromJson(data);
-    m_mobo.close();
-
-    QVariantMap mobos = qvariant_cast<QVariantMap>(doc);
+    m_mobo.close();    
+    QVariantMap mobos = qvariant_cast<QVariantMap>(doc["Motherboards"]);
     foreach(QString key, mobos.keys())
     {
         QVariantMap currentMobo = qvariant_cast<QVariantMap>(mobos.value(key));
@@ -236,7 +235,7 @@ void fileReader::restoreRAM()
     QJsonDocument doc = QJsonDocument::fromJson(data);
     m_ram.close();
 
-    QVariantMap ram = qvariant_cast<QVariantMap>(doc);
+    QVariantMap ram = qvariant_cast<QVariantMap>(doc["RAM"]);
     foreach(QString key, ram.keys())
     {
         QVariantMap currentRAM = qvariant_cast<QVariantMap>(ram.value(key));
@@ -262,7 +261,8 @@ void fileReader::restoreStorage()
     QJsonDocument doc = QJsonDocument::fromJson(data);
     m_storage.close();
 
-    QVariantMap storageMap = qvariant_cast<QVariantMap>(doc);
+    // Restoring hard drives
+    QVariantMap storageMap = qvariant_cast<QVariantMap>(doc["HDDs"]);
     foreach(QString key, storageMap.keys())
     {
         QVariantMap currentDrive = qvariant_cast<QVariantMap>(storageMap.value(key));
@@ -271,15 +271,37 @@ void fileReader::restoreStorage()
         {
             specs.insert(spec, currentDrive.value(spec).toString());
         }
-        storage *toInsert;
-        if (specs["Type"] == "hdd")
-            toInsert = new hdd(specs["Model"], specs["Port"], specs["Size"], specs["Read"].toInt(),
+        storage *toInsert = new hdd(specs["Model"], specs["Port"], specs["Size"], specs["Read"].toInt(),
+                specs["Write"].toInt(), specs["Cache"].toInt(), specs["Price"].toInt());
+        m_db->addStorage(toInsert);
+    }
+
+    // Restoring M.2 SSDs
+    storageMap = qvariant_cast<QVariantMap>(doc["M.2 SSDs"]);
+    foreach(QString key, storageMap.keys())
+    {
+        QVariantMap currentDrive = qvariant_cast<QVariantMap>(storageMap.value(key));
+        QMap<QString, QString> specs;
+        foreach(QString spec, currentDrive.keys())
+        {
+            specs.insert(spec, currentDrive.value(spec).toString());
+        }
+        storage *toInsert = new m2SSD(specs["Model"], specs["Size"], specs["Read"].toInt(),
                     specs["Write"].toInt(), specs["Cache"].toInt(), specs["Price"].toInt());
-        else if (specs["Port"] == "M.2")
-            toInsert = new m2SSD(specs["Model"], specs["Size"], specs["Read"].toInt(),
-                    specs["Write"].toInt(), specs["Cache"].toInt(), specs["Price"].toInt());
-        else
-            toInsert = new sataSSD(specs["Model"], specs["Size"], specs["Read"].toInt(),
+        m_db->addStorage(toInsert);
+    }
+
+    // Restoring SATA3 SSDs
+    storageMap = qvariant_cast<QVariantMap>(doc["M.2 SSDs"]);
+    foreach(QString key, storageMap.keys())
+    {
+        QVariantMap currentDrive = qvariant_cast<QVariantMap>(storageMap.value(key));
+        QMap<QString, QString> specs;
+        foreach(QString spec, currentDrive.keys())
+        {
+            specs.insert(spec, currentDrive.value(spec).toString());
+        }
+        storage *toInsert = new sataSSD(specs["Model"], specs["Size"], specs["Read"].toInt(),
                     specs["Write"].toInt(), specs["Cache"].toInt(), specs["Price"].toInt());
         m_db->addStorage(toInsert);
     }
@@ -291,7 +313,8 @@ void fileReader::restoreCoolers()
     QJsonDocument doc = QJsonDocument::fromJson(data);
     m_cooler.close();
 
-    QVariantMap coolerMap = qvariant_cast<QVariantMap>(doc);
+    // Restoring AIOs
+    QVariantMap coolerMap = qvariant_cast<QVariantMap>(doc["AIO"]);
     foreach(QString key, coolerMap.keys())
     {
         QVariantMap currentCooler= qvariant_cast<QVariantMap>(coolerMap.value(key));
@@ -300,16 +323,25 @@ void fileReader::restoreCoolers()
         {
             specs.insert(spec, currentCooler.value(spec).toString());
         }
-        cooler *toInsert;
-        if (specs["Type"] == "AIO")
-            toInsert = new AIO(specs["Model"], specs["TDP"].toInt(), specs["Included Fans"].toInt(),
-                    specs["Maximum Fans"].toInt(), specs["Radiator Size"].toInt(),
-                    specs["Cooler Height"].toInt(), specs["Sockets"].split(", "),
-                    specs["Price"].toInt());
-        else
-            toInsert = new airCooler(specs["Model"], specs["TDP"].toInt(), specs["Included Fans"].toInt(),
-                    specs["Maximum Fans"].toInt(), specs["Cooler Height"].toInt(), specs["Sockets"].split(", "),
-                    specs["Price"].toInt());
+        cooler *toInsert = new AIO(specs["Model"], specs["TDP"].toInt(), specs["Included Fans"].toInt(),
+                specs["Maximum Fans"].toInt(), specs["Radiator Size"].toInt(), specs["Cooler Height"].toInt(),
+                specs["Sockets"].split(", "), specs["Price"].toInt());
+        m_db->addCooler(toInsert);
+    }
+
+    // Restoring air coolers
+    coolerMap = qvariant_cast<QVariantMap>(doc["Air Cooler"]);
+    foreach(QString key, coolerMap.keys())
+    {
+        QVariantMap currentCooler= qvariant_cast<QVariantMap>(coolerMap.value(key));
+        QMap<QString, QString> specs;
+        foreach(QString spec, currentCooler.keys())
+        {
+            specs.insert(spec, currentCooler.value(spec).toString());
+        }
+        cooler *toInsert = new airCooler(specs["Model"], specs["TDP"].toInt(), specs["Included Fans"].toInt(),
+                specs["Maximum Fans"].toInt(), specs["Cooler Height"].toInt(), specs["Sockets"].split(", "),
+                specs["Price"].toInt());
         m_db->addCooler(toInsert);
     }
 }
@@ -320,7 +352,7 @@ void fileReader::restoreCases()
     QJsonDocument doc = QJsonDocument::fromJson(data);
     m_case.close();
 
-    QVariantMap caseMap = qvariant_cast<QVariantMap>(doc);
+    QVariantMap caseMap = qvariant_cast<QVariantMap>(doc["Cases"]);
     foreach(QString key, caseMap.keys())
     {
         QVariantMap currentCase= qvariant_cast<QVariantMap>(caseMap.value(key));
@@ -350,6 +382,7 @@ bool fileReader::restore()
     restoreStorage();
     restoreCoolers();
     restoreCases();
+    closeFiles();
 
     return true;
 }

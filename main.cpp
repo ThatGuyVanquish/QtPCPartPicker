@@ -69,8 +69,8 @@ int main(int argc, char *argv[])
     fw.backup();
 
     fileReader fr(&h);
-    fr.restore();
+    if (!fr.restore())
+        qWarning() << "Failed to restore";
 
-    qInfo() << "Testing to see if things restore";
     return a.exec();
 }

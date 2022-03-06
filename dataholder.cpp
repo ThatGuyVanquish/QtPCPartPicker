@@ -220,13 +220,16 @@ void dataHolder::addRAM(RAM* toInsert)
 {
     // Map by DDR Version, sort by speed
     QString version = toInsert->getVersion();
-    version == "DDR3" ? insertRAMBySpeed(ramMap["DDR3"], toInsert) :
-    (version == "DDR4" ? insertRAMBySpeed(ramMap["DDR4"], toInsert) : insertRAMBySpeed(ramMap["DDR5"], toInsert));
+    version == "DDR3" ? insertRAMBySpeed(&ramMap["DDR3"], toInsert) :
+    (version == "DDR4" ? insertRAMBySpeed(&ramMap["DDR4"], toInsert) : insertRAMBySpeed(&ramMap["DDR5"], toInsert));
 
     // Map by price
     int index = 0;
     if (ramMap["Price"].isEmpty())
+    {
         ramMap["Price"].append(toInsert);
+        return;
+    }
 
     for (RAM* current : ramMap["Price"])
     {
