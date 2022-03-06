@@ -1,0 +1,38 @@
+{
+    "HDDs": {
+        "Seagate Barracuda": {
+            "Cache": "32",
+            "Model": "Seagate Barracuda",
+            "Port": "SATA3",
+            "Price": "60",
+            "Read": "500",
+            "Size": "2TB",
+            "Type": "hdd",
+            "Write": "400"
+        }
+    },
+    "M.2 SSDs": {
+        "Samsung 970 Pro": {
+            "Cache": "256",
+            "Model": "Samsung 970 Pro",
+            "Port": "M.2",
+            "Price": "350",
+            "Read": "3500",
+            "Size": "512GB",
+            "Type": "ssd",
+            "Write": "3200"
+        }
+    },
+    "SATA SSDs": {
+        "Samsung 840 EVO": {
+            "Cache": "64",
+            "Model": "Samsung 840 EVO",
+            "Port": "SATA3",
+            "Price": "110",
+            "Read": "800",
+            "Size": "1TB",
+            "Type": "ssd",
+            "Write": "650"
+        }
+    }
+}

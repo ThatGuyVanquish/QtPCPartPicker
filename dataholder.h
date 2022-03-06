@@ -16,12 +16,6 @@
 
 using namespace std;
 
-template<typename T>
-    void eraseFrom(QList<T> vec, T toRemove)
-    {
-        vec.erase(std::find(vec.begin(), vec.end(), toRemove));
-    }
-
 static void toLower(string str);
 static void insertRAMBySpeed(QList<RAM*> v, RAM* toInsert);
 

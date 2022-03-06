@@ -1,0 +1,22 @@
+{
+    "Corsair Vengeance": {
+        "DIMMS": "4",
+        "Heatsink": "1",
+        "Model": "Corsair Vengeance",
+        "Price": "659",
+        "Size": "32",
+        "Speed": "5133",
+        "Timings": "34, 35, 34, 40",
+        "Version": "DDR5"
+    },
+    "GSkill TridentZ": {
+        "DIMMS": "2",
+        "Heatsink": "1",
+        "Model": "GSkill TridentZ",
+        "Price": "250",
+        "Size": "16",
+        "Speed": "3600",
+        "Timings": "15, 15, 17, 34",
+        "Version": "DDR4"
+    }
+}

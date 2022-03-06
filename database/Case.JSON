@@ -1,0 +1,38 @@
+{
+    "Fractal Design Define R7": {
+        "Compatible Motherboards": "ATX, mATX, ITX",
+        "Cooler Height": "17",
+        "Expansion Slots": "8",
+        "Fans": "3",
+        "Fits Radiators": "1",
+        "Form Factor": "Mid Tower",
+        "Front Audio": "1",
+        "GPU Length": "34",
+        "HDD Slots": "7",
+        "Height": "60",
+        "Length": "58",
+        "Model": "Fractal Design Define R7",
+        "Price": "150",
+        "SSD Slots": "2",
+        "USB Ports": "4",
+        "Width": "32"
+    },
+    "Lian Li PC-O11": {
+        "Compatible Motherboards": "E-ATX, ATX, mATX, ITX",
+        "Cooler Height": "22",
+        "Expansion Slots": "8",
+        "Fans": "5",
+        "Fits Radiators": "1",
+        "Form Factor": "Full Tower",
+        "Front Audio": "1",
+        "GPU Length": "41",
+        "HDD Slots": "7",
+        "Height": "60",
+        "Length": "58",
+        "Model": "Lian Li PC-O11",
+        "Price": "250",
+        "SSD Slots": "2",
+        "USB Ports": "2",
+        "Width": "32"
+    }
+}

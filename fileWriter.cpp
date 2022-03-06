@@ -127,7 +127,7 @@ public:
         return 1;
     }
 
-    void cpuBackUp()
+    void cpuBackup()
     {
         QVariantMap intelCPUs;
         QVariantMap amdCPUs;
@@ -153,7 +153,7 @@ public:
         m_db->clearCPUMaps();
     }
 
-    void gpuBackUp()
+    void gpuBackup()
     {
         QVariantMap intelGPUs;
         QVariantMap amdGPUs;
@@ -183,7 +183,7 @@ public:
         m_db->clearGPUMaps();
     }
 
-    void moboBackUp()
+    void moboBackup()
     {
         QVariantMap mobomap;
         QVariantMap moboSpecs;
@@ -195,7 +195,6 @@ public:
                 moboSpecs.insert(key, QVariant(moboToWrite->backup().value(key)));
             }
             mobomap.insert(moboToWrite->getModel(), QVariant(moboSpecs));
-            delete moboToWrite;
             moboToWrite = m_db->removeMobo();
         }
         QJsonDocument doc = QJsonDocument::fromVariant(QVariant(mobomap));
@@ -203,7 +202,7 @@ public:
         m_db->clearMoboMaps();
     }
 
-    void ramBackUp()
+    void ramBackup()
     {
         QVariantMap rammap;
         QVariantMap ramSpecs;
@@ -215,7 +214,6 @@ public:
                 ramSpecs.insert(key, QVariant(ramToWrite->backup().value(key)));
             }
             rammap.insert(ramToWrite->getModel(), QVariant(ramSpecs));
-            delete ramToWrite;
             ramToWrite = m_db->removeRAM();
         }
         QJsonDocument doc = QJsonDocument::fromVariant(QVariant(rammap));
@@ -223,7 +221,7 @@ public:
         m_db->clearRAMMaps();
     }
 
-    void storageBackUp()
+    void storageBackup()
     {
         QVariantMap m2map;
         QVariantMap hddmap;
@@ -243,7 +241,6 @@ public:
                 m2map.insert(driveToWrite->getModel(), QVariant(storageSpecs));
             else
                 ssdmap.insert(driveToWrite->getModel(), QVariant(storageSpecs));
-            delete driveToWrite;
             driveToWrite = m_db->removeStorage();
         }
         storagemap.insert("HDDs", QVariant(hddmap));
@@ -254,7 +251,7 @@ public:
         m_db->clearStorageMaps();
     }
 
-    void coolerBackUp()
+    void coolerBackup()
     {
         QVariantMap aiomap;
         QVariantMap airmap;
@@ -281,7 +278,7 @@ public:
         m_db->clearCoolerMaps();
     }
 
-    void caseBackUp()
+    void caseBackup()
     {
         QVariantMap casemap;
         QVariantMap caseSpecs;
@@ -301,21 +298,22 @@ public:
         m_db->clearCaseMaps();
     }
 
-    bool backUp ()
+    bool backup ()
     {
         if (openFiles() <= 0)
         {
             return false;
         }
-        cpuBackUp();
-        gpuBackUp();
-        moboBackUp();
-        ramBackUp();
-        storageBackUp();
-        coolerBackUp();
-        caseBackUp();
+        cpuBackup();
+        gpuBackup();
+        moboBackup();
+        ramBackup();
+        storageBackup();
+        coolerBackup();
+        caseBackup();
 
         closeFiles();
         return true;
     }
+
 };

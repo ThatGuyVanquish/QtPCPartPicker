@@ -250,8 +250,8 @@ void fileReader::restoreRAM()
         {
             timings.append(val.toInt());
         }
-        RAM *toInsert = new RAM(specs["Model"], specs["Version"], specs["Speed"].toInt(), timings,
-                specs["Price"].toInt(), specs["Heatsink"].toInt());
+        RAM *toInsert = new RAM(specs["Model"], specs["Version"], specs["Size"].toInt(), specs["DIMMS"].toInt(),
+                specs["Speed"].toInt(), timings, specs["Price"].toInt(), specs["Heatsink"].toInt());
         m_db->addRAM(toInsert);
     }
 }
@@ -279,7 +279,7 @@ void fileReader::restoreStorage()
             toInsert = new m2SSD(specs["Model"], specs["Size"], specs["Read"].toInt(),
                     specs["Write"].toInt(), specs["Cache"].toInt(), specs["Price"].toInt());
         else
-            toInsert = new sataSSD(specs["Model"], specs["Read"].toInt(),
+            toInsert = new sataSSD(specs["Model"], specs["Size"], specs["Read"].toInt(),
                     specs["Write"].toInt(), specs["Cache"].toInt(), specs["Price"].toInt());
         m_db->addStorage(toInsert);
     }
@@ -337,4 +337,19 @@ void fileReader::restoreCases()
                 specs["Front Audio"].toInt());
         m_db->addCase(toInsert);
     }
+}
+
+bool fileReader::restore()
+{
+    if (openFiles() <= 0)
+        return false;
+    restoreCPUs();
+    restoreGPUs();
+    restoreMotherboards();
+    restoreRAM();
+    restoreStorage();
+    restoreCoolers();
+    restoreCases();
+
+    return true;
 }

@@ -225,16 +225,17 @@ void dataHolder::addRAM(RAM* toInsert)
 
     // Map by price
     int index = 0;
+    if (ramMap["Price"].isEmpty())
+        ramMap["Price"].append(toInsert);
+
     for (RAM* current : ramMap["Price"])
     {
         if (toInsert->getPrice() >= current->getPrice())
             index++;
         else
-        {
-            ramMap["Price"].insert(ramMap["Price"].begin() + index, toInsert);
             break;
-        }
     }
+    ramMap["Price"].insert(ramMap["Price"].begin() + index, toInsert);
 }
 
 RAM* dataHolder::removeRAM()
@@ -266,11 +267,9 @@ void dataHolder::addStorage(storage* toInsert)
         if (toInsert->getSize() >= drive->getSize())
             index++;
         else
-        {
-            storageMap["Size"].insert(storageMap["Size"].begin() + index, toInsert);
             break;
-        }
     }
+    storageMap["Size"].insert(storageMap["Size"].begin() + index, toInsert);
 
     // Mapping by price
     index = 0;
@@ -279,11 +278,9 @@ void dataHolder::addStorage(storage* toInsert)
         if (toInsert->getPrice() >= drive->getPrice())
             index++;
         else
-        {
-            storageMap["Price"].insert(storageMap["Price"].begin() + index, toInsert);
             break;
-        }
     }
+    storageMap["Price"].insert(storageMap["Price"].begin() + index, toInsert);
 }
 
 storage* dataHolder::removeStorage()
@@ -315,11 +312,9 @@ void dataHolder::addCooler(cooler* toInsert)
         if (toInsert->getTDP() >= current->getTDP())
             index++;
         else
-        {
-            coolerMap["TDP"].insert(coolerMap["TDP"].begin() + index, toInsert);
             break;
-        }
     }
+    coolerMap["TDP"].insert(coolerMap["TDP"].begin() + index, toInsert);
 
     // Mapping by price
     index = 0;
@@ -328,11 +323,9 @@ void dataHolder::addCooler(cooler* toInsert)
         if (toInsert->getPrice() >= current->getPrice())
             index++;
         else
-        {
-            coolerMap["Price"].insert(coolerMap["Price"].begin() + index, toInsert);
             break;
-        }
     }
+    coolerMap["Price"].insert(coolerMap["Price"].begin() + index, toInsert);
 }
 
 cooler* dataHolder::removeCooler()
@@ -371,11 +364,9 @@ void dataHolder::addCase(pcCase* toInsert)
         if (vol >= current->calculateCaseVolume())
             index++;
         else
-        {
-            caseMap["Volume"].insert(caseMap["Volume"].begin() + index, toInsert);
             break;
-        }
     }
+    caseMap["Volume"].insert(caseMap["Volume"].begin() + index, toInsert);
 
     // Mapping by price
     index = 0;
@@ -384,11 +375,9 @@ void dataHolder::addCase(pcCase* toInsert)
         if (toInsert->getPrice() >= current->getPrice())
             index++;
         else
-        {
-            caseMap["Price"].insert(caseMap["Price"].begin() + index, toInsert);
             break;
-        }
     }
+    caseMap["Price"].insert(caseMap["Price"].begin() + index, toInsert);
 }
 
 pcCase* dataHolder::removeCase()

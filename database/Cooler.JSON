@@ -1,0 +1,27 @@
+{
+    "AIO": {
+        "Fractal Design Something": {
+            "Cooler Height": "5",
+            "Included Fans": "2",
+            "Maximum Fans": "4",
+            "Model": "Fractal Design Something",
+            "Price": "300",
+            "Radiator Size": "240",
+            "Sockets": "LGA1150, LGA1151, LGA1700, TR4",
+            "TDP": "200",
+            "Type": "AIO"
+        }
+    },
+    "Air Cooler": {
+        "Noctua NH-D15": {
+            "Cooler Height": "168",
+            "Included Fans": "2",
+            "Maximum Fans": "2",
+            "Model": "Noctua NH-D15",
+            "Price": "150",
+            "Sockets": "LGA1150, LGA1151, LGA1700, AM4",
+            "TDP": "250",
+            "Type": "Air"
+        }
+    }
+}

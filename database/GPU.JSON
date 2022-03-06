@@ -1,8 +1,56 @@
 {
     "AMD": {
+        "RX6800": {
+            "BClock": "1200",
+            "Boost": "1450",
+            "Bus": "64",
+            "Height": "20",
+            "Inputs": "DisplayPort 2.1",
+            "Length": "28",
+            "Manufacturer": "AMD",
+            "Model": "RX6800",
+            "PCIE": "4",
+            "Price": "800",
+            "Ray Tracing": "1",
+            "Slots": "2",
+            "TDP": "250",
+            "VRAM": "8"
+        }
     },
     "Intel": {
+        "Iris XE": {
+            "BClock": "1800",
+            "Boost": "1800",
+            "Bus": "32",
+            "Height": "3",
+            "Inputs": "HDMI",
+            "Length": "3",
+            "Manufacturer": "Intel",
+            "Model": "Iris XE",
+            "PCIE": "4",
+            "Price": "43",
+            "Slots": "1",
+            "TDP": "40",
+            "VRAM": "8"
+        }
     },
-    "NVidia": {
+    "Nvidia": {
+        "RTX3090Ti": {
+            "BClock": "1950",
+            "Boost": "2134",
+            "Bus": "512",
+            "DLSS": "1",
+            "Height": "21",
+            "Inputs": "DVI-D",
+            "Length": "30",
+            "Manufacturer": "Nvidia",
+            "Model": "RTX3090Ti",
+            "PCIE": "4",
+            "Price": "1400",
+            "Ray Tracing": "1",
+            "Slots": "3",
+            "TDP": "350",
+            "VRAM": "16"
+        }
     }
 }

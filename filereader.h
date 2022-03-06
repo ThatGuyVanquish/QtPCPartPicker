@@ -47,6 +47,7 @@ public:
 
     int openFiles();
     void closeFiles();
+    bool restore();
 
     void restoreCPUs();
     void restoreGPUs();
