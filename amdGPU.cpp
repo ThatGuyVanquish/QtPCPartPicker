@@ -1,24 +1,29 @@
-#include "GPU.h"
+#include "amdGPU.h"
 
-class amdGPU: public GPU
+amdGPU::amdGPU(QString model, int pcie, int vram, int base, int bus, int tdp, int pcieSlots,
+               int height, int length, int price, QStringList inputs, int boost, bool rays):
+    GPU(model, vram, pcie, base, bus, tdp, pcieSlots, height, length, price, inputs, boost),
+    _rayAccelerators(rays)
+{}
+
+bool amdGPU::hasRT()
 {
-    private:
-        bool _rayAccelerators;
+    return _rayAccelerators;
+}
 
-    public:
-        amdGPU(QString model, int pcie, int vram, int base, int bus, int tdp, int pcieSlots, int height, int length, int price, QStringList inputs, int boost = -1, bool rays = false):
-        GPU(model, vram, pcie, base, bus, tdp, pcieSlots, height, length, price, inputs, boost),
-        _rayAccelerators(rays)
-        {};
-        ~amdGPU(){};
-        bool hasRT() {return _rayAccelerators;}
-        QString getManu() {return "AMD";}
-        string toString()
-        {
-            return "Manufacturer: AMD\n" + 
+QString amdGPU::getManu()
+{
+    return "AMD";
+}
+
+string amdGPU::toString()
+{
+    return "Manufacturer: AMD\n" +
             GPU::toString() +
             "Ray Tracing: " + (_rayAccelerators ? "Yes" : "No") + "\n";
-        }
-        bool runsDLSS() {return false;}
+}
 
-};
+bool amdGPU::runsDLSS()
+{
+    return false;
+}

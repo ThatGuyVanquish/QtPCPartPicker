@@ -1,23 +1,24 @@
 #include "CPU.h"
+#include "intelCPU.h"
 
-class intelCPU: public CPU
+intelCPU::intelCPU(QString model, QString socket, int cores, double base, int l2,
+                   int l3, int lanes, int tdp, int price, bool igpu, bool cooler,
+                   int threads, double boost, bool unlocked):
+    CPU(model, socket, cores, base, l2, l3, lanes, tdp, price, igpu, cooler, threads, boost),
+    _unlocked(unlocked)
+{}
+
+bool intelCPU::isUnlocked()
 {
-    private:
-        bool _unlocked;
+    return _unlocked;
+}
 
-    public:
-        intelCPU(QString model, QString socket, int cores, double base, int l2, int l3, int lanes, int tdp, int price, bool igpu = true, bool cooler = false, int threads = -1, double boost = -1, bool unlocked = false):
-        CPU(model, socket, cores, base, l2, l3, lanes, tdp, price, igpu, cooler, threads, boost),
-        _unlocked(unlocked)
-        {};
-        ~intelCPU(){};
-        
-        bool isUnlocked() {return _unlocked;}
+QString intelCPU::getManu()
+{
+    return "Intel";
+}
 
-        QString getManu() {return "Intel";}
-
-        string toString()
-        {
-            return "Manufacturer: Intel\n" + CPU::toString() + "Unlocked: " + (_unlocked ? "Yes" : "No") + "\n";
-        }
-};
+string intelCPU::toString()
+{
+    return "Manufacturer: Intel\n" + CPU::toString() + "Unlocked: " + (_unlocked ? "Yes" : "No") + "\n";
+}

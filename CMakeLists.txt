@@ -23,29 +23,45 @@ find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core Concurrent REQUIRED)
 add_executable(PCPartPicker
     main.cpp
     CPU.h
+    CPU.cpp
+    amdCPU.h
     amdCPU.cpp
+    intelCPU.h
     intelCPU.cpp
     GPU.h
+    GPU.cpp
+    amdGPU.h
     amdGPU.cpp
+    intelGPU.h
     intelGPU.cpp
+    nvidiaGPU.h
     nvidiaGPU.cpp
     motherboard.h
     motherboard.cpp
     RAM.h
+    RAM.cpp
     cooler.h
+    cooler.cpp
+    AIO.h
     AIO.cpp
+    airCooler.h
     airCooler.cpp
     pcCase.h
     pcCase.cpp
     storage.h
+    storage.cpp
+    sataSSD.h
     sataSSD.cpp
+    hdd.h
     hdd.cpp
+    m2SSD.h
     m2SSD.cpp
-    fileWriter.cpp
     dataholder.h
     dataholder.cpp
     compatibility.h
     compatibility.cpp
+    fileWriter.h
+    fileWriter.cpp
     filereader.h
     filereader.cpp
 )

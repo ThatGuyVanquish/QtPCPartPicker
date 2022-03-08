@@ -1,13 +1,10 @@
-#include "cooler.h"
+#include "airCooler.h"
 
-class airCooler: public cooler
+airCooler::airCooler(QString model, int tdp, int fans, int maxFans, int h, QStringList sockets, int price):
+    cooler(model, tdp, fans, maxFans, 0, h, sockets, price)
+{}
+
+bool airCooler::canFit(int height, bool rads)
 {
-    public:
-        airCooler(QString model, int tdp, int fans, int maxFans, int h, QStringList sockets, int price):
-        cooler(model, tdp, fans, maxFans, 0, h, sockets, price)
-        {};
-        bool canFit(int height, bool rads)
-        {
-            return this->getHeight() <= height;
-        }
-};
+    return this->getHeight() <= height;
+}

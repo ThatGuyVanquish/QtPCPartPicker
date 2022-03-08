@@ -1,26 +1,32 @@
-#include "GPU.h"
+#include "nvidiaGPU.h"
 
-class nvidiaGPU: public GPU
+nvidiaGPU::nvidiaGPU(QString model, int pcie, int vram, int base, int bus, int tdp,
+                     int pcieSlots, int height, int length, int price, QStringList inputs,
+                     int boost, bool rays, bool dlss):
+    GPU(model, vram, pcie, base, bus, tdp, pcieSlots, height, length, price, inputs, boost),
+    _rtCores(rays),
+    _dlss(dlss)
+{}
+
+bool nvidiaGPU::hasRT()
 {
-    private:
-        bool _rtCores;
-        bool _dlss;
+    return _rtCores;
+}
 
-    public:
-        nvidiaGPU(QString model, int pcie, int vram, int base, int bus, int tdp, int pcieSlots, int height, int length, int price, QStringList inputs, int boost = -1, bool rays = false, bool dlss = true):
-        GPU(model, vram, pcie, base, bus, tdp, pcieSlots, height, length, price, inputs, boost),
-        _rtCores(rays),
-        _dlss(dlss)
-        {};
-        ~nvidiaGPU(){};
-        bool hasRT() {return _rtCores;}
-        bool runsDLSS() {return _dlss;}
-        QString getManu() {return "Nvidia";}
-        string toString()
-        {
-            return "Manufacturer: Nvidia\n" + 
+bool nvidiaGPU::runsDLSS()
+{
+    return _dlss;
+}
+
+QString nvidiaGPU::getManu()
+{
+    return "Nvidia";
+}
+
+string nvidiaGPU::toString()
+{
+    return "Manufacturer: Nvidia\n" +
             GPU::toString() +
             "Ray Tracing: " + (_rtCores ? "Yes" : "No") + "\n" +
-            "DLSS Compatible: " + (_dlss ? "Yes" : "No") + "\n"; 
-        }
-};
+            "DLSS Compatible: " + (_dlss ? "Yes" : "No") + "\n";
+}
