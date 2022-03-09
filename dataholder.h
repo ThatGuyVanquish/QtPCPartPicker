@@ -1,13 +1,23 @@
 #ifndef DATAHOLDER_H
 #define DATAHOLDER_H
 
-#include "cooler.h"
 #include "CPU.h"
 #include "GPU.h"
+#include "intelCPU.h"
+#include "intelGPU.h"
+#include "amdCPU.h"
+#include "amdGPU.h"
+#include "nvidiaGPU.h"
 #include "motherboard.h"
-#include "pcCase.h"
 #include "RAM.h"
 #include "storage.h"
+#include "hdd.h"
+#include "sataSSD.h"
+#include "m2SSD.h"
+#include "pcCase.h"
+#include "cooler.h"
+#include "AIO.h"
+#include "airCooler.h"
 
 #include <QObject>
 #include <QFuture>
@@ -23,17 +33,28 @@ class dataHolder : public QObject
 {
     Q_OBJECT
 private:
-    QMap<string, QList<CPU*>> cpuMap; // Intel / AMD / CoreCount
-    QMap<string, QList<GPU*>> gpuMap;
-    QMap<string, QList<motherboard*>> moboMap; // Formfactors, intel/amd, ddr? pcie?
-    QMap<string, QList<RAM*>> ramMap;
-    QMap<string, QList<storage*>> storageMap;
-    QMap<string, QList<pcCase*>> caseMap; // Formfactors
-    QMap<string, QList<cooler*>> coolerMap; //aio/air, socket compatibility
+    QString m_dbDirectory;
+    QMap<QString, QList<CPU*>> cpuMap; // Intel / AMD / CoreCount
+    QMap<QString, QList<GPU*>> gpuMap;
+    QMap<QString, QList<motherboard*>> moboMap; // Formfactors, intel/amd, ddr? pcie?
+    QMap<QString, QList<RAM*>> ramMap;
+    QMap<QString, QList<storage*>> storageMap;
+    QMap<QString, QList<pcCase*>> caseMap; // Formfactors
+    QMap<QString, QList<cooler*>> coolerMap; //aio/air, socket compatibility
 
 public:
-    explicit dataHolder(QObject *parent = nullptr);
+    explicit dataHolder(QString dir, QObject *parent = nullptr);
     ~dataHolder();
+    QString getDir();
+
+    // For unit tests
+    QMap<QString, QList<CPU*>> *CPUMap();
+    QMap<QString, QList<GPU*>> *GPUMap();
+    QMap<QString, QList<motherboard*>> *MOBOMap();
+    QMap<QString, QList<RAM*>> *RAMMap();
+    QMap<QString, QList<storage*>> *STORAGEMap();
+    QMap<QString, QList<pcCase*>> *CASEMap();
+    QMap<QString, QList<cooler*>> *COOLERMap();
 
     void initialize();
     void addCPU(CPU *toInsert);

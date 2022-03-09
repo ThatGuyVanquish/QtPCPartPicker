@@ -1,7 +1,43 @@
 #include "dataholder.h"
 
-dataHolder::dataHolder(QObject *parent)
+QMap<QString, QList<CPU *> > *dataHolder::CPUMap()
+{
+    return &cpuMap;
+}
+
+QMap<QString, QList<GPU *> > *dataHolder::GPUMap()
+{
+    return &gpuMap;
+}
+
+QMap<QString, QList<motherboard *> > *dataHolder::MOBOMap()
+{
+    return &moboMap;
+}
+
+QMap<QString, QList<RAM *> > *dataHolder::RAMMap()
+{
+    return &ramMap;
+}
+
+QMap<QString, QList<storage *> > *dataHolder::STORAGEMap()
+{
+    return &storageMap;
+}
+
+QMap<QString, QList<pcCase *> > *dataHolder::CASEMap()
+{
+    return &caseMap;
+}
+
+QMap<QString, QList<cooler *> > *dataHolder::COOLERMap()
+{
+    return &coolerMap;
+}
+
+dataHolder::dataHolder(QString dir, QObject *parent)
     : QObject{parent},
+      m_dbDirectory(dir),
       cpuMap(),
       gpuMap(),
       moboMap(),
@@ -12,6 +48,31 @@ dataHolder::dataHolder(QObject *parent)
 {}
 
 dataHolder::~dataHolder(){};
+
+QString dataHolder::getDir()
+{
+    return m_dbDirectory;
+}
+
+template<typename T>
+void insertByPrice(QList<T*> lst, T *toInsert)
+{
+    int index = 0;
+    if (lst.isEmpty())
+    {
+        lst.append(toInsert);
+        return;
+    }
+
+    for (T* current : lst)
+    {
+        if (toInsert->getPrice() >= current->getPrice())
+            index++;
+        else
+            break;
+    }
+    lst.insert(lst.begin() + index, toInsert);
+}
 
 // Logic to access database
 void dataHolder::initialize()
@@ -128,16 +189,8 @@ void dataHolder::addCPU(CPU* toInsert)
         }
     }
 
-    // Insert into a QList which is sorted by price, by insertion sort
-    int index = 0;
-    for (CPU* current : cpuMap["Price"])
-    {
-        if (toInsert->getPrice() >= current->getPrice())
-            index++;
-        else
-            break;
-    }
-    cpuMap["Price"].insert(cpuMap["Price"].begin() + index, toInsert);
+    // Insert into a QList which is sorted by price
+    insertByPrice(cpuMap["Price"], toInsert);
 }
 
 CPU* dataHolder::removeCPU()
@@ -176,16 +229,8 @@ void dataHolder::addGPU(GPU* toInsert)
     if (toInsert->hasRT())
         gpuMap["Ray Tracing"].push_back(toInsert);
 
-    // Insert into a QList which is sorted by price, by insertion sort
-    int index = 0;
-    for (GPU* current : gpuMap["Price"])
-    {
-        if (toInsert->getPrice() >= current->getPrice())
-            index++;
-        else
-            break;
-    }
-    gpuMap["Price"].insert(gpuMap["Price"].begin() + index, toInsert);
+    // Insert into a QList which is sorted by price
+    insertByPrice(gpuMap["Price"], toInsert);
 }
 
 GPU* dataHolder::removeGPU()
@@ -219,15 +264,7 @@ void dataHolder::addMotherboard(motherboard* toInsert, string purpose)
     moboMap["DDR4"].push_back(toInsert) : moboMap["DDR5"].push_back(toInsert));
 
     // Mapping by price
-    int index = 0;
-    for (motherboard* current : moboMap["Price"])
-    {
-        if (toInsert->getPrice() >= current->getPrice())
-            index++;
-        else
-            break;
-    }
-    moboMap["Price"].insert(moboMap["Price"].begin() + index, toInsert);
+    insertByPrice(moboMap["Price"], toInsert);
 }
 
 motherboard* dataHolder::removeMobo()
@@ -258,21 +295,7 @@ void dataHolder::addRAM(RAM* toInsert)
     (version == "DDR4" ? insertRAMBySpeed(&ramMap["DDR4"], toInsert) : insertRAMBySpeed(&ramMap["DDR5"], toInsert));
 
     // Map by price
-    int index = 0;
-    if (ramMap["Price"].isEmpty())
-    {
-        ramMap["Price"].append(toInsert);
-        return;
-    }
-
-    for (RAM* current : ramMap["Price"])
-    {
-        if (toInsert->getPrice() >= current->getPrice())
-            index++;
-        else
-            break;
-    }
-    ramMap["Price"].insert(ramMap["Price"].begin() + index, toInsert);
+    insertByPrice(ramMap["Price"], toInsert);
 }
 
 RAM* dataHolder::removeRAM()
@@ -309,15 +332,7 @@ void dataHolder::addStorage(storage* toInsert)
     storageMap["Size"].insert(storageMap["Size"].begin() + index, toInsert);
 
     // Mapping by price
-    index = 0;
-    for (storage* drive : storageMap["Price"])
-    {
-        if (toInsert->getPrice() >= drive->getPrice())
-            index++;
-        else
-            break;
-    }
-    storageMap["Price"].insert(storageMap["Price"].begin() + index, toInsert);
+    insertByPrice(storageMap["Price"], toInsert);
 }
 
 storage* dataHolder::removeStorage()
@@ -354,15 +369,7 @@ void dataHolder::addCooler(cooler* toInsert)
     coolerMap["TDP"].insert(coolerMap["TDP"].begin() + index, toInsert);
 
     // Mapping by price
-    index = 0;
-    for (cooler* current : coolerMap["Price"])
-    {
-        if (toInsert->getPrice() >= current->getPrice())
-            index++;
-        else
-            break;
-    }
-    coolerMap["Price"].insert(coolerMap["Price"].begin() + index, toInsert);
+    insertByPrice(coolerMap["Price"], toInsert);
 }
 
 cooler* dataHolder::removeCooler()
@@ -406,15 +413,7 @@ void dataHolder::addCase(pcCase* toInsert)
     caseMap["Volume"].insert(caseMap["Volume"].begin() + index, toInsert);
 
     // Mapping by price
-    index = 0;
-    for (pcCase* current : caseMap["Price"])
-    {
-        if (toInsert->getPrice() >= current->getPrice())
-            index++;
-        else
-            break;
-    }
-    caseMap["Price"].insert(caseMap["Price"].begin() + index, toInsert);
+    insertByPrice(caseMap["Price"], toInsert);
 }
 
 pcCase* dataHolder::removeCase()
