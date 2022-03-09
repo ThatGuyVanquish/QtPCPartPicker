@@ -34,13 +34,13 @@ public:
     void closeFiles();
     int openFiles();
 
-    void cpuBackup();
-    void gpuBackup();
-    void moboBackup();
-    void ramBackup();
-    void storageBackup();
-    void coolerBackup();
-    void caseBackup();
+    void cpuBackup(QFile *f);
+    void gpuBackup(QFile *f);
+    void moboBackup(QFile *f);
+    void ramBackup(QFile *f);
+    void storageBackup(QFile *f);
+    void coolerBackup(QFile *f);
+    void caseBackup(QFile *f);
 
     bool backup ();
 

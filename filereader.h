@@ -2,23 +2,6 @@
 #define FILEREADER_H
 
 #include "dataholder.h"
-#include "CPU.h"
-#include "GPU.h"
-#include "intelCPU.cpp"
-#include "intelGPU.cpp"
-#include "amdCPU.cpp"
-#include "amdGPU.cpp"
-#include "nvidiaGPU.cpp"
-#include "motherboard.h"
-#include "RAM.h"
-#include "storage.h"
-#include "hdd.cpp"
-#include "sataSSD.cpp"
-#include "m2SSD.cpp"
-#include "pcCase.h"
-#include "cooler.h"
-#include "AIO.cpp"
-#include "airCooler.cpp"
 
 #include <QObject>
 #include <QJsonDocument>
@@ -49,13 +32,13 @@ public:
     void closeFiles();
     bool restore();
 
-    void restoreCPUs();
-    void restoreGPUs();
-    void restoreMotherboards();
-    void restoreRAM();
-    void restoreStorage();
-    void restoreCoolers();
-    void restoreCases();
+    void restoreCPUs(QFile *f);
+    void restoreGPUs(QFile *f);
+    void restoreMotherboards(QFile *f);
+    void restoreRAM(QFile *f);
+    void restoreStorage(QFile *f);
+    void restoreCoolers(QFile *f);
+    void restoreCases(QFile *f);
 
 signals:
 

@@ -6,13 +6,13 @@ fileReader::fileReader(QObject *parent)
 
 fileReader::fileReader(dataHolder *db):
     m_db(db),
-    m_cpu("/home/nave/Documents/QtProjects/PCPartPicker/database/CPU.JSON"),
-    m_gpu("/home/nave/Documents/QtProjects/PCPartPicker/database/GPU.JSON"),
-    m_mobo("/home/nave/Documents/QtProjects/PCPartPicker/database/Motherboard.JSON"),
-    m_ram("/home/nave/Documents/QtProjects/PCPartPicker/database/RAM.JSON"),
-    m_storage("/home/nave/Documents/QtProjects/PCPartPicker/database/Storage.JSON"),
-    m_case("/home/nave/Documents/QtProjects/PCPartPicker/database/Case.JSON"),
-    m_cooler("/home/nave/Documents/QtProjects/PCPartPicker/database/Cooler.JSON")
+    m_cpu(db->getDir() + "CPU.JSON"),
+    m_gpu(db->getDir() + "GPU.JSON"),
+    m_mobo(db->getDir() + "Motherboard.JSON"),
+    m_ram(db->getDir() + "RAM.JSON"),
+    m_storage(db->getDir() + "Storage.JSON"),
+    m_case(db->getDir() + "Case.JSON"),
+    m_cooler(db->getDir() + "Cooler.JSON")
 {}
 
 void fileReader::closeFiles()
@@ -105,9 +105,13 @@ int fileReader::openFiles()
     return 1;
 }
 
-void fileReader::restoreCPUs()
+void fileReader::restoreCPUs(QFile *f)
 {
-    QByteArray data = m_cpu.readAll();
+    QByteArray data;
+    if (f->isOpen())
+        data = f->readAll();
+    else
+        data = m_cpu.readAll();
     QJsonDocument doc = QJsonDocument::fromJson(data);
     m_cpu.close();
 
@@ -146,9 +150,13 @@ void fileReader::restoreCPUs()
     }
 }
 
-void fileReader::restoreGPUs()
+void fileReader::restoreGPUs(QFile *f)
 {
-    QByteArray data = m_gpu.readAll();
+    QByteArray data;
+    if (f->isOpen())
+        data = f->readAll();
+    else
+        data = m_gpu.readAll();
     QJsonDocument doc = QJsonDocument::fromJson(data);
     m_gpu.close();
 
@@ -204,9 +212,13 @@ void fileReader::restoreGPUs()
     }
 }
 
-void fileReader::restoreMotherboards()
+void fileReader::restoreMotherboards(QFile *f)
 {
-    QByteArray data = m_mobo.readAll();
+    QByteArray data;
+    if (f->isOpen())
+        data = f->readAll();
+    else
+        data = m_mobo.readAll();
     QJsonDocument doc = QJsonDocument::fromJson(data);
     m_mobo.close();    
     QVariantMap mobos = qvariant_cast<QVariantMap>(doc["Motherboards"]);
@@ -229,9 +241,13 @@ void fileReader::restoreMotherboards()
     }
 }
 
-void fileReader::restoreRAM()
+void fileReader::restoreRAM(QFile *f)
 {
-    QByteArray data = m_ram.readAll();
+    QByteArray data;
+    if (f->isOpen())
+        data = f->readAll();
+    else
+        data = m_ram.readAll();
     QJsonDocument doc = QJsonDocument::fromJson(data);
     m_ram.close();
 
@@ -255,9 +271,13 @@ void fileReader::restoreRAM()
     }
 }
 
-void fileReader::restoreStorage()
+void fileReader::restoreStorage(QFile *f)
 {
-    QByteArray data = m_storage.readAll();
+    QByteArray data;
+    if (f->isOpen())
+        data = f->readAll();
+    else
+        data = m_storage.readAll();
     QJsonDocument doc = QJsonDocument::fromJson(data);
     m_storage.close();
 
@@ -307,9 +327,13 @@ void fileReader::restoreStorage()
     }
 }
 
-void fileReader::restoreCoolers()
+void fileReader::restoreCoolers(QFile *f)
 {
-    QByteArray data = m_cooler.readAll();
+    QByteArray data;
+    if (f->isOpen())
+        data = f->readAll();
+    else
+        data = m_cooler.readAll();
     QJsonDocument doc = QJsonDocument::fromJson(data);
     m_cooler.close();
 
@@ -346,9 +370,13 @@ void fileReader::restoreCoolers()
     }
 }
 
-void fileReader::restoreCases()
+void fileReader::restoreCases(QFile *f)
 {
-    QByteArray data = m_case.readAll();
+    QByteArray data;
+    if (f->isOpen())
+        data = f->readAll();
+    else
+        data = m_case.readAll();
     QJsonDocument doc = QJsonDocument::fromJson(data);
     m_case.close();
 
@@ -375,13 +403,14 @@ bool fileReader::restore()
 {
     if (openFiles() <= 0)
         return false;
-    restoreCPUs();
-    restoreGPUs();
-    restoreMotherboards();
-    restoreRAM();
-    restoreStorage();
-    restoreCoolers();
-    restoreCases();
+    QFile f;
+    restoreCPUs(&f);
+    restoreGPUs(&f);
+    restoreMotherboards(&f);
+    restoreRAM(&f);
+    restoreStorage(&f);
+    restoreCoolers(&f);
+    restoreCases(&f);
     closeFiles();
 
     return true;

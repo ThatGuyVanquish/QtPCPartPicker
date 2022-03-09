@@ -2,13 +2,13 @@
 
 fileWriter::fileWriter(dataHolder *db):
     m_db(db),
-    m_cpu("/home/nave/Documents/QtProjects/PCPartPicker/database/CPU.JSON"),
-    m_gpu("/home/nave/Documents/QtProjects/PCPartPicker/database/GPU.JSON"),
-    m_mobo("/home/nave/Documents/QtProjects/PCPartPicker/database/Motherboard.JSON"),
-    m_ram("/home/nave/Documents/QtProjects/PCPartPicker/database/RAM.JSON"),
-    m_storage("/home/nave/Documents/QtProjects/PCPartPicker/database/Storage.JSON"),
-    m_case("/home/nave/Documents/QtProjects/PCPartPicker/database/Case.JSON"),
-    m_cooler("/home/nave/Documents/QtProjects/PCPartPicker/database/Cooler.JSON")
+    m_cpu(db->getDir() + "CPU.JSON"),
+    m_gpu(db->getDir() + "GPU.JSON"),
+    m_mobo(db->getDir() + "Motherboard.JSON"),
+    m_ram(db->getDir() + "RAM.JSON"),
+    m_storage(db->getDir() + "Storage.JSON"),
+    m_case(db->getDir() + "Case.JSON"),
+    m_cooler(db->getDir() + "Cooler.JSON")
 {}
 
 void fileWriter::closeFiles()
@@ -101,7 +101,7 @@ int fileWriter::openFiles()
     return 1;
 }
 
-void fileWriter::cpuBackup()
+void fileWriter::cpuBackup(QFile *f)
 {
     QVariantMap intelCPUs;
     QVariantMap amdCPUs;
@@ -123,11 +123,14 @@ void fileWriter::cpuBackup()
     cpumap.insert("Intel", intelCPUs);
     cpumap.insert("AMD", amdCPUs);
     QJsonDocument doc = QJsonDocument::fromVariant(QVariant(cpumap));
-    m_cpu.write(doc.toJson());
+    if (f->isOpen())
+        f->write(doc.toJson());
+    else
+        m_cpu.write(doc.toJson());
     m_db->clearCPUMaps();
 }
 
-void fileWriter::gpuBackup()
+void fileWriter::gpuBackup(QFile *f)
 {
     QVariantMap intelGPUs;
     QVariantMap amdGPUs;
@@ -153,11 +156,14 @@ void fileWriter::gpuBackup()
     gpumap.insert("AMD", amdGPUs);
     gpumap.insert("Nvidia", nvidiaGPUs);
     QJsonDocument doc = QJsonDocument::fromVariant(QVariant(gpumap));
-    m_gpu.write(doc.toJson());
+    if (f->isOpen())
+        f->write(doc.toJson());
+    else
+        m_gpu.write(doc.toJson());
     m_db->clearGPUMaps();
 }
 
-void fileWriter::moboBackup()
+void fileWriter::moboBackup(QFile *f)
 {
     QVariantMap mobomap;
     QVariantMap moboSpecs;
@@ -174,11 +180,14 @@ void fileWriter::moboBackup()
     QVariantMap backupMap;
     backupMap["Motherboards"] = QVariant(mobomap);
     QJsonDocument doc = QJsonDocument::fromVariant(backupMap);
-    m_mobo.write(doc.toJson());
+    if (f->isOpen())
+        f->write(doc.toJson());
+    else
+        m_mobo.write(doc.toJson());
     m_db->clearMoboMaps();
 }
 
-void fileWriter::ramBackup()
+void fileWriter::ramBackup(QFile *f)
 {
     QVariantMap rammap;
     QVariantMap ramSpecs;
@@ -195,11 +204,14 @@ void fileWriter::ramBackup()
     QVariantMap backupMap;
     backupMap["RAM"] = QVariant(rammap);
     QJsonDocument doc = QJsonDocument::fromVariant(QVariant(backupMap));
-    m_ram.write(doc.toJson());
+    if (f->isOpen())
+        f->write(doc.toJson());
+    else
+        m_ram.write(doc.toJson());
     m_db->clearRAMMaps();
 }
 
-void fileWriter::storageBackup()
+void fileWriter::storageBackup(QFile *f)
 {
     QVariantMap m2map;
     QVariantMap hddmap;
@@ -225,11 +237,14 @@ void fileWriter::storageBackup()
     storagemap.insert("SATA SSDs", QVariant(ssdmap));
     storagemap.insert("M.2 SSDs", QVariant(m2map));
     QJsonDocument doc = QJsonDocument::fromVariant(QVariant(storagemap));
-    m_storage.write(doc.toJson());
+    if (f->isOpen())
+        f->write(doc.toJson());
+    else
+        m_storage.write(doc.toJson());
     m_db->clearStorageMaps();
 }
 
-void fileWriter::coolerBackup()
+void fileWriter::coolerBackup(QFile *f)
 {
     QVariantMap aiomap;
     QVariantMap airmap;
@@ -252,11 +267,14 @@ void fileWriter::coolerBackup()
     coolermap.insert("AIO", QVariant(aiomap));
     coolermap.insert("Air Cooler", QVariant(airmap));
     QJsonDocument doc = QJsonDocument::fromVariant(QVariant(coolermap));
-    m_cooler.write(doc.toJson());
+    if (f->isOpen())
+        f->write(doc.toJson());
+    else
+        m_cooler.write(doc.toJson());
     m_db->clearCoolerMaps();
 }
 
-void fileWriter::caseBackup()
+void fileWriter::caseBackup(QFile *f)
 {
     QVariantMap casemap;
     QVariantMap caseSpecs;
@@ -274,7 +292,10 @@ void fileWriter::caseBackup()
     QVariantMap backupMap;
     backupMap["Cases"] = QVariant(casemap);
     QJsonDocument doc = QJsonDocument::fromVariant(QVariant(backupMap));
-    m_case.write(doc.toJson());
+    if (f->isOpen())
+        f->write(doc.toJson());
+    else
+        m_case.write(doc.toJson());
     m_db->clearCaseMaps();
 }
 
@@ -282,14 +303,14 @@ bool fileWriter::backup()
 {
     if (openFiles() <= 0)
         return false;
-
-    cpuBackup();
-    gpuBackup();
-    moboBackup();
-    ramBackup();
-    storageBackup();
-    coolerBackup();
-    caseBackup();
+    QFile f;
+    cpuBackup(&f);
+    gpuBackup(&f);
+    moboBackup(&f);
+    ramBackup(&f);
+    storageBackup(&f);
+    coolerBackup(&f);
+    caseBackup(&f);
 
     closeFiles();
     return true;
