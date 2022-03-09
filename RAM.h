@@ -24,7 +24,7 @@ class RAM: public QObject
 
     public:
         RAM(QString model, QString version, int size, int dimms, int speed,
-            QList<int> timing, int price, bool hs = true);;
+            QList<int> timing, int price, bool hs = true);
         
         ~RAM(){};
 
