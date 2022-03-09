@@ -19,6 +19,7 @@ set(Boost_INCLUDE_DIRS ON)
 
 find_package(QT NAMES Qt6 Qt5 COMPONENTS Core Concurrent REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core Concurrent REQUIRED)
+find_package(Qt6 REQUIRED COMPONENTS Test)
 
 add_executable(PCPartPicker
     main.cpp
@@ -64,7 +65,9 @@ add_executable(PCPartPicker
     fileWriter.cpp
     filereader.h
     filereader.cpp
+    dbtests.h
+    dbtests.cpp
 )
 
 
-target_link_libraries(PCPartPicker Qt${QT_VERSION_MAJOR}::Core Qt${QT_VERSION_MAJOR}::Concurrent)
+target_link_libraries(PCPartPicker Qt${QT_VERSION_MAJOR}::Core Qt${QT_VERSION_MAJOR}::Concurrent Qt6::Test)

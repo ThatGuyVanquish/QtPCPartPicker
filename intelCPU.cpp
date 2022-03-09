@@ -1,4 +1,3 @@
-#include "CPU.h"
 #include "intelCPU.h"
 
 intelCPU::intelCPU(QString model, QString socket, int cores, double base, int l2,

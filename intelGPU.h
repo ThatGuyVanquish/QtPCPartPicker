@@ -9,7 +9,7 @@ class intelGPU: public GPU
 
     public:
         intelGPU(QString model, int pcie, int vram, int base, int bus, int tdp, int pcieSlots,
-                 int height, int length, int price, QStringList inputs, int boost = -1);;
+                 int height, int length, int price, QStringList inputs, int boost = -1);
 
         ~intelGPU(){};
 
