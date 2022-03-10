@@ -85,3 +85,13 @@ bool Compatibility::testCompatibility(pcCase *pcCase, cooler *cooler)
     pcCase->resetCooler();
     return fits;
 }
+
+bool Compatibility::testCompatibility(PSU *psu, QList<CPU *> cpus, QList<GPU *> gpus)
+{
+    QObject::connect(m_data, &dataHolder::psuCompatibility, psu, &PSU::couldPower);
+    m_data->testPSUCompatibility(cpus, gpus);
+    QObject::disconnect(m_data, &dataHolder::psuCompatibility, psu, &PSU::couldPower);
+    bool powers = psu->canPower();
+    psu->resetPower();
+    return powers;
+}
