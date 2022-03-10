@@ -18,6 +18,7 @@
 #include "cooler.h"
 #include "AIO.h"
 #include "airCooler.h"
+#include "psu.h"
 
 #include <QObject>
 #include <QFuture>
@@ -27,7 +28,8 @@
 using namespace std;
 
 static void toLower(string str);
-static void insertRAMBySpeed(QList<RAM*> v, RAM* toInsert);
+static void insertRAMBySpeed(QList<RAM*> v, RAM *toInsert);
+static void insertPSUByWattage(QList<PSU*> v, PSU *toInsert);
 
 class dataHolder : public QObject
 {
@@ -39,6 +41,7 @@ private:
     QMap<QString, QList<motherboard*>> moboMap; // Formfactors, intel/amd, ddr? pcie?
     QMap<QString, QList<RAM*>> ramMap;
     QMap<QString, QList<storage*>> storageMap;
+    QMap<QString, QList<PSU*>> psuMap; // Price, wattage (under 600, 600-1000, over 1000), form factor
     QMap<QString, QList<pcCase*>> caseMap; // Formfactors
     QMap<QString, QList<cooler*>> coolerMap; //aio/air, socket compatibility
 
@@ -53,28 +56,40 @@ public:
     QMap<QString, QList<motherboard*>> *MOBOMap();
     QMap<QString, QList<RAM*>> *RAMMap();
     QMap<QString, QList<storage*>> *STORAGEMap();
+    QMap<QString, QList<PSU*>> *PSUMap();
     QMap<QString, QList<pcCase*>> *CASEMap();
     QMap<QString, QList<cooler*>> *COOLERMap();
 
     void initialize();
+
     void addCPU(CPU *toInsert);
     CPU* removeCPU();
     void clearCPUMaps();
+
     void addGPU(GPU *toInsert);
     GPU* removeGPU();
     void clearGPUMaps();
+
     void addMotherboard(motherboard *toInsert, string purpose = "");
     motherboard* removeMobo();
     void clearMoboMaps();
+
     void addRAM(RAM *toInsert);
     RAM* removeRAM();
     void clearRAMMaps();
+
     void addStorage(storage *toInsert);
     storage* removeStorage();
     void clearStorageMaps();
+
     void addCooler(cooler *toInsert);
     cooler* removeCooler();
     void clearCoolerMaps();
+
+    void addPSU(PSU *toInsert);
+    PSU* removePSU();
+    void clearPSUMaps();
+
     void addCase(pcCase *toInsert);
     pcCase* removeCase();
     void clearCaseMaps();
@@ -83,10 +98,14 @@ public:
     void testMoboCompatibility(RAM *ram);
     void testMoboCompatibility(cooler *cooler);
     void testMoboCompatibility(storage *storage);
+
     void testCaseCompatibility(motherboard *mobo);
     void testCaseCompatibility(storage *storage);
     void testCaseCompatibility(GPU *gpu);
     void testCaseCompatibility(cooler *cooler);
+    // void testCaseCompatibility(PSU *psu); future addition
+
+    void testPSUCompatibility(QList<CPU*>, QList<GPU*> gpus);
 
 signals:
     // Motherboard related
@@ -100,6 +119,10 @@ signals:
     void storageSpaceAvailable(storage *storage);
     void gpuCompatibility(GPU *gpu);
     void coolerSpaceAvailable(cooler *cooler);
+
+    // PSU related
+    void psuCompatibility(QList<CPU*> cpus, QList<GPU*> gpus);
+
 
 public slots:
 };
@@ -120,6 +143,24 @@ static void insertRAMBySpeed(QList<RAM*> *v, RAM* toInsert)
     for (RAM* ram : *v)
     {
         if (toInsert->getSpeed() >= ram->getSpeed())
+            index++;
+        else
+            break;
+    }
+    v->insert(v->begin() + index, toInsert);
+}
+
+static void insertPSUByWattage(QList<PSU*> *v, PSU *toInsert)
+{
+    int index = 0;
+    if (v->isEmpty())
+    {
+        v->append(toInsert);
+        return;
+    }
+    for (PSU* psu : *v)
+    {
+        if (toInsert->getWattage() >= psu->getWattage())
             index++;
         else
             break;

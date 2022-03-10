@@ -25,6 +25,11 @@ QMap<QString, QList<storage *> > *dataHolder::STORAGEMap()
     return &storageMap;
 }
 
+QMap<QString, QList<PSU *> > *dataHolder::PSUMap()
+{
+    return &psuMap;
+}
+
 QMap<QString, QList<pcCase *> > *dataHolder::CASEMap()
 {
     return &caseMap;
@@ -129,6 +134,15 @@ void dataHolder::initialize()
     coolerMap["TDP"] = QList<cooler*>({});
     coolerMap["Price"] = QList<cooler*>({});
     // *** Would add socket based mapping but it might be too much right now, might add later ***
+
+    // PSU Map initialization
+    psuMap["Low W"] = QList<PSU*>({});
+    psuMap["Mid W"] = QList<PSU*>({});
+    psuMap["High W"] = QList<PSU*>({});
+    psuMap["SFF"] = QList<PSU*>({});
+    psuMap["ATX"] = QList<PSU*>({});
+    psuMap["Server"] = QList<PSU*>({});
+    psuMap["Price"] = QList<PSU*>({});
 
     // Case Map initialization
     caseMap["ITX"] = QList<pcCase*>({});
@@ -388,6 +402,41 @@ void dataHolder::clearCoolerMaps()
     coolerMap["Price"].clear();
 }
 
+void dataHolder::addPSU(PSU *toInsert)
+{
+    // Mapping by wattage
+    toInsert->getWattage() <= 600 ? insertPSUByWattage(psuMap["Low W"], toInsert) :
+    toInsert->getWattage() <= 1000 ? insertPSUByWattage(psuMap["Mid W"], toInsert) :
+    insertPSUByWattage(psuMap["High W"], toInsert);
+
+    // Mapping by form factor
+    toInsert->getFormFactor() == "SFF" ? psuMap["SFF"].append(toInsert) :
+    toInsert->getFormFactor() == "ATX" ? psuMap["ATX"].append(toInsert) :
+    psuMap["Server"].append(toInsert);
+
+    // Mapping by price
+    insertByPrice(psuMap["Price"], toInsert);
+}
+
+PSU* dataHolder::removePSU()
+{
+    if (psuMap["Price"].isEmpty())
+        return nullptr;
+    PSU* toRemove = psuMap["Price"].takeFirst();
+    return toRemove;
+}
+
+void dataHolder::clearPSUMaps()
+{
+    psuMap["Low W"].clear();
+    psuMap["Mid W"].clear();
+    psuMap["High W"].clear();
+    psuMap["SFF"].clear();
+    psuMap["ATX"].clear();
+    psuMap["Server"].clear();
+    psuMap["Price"].clear();
+}
+
 void dataHolder::addCase(pcCase* toInsert)
 {
     // Mapping by motherboard support
@@ -472,4 +521,9 @@ void dataHolder::testCaseCompatibility(GPU *gpu)
 void dataHolder::testCaseCompatibility(cooler *cooler)
 {
     emit coolerSpaceAvailable(cooler);
+}
+
+void dataHolder::testPSUCompatibility(QList<CPU *> cpus, QList<GPU *> gpus)
+{
+    emit psuCompatibility(cpus, gpus);
 }
