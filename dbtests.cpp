@@ -3,9 +3,7 @@
 dbtests::dbtests(QString dir, QObject *parent)
     : m_testDir(dir),
       QObject{parent}
-{
-
-}
+{}
 
 void dbtests::cpuTests(dataHolder *h)
 {
@@ -694,6 +692,117 @@ void dbtests::coolerTests(dataHolder *h)
     // cooler is a QObject so will be deleted here
 }
 
+void dbtests::psuTests(dataHolder *h)
+{
+    /*
+     * PSU(QString model, QString modularity, QString ff, Efficiency efficiency, int wattage,
+     * int price, bool fan = true)
+     *
+     *  psuMap["Low W"]
+     *  psuMap["Mid W"]
+     *  psuMap["High W"]
+     *  psuMap["SFF"]
+     *  psuMap["ATX"]
+     *  psuMap["Server"]
+     *  psuMap["Price"]
+     *
+     *         Tests should include:
+     *         Insertion into:
+     *         Wattage based lists, form factor based lists
+     *         Backup
+     *         Restore
+     *         Make sure everything's back where it's suppose to be
+    */
+
+    qDebug() << "Unit Testing PSU database";
+    fileWriter fw(h);
+    QMap<QString, QList<PSU*>> *psus = h->PSUMap();
+    foreach(QString key, psus->keys())
+        if (!psus->value(key).isEmpty())
+        {
+            qWarning() << "PSU DB wasn't empty before testing, backing up and clearing";
+            QFile backup(m_testDir + "/Backups/PSU.JSON");
+            backup.open(QIODevice::WriteOnly);
+            fw.caseBackup(&backup);
+            backup.close();
+            break;
+        }
+
+    PSU *psu1 = new PSU("SFF 500W", "Modular", "SFF", Efficiency::Platinum, 500, 60);
+    psu1->setObjectName("500W, SFF");
+    h->addPSU(psu1);
+    QVERIFY2(psus->value("Low W").contains(psu1), "Low W map doesn't contain Low W PSU");
+    QVERIFY2(!psus->value("Mid W").contains(psu1), "Mid W map contains Low W PSU");
+    QVERIFY2(!psus->value("High W").contains(psu1), "High W map contains Low W PSU");
+    QVERIFY2(psus->value("SFF").contains(psu1), "SFF map doesn't contain SFF PSU");
+    QVERIFY2(!psus->value("ATX").contains(psu1), "ATX map contains SFF PSU");
+    QVERIFY2(!psus->value("Server").contains(psu1), "Server map contains SFF PSU");
+
+    PSU *psu2 = new PSU("ATX 700W", "Modular", "ATX", Efficiency::Platinum, 700, 60);
+    psu2->setObjectName("700W, ATX");
+    h->addPSU(psu2);
+    QVERIFY2(!psus->value("Low W").contains(psu2), "Low W map contains Mid W PSU");
+    QVERIFY2(psus->value("Mid W").contains(psu2), "Mid W map doesn't contain Mid W PSU");
+    QVERIFY2(!psus->value("High W").contains(psu2), "High W map contains Mid W PSU");
+    QVERIFY2(!psus->value("SFF").contains(psu2), "SFF map contains ATX PSU");
+    QVERIFY2(psus->value("ATX").contains(psu2), "ATX map doesn't contain ATX PSU");
+    QVERIFY2(!psus->value("Server").contains(psu2), "Server map contains ATX PSU");
+
+    PSU *psu3 = new PSU("Server 1200W", "Not Modular", "Server", Efficiency::Silver, 1200, 506);
+    psu3->setObjectName("1200W, Server");
+    h->addPSU(psu3);
+    QVERIFY2(!psus->value("Low W").contains(psu3), "Low W map contains High W PSU");
+    QVERIFY2(!psus->value("Mid W").contains(psu3), "Mid W map contains High W PSU");
+    QVERIFY2(psus->value("High W").contains(psu3), "High W map doesn't contain Low W PSU");
+    QVERIFY2(!psus->value("SFF").contains(psu3), "SFF map contains Server PSU");
+    QVERIFY2(!psus->value("ATX").contains(psu3), "ATX map contains Server PSU");
+    QVERIFY2(psus->value("Server").contains(psu3), "Server map doesn't contain Server PSU");
+
+    QFile db(m_testDir + "/Database/PSU.JSON");
+    db.open(QIODevice::ReadWrite);
+    fw.psuBackup(&db);
+    bool empty = true;
+    foreach(QString key, psus->keys())
+    {
+        empty = psus->value(key).isEmpty();
+        if (!empty)
+        {
+            qWarning() << key << " PSU Map wasn't completely backed up";
+        }
+    }
+    QVERIFY2(empty, "One or more lists weren't backed up properly or weren't emptied");
+    fileReader fr(h);
+    fr.restorePSUs(&db);
+    db.close();
+
+    qDebug() << "Verification after restoration";
+    // Low W SFF PSU
+    QVERIFY2(psus->value("Low W").contains(psu1), "Low W map doesn't contain Low W PSU");
+    QVERIFY2(!psus->value("Mid W").contains(psu1), "Mid W map contains Low W PSU");
+    QVERIFY2(!psus->value("High W").contains(psu1), "High W map contains Low W PSU");
+    QVERIFY2(psus->value("SFF").contains(psu1), "SFF map doesn't contain SFF PSU");
+    QVERIFY2(!psus->value("ATX").contains(psu1), "ATX map contains SFF PSU");
+    QVERIFY2(!psus->value("Server").contains(psu1), "Server map contains SFF PSU");
+    // Mid W ATX PSU
+    QVERIFY2(!psus->value("Low W").contains(psu2), "Low W map contains Mid W PSU");
+    QVERIFY2(psus->value("Mid W").contains(psu2), "Mid W map doesn't contain Mid W PSU");
+    QVERIFY2(!psus->value("High W").contains(psu2), "High W map contains Mid W PSU");
+    QVERIFY2(!psus->value("SFF").contains(psu2), "SFF map contains ATX PSU");
+    QVERIFY2(psus->value("ATX").contains(psu2), "ATX map doesn't contain ATX PSU");
+    QVERIFY2(!psus->value("Server").contains(psu2), "Server map contains ATX PSU");
+    // High W Server PSU
+    QVERIFY2(!psus->value("Low W").contains(psu3), "Low W map contains High W PSU");
+    QVERIFY2(!psus->value("Mid W").contains(psu3), "Mid W map contains High W PSU");
+    QVERIFY2(psus->value("High W").contains(psu3), "High W map doesn't contain Low W PSU");
+    QVERIFY2(!psus->value("SFF").contains(psu3), "SFF map contains Server PSU");
+    QVERIFY2(!psus->value("ATX").contains(psu3), "ATX map contains Server PSU");
+    QVERIFY2(psus->value("Server").contains(psu3), "Server map doesn't contain Server PSU");
+
+    qInfo() << "End of PSU Unit Tests, passed successfully";
+    // PSU is a QObject so will be deleted here
+
+}
+
 void dbtests::caseTests(dataHolder *h)
 {
     /*
@@ -721,7 +830,7 @@ void dbtests::caseTests(dataHolder *h)
     foreach(QString key, cases->keys())
         if (!cases->value(key).isEmpty())
         {
-            qWarning() << "Cooler DB wasn't empty before testing, backing up and clearing";
+            qWarning() << "Case DB wasn't empty before testing, backing up and clearing";
             QFile backup(m_testDir + "/Backups/Case.JSON");
             backup.open(QIODevice::WriteOnly);
             fw.caseBackup(&backup);
@@ -777,6 +886,7 @@ void dbtests::caseTests(dataHolder *h)
     QVERIFY2(!cases->value("ATX").contains(case2), "ATX list contains non ATX case");
     QVERIFY2(cases->value("E-ATX").contains(case2), "E-ATX list doesn't contain E-ATX case");
     QVERIFY2(cases->value("Volume").contains(case2), "Volume list doesn't contain All but ATX case");
+
     qInfo() << "End of Case Unit Tests, passed successfully";
     // pcCase is a QObject so will be deleted here
 }

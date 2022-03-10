@@ -25,6 +25,7 @@ private slots:
     void ramTests(dataHolder *h);
     void storageTests(dataHolder *h);
     void coolerTests(dataHolder *h);
+    void psuTests(dataHolder *h);
     void caseTests(dataHolder *h);
 
     void runTests();
