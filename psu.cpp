@@ -137,3 +137,18 @@ void PSU::couldPower(QList<CPU *> cpus, QList<GPU *> gpus)
         powerUsage += gpu->getTDP();
     _canPower = powerUsage <= _wattage * eff;
 }
+
+Efficiency getEfficiency(QString str)
+{
+    if (str == "None")
+        return Efficiency::None;
+    if (str == "80+ Bronze")
+        return Efficiency::Bronze;
+    if (str == "80+ Silver")
+        return Efficiency::Silver;
+    if (str == "80+ Gold")
+        return Efficiency::Gold;
+    if (str == "80+ Platinum")
+        return Efficiency::Platinum;
+    return Efficiency::Titanium;
+}

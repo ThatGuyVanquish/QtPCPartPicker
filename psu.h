@@ -63,4 +63,6 @@ signals:
 
 };
 
+static Efficiency getEfficiency(QString str);
+
 #endif // PSU_H
