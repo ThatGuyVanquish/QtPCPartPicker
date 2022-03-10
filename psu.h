@@ -17,6 +17,7 @@ class PSU : public QObject
 private:
     QString _model;
     QString _modularity;
+    QString _ff; // Currently won't be in use, would need to add psu ff support to pcCase
     Efficiency _efficiency;
     int _wattage;
     bool _fan;
@@ -29,11 +30,13 @@ private:
 
 public:
     explicit PSU(QObject *parent = nullptr);
-    PSU(QString model, QString modularity, Efficiency efficiency, int wattage, int price, bool fan = true);
+    PSU(QString model, QString modularity, QString ff, Efficiency efficiency, int wattage, int price, bool fan = true);
 
     QString getModel();
 
     QString getModularity();
+
+    QString getFormFactor();
 
     QString efficiency();
 
@@ -54,10 +57,7 @@ public:
     virtual string toString();
 
 public slots:
-    void couldPower(CPU *cpu, GPU *gpu); // 1 CPU, up to 1 GPU
-    void couldPower(QList<CPU*> cpus, GPU *gpu); // up to 2 CPUs, up to 1 GPU
     void couldPower(QList<CPU*> cpus, QList<GPU*> gpus); // Up to 2 CPUs, multiple GPUs
-    void couldPower(CPU *cpu, QList<GPU*> gpus); // 1 CPU, multiple GPUs
 
 signals:
 
