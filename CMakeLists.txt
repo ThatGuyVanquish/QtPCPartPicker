@@ -47,8 +47,8 @@ add_executable(PCPartPicker
     AIO.cpp
     airCooler.h
     airCooler.cpp
-    pcCase.h
-    pcCase.cpp
+    psu.h
+    psu.cpp
     storage.h
     storage.cpp
     sataSSD.h
@@ -57,6 +57,8 @@ add_executable(PCPartPicker
     hdd.cpp
     m2SSD.h
     m2SSD.cpp
+    pcCase.h
+    pcCase.cpp
     dataholder.h
     dataholder.cpp
     compatibility.h
@@ -65,6 +67,8 @@ add_executable(PCPartPicker
     fileWriter.cpp
     filereader.h
     filereader.cpp
+    specbuilder.h
+    specbuilder.cpp
     dbtests.h
     dbtests.cpp
 )

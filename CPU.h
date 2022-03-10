@@ -55,7 +55,6 @@ public:
     virtual string toString();
 
 signals:
-    void insert(CPU* cpu);
 
 public slots:
     bool canFit(QString socket);
