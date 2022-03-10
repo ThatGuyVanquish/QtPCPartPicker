@@ -11,6 +11,7 @@ fileReader::fileReader(dataHolder *db):
     m_mobo(db->getDir() + "Motherboard.JSON"),
     m_ram(db->getDir() + "RAM.JSON"),
     m_storage(db->getDir() + "Storage.JSON"),
+    m_psu(db->getDir() + "PSU.JSON"),
     m_case(db->getDir() + "Case.JSON"),
     m_cooler(db->getDir() + "Cooler.JSON")
 {}
@@ -370,6 +371,32 @@ void fileReader::restoreCoolers(QFile *f)
     }
 }
 
+void fileReader::restorePSUs(QFile *f)
+{
+    QByteArray data;
+    if (f->isOpen())
+        data = f->readAll();
+    else
+        data = m_psu.readAll();
+    QJsonDocument doc = QJsonDocument::fromJson(data);
+    m_psu.close();
+
+    QVariantMap psuMap = qvariant_cast<QVariantMap>(doc["PSUs"]);
+    foreach(QString key, psuMap.keys())
+    {
+        QVariantMap currentPSU= qvariant_cast<QVariantMap>(psuMap.value(key));
+        QMap<QString, QString> specs;
+        foreach(QString spec, currentPSU.keys())
+        {
+            specs.insert(spec, currentPSU.value(spec).toString());
+        }
+        PSU *toInsert = new PSU(specs["Model"], specs["Modularity"], specs["Form Factor"],
+                getEfficiency(specs["Efficiency"]), specs["Wattage"].toInt(), specs["Price"].toInt(),
+                specs["Fan"].toInt());
+        m_db->addPSU(toInsert);
+    }
+}
+
 void fileReader::restoreCases(QFile *f)
 {
     QByteArray data;
@@ -410,6 +437,7 @@ bool fileReader::restore()
     restoreRAM(&f);
     restoreStorage(&f);
     restoreCoolers(&f);
+    restorePSUs(&f);
     restoreCases(&f);
     closeFiles();
 

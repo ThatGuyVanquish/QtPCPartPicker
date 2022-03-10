@@ -24,6 +24,7 @@ private:
     QFile m_mobo;
     QFile m_ram;
     QFile m_storage;
+    QFile m_psu;
     QFile m_case;
     QFile m_cooler;
 
@@ -40,6 +41,7 @@ public:
     void ramBackup(QFile *f);
     void storageBackup(QFile *f);
     void coolerBackup(QFile *f);
+    void psuBackup(QFile *f);
     void caseBackup(QFile *f);
 
     bool backup ();

@@ -21,6 +21,7 @@ private:
     QFile m_mobo;
     QFile m_ram;
     QFile m_storage;
+    QFile m_psu;
     QFile m_case;
     QFile m_cooler;
 
@@ -38,6 +39,7 @@ public:
     void restoreRAM(QFile *f);
     void restoreStorage(QFile *f);
     void restoreCoolers(QFile *f);
+    void restorePSUs(QFile *f);
     void restoreCases(QFile *f);
 
 signals:

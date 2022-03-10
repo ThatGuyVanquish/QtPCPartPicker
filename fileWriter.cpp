@@ -274,6 +274,30 @@ void fileWriter::coolerBackup(QFile *f)
     m_db->clearCoolerMaps();
 }
 
+void fileWriter::psuBackup(QFile *f)
+{
+    QVariantMap psumap;
+    QVariantMap psuSpecs;
+    PSU *psuToWrite = m_db->removePSU();
+    while (psuToWrite != nullptr)
+    {
+        foreach(QString key, psuToWrite->backup().keys())
+        {
+            psuSpecs.insert(key, psuToWrite->backup().value(key));
+        }
+        psumap.insert(psuToWrite->getModel(), psuSpecs);
+        psuToWrite = m_db->removePSU();
+    }
+    QVariantMap backupMap;
+    backupMap["PSUs"] = QVariant(psumap);
+    QJsonDocument doc = QJsonDocument::fromVariant(QVariant(backupMap));
+    if (f->isOpen())
+        f->write(doc.toJson());
+    else
+        m_psu.write(doc.toJson());
+    m_db->clearPSUMaps();
+}
+
 void fileWriter::caseBackup(QFile *f)
 {
     QVariantMap casemap;
@@ -286,7 +310,6 @@ void fileWriter::caseBackup(QFile *f)
             caseSpecs.insert(key, caseToWrite->backup().value(key));
         }
         casemap.insert(caseToWrite->getModel(), caseSpecs);
-        delete caseToWrite;
         caseToWrite = m_db->removeCase();
     }
     QVariantMap backupMap;
@@ -310,6 +333,7 @@ bool fileWriter::backup()
     ramBackup(&f);
     storageBackup(&f);
     coolerBackup(&f);
+    psuBackup(&f);
     caseBackup(&f);
 
     closeFiles();
