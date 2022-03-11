@@ -103,6 +103,8 @@ public:
     pcCase* removeCase();
     void clearCaseMaps();
 
+    void clearMaps();
+
     void testMoboCompatibility(CPU *cpu);
     void testMoboCompatibility(RAM *ram);
     void testMoboCompatibility(cooler *cooler);

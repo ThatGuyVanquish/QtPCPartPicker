@@ -485,6 +485,18 @@ void dataHolder::clearCaseMaps()
     caseMap["Price"].clear();
 }
 
+void dataHolder::clearMaps()
+{
+    clearCPUMaps();
+    clearGPUMaps();
+    clearMoboMaps();
+    clearRAMMaps();
+    clearCoolerMaps();
+    clearPSUMaps();
+    clearStorageMaps();
+    clearCaseMaps();
+}
+
 void dataHolder::testMoboCompatibility(CPU *cpu)
 {
     emit cpuCompatibility(cpu);
