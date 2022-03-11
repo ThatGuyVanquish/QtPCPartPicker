@@ -23,54 +23,63 @@ find_package(Qt6 REQUIRED COMPONENTS Test)
 
 add_executable(PCPartPicker
     main.cpp
-    CPU.h
-    CPU.cpp
-    amdCPU.h
-    amdCPU.cpp
-    intelCPU.h
-    intelCPU.cpp
-    GPU.h
-    GPU.cpp
-    amdGPU.h
-    amdGPU.cpp
-    intelGPU.h
-    intelGPU.cpp
-    nvidiaGPU.h
-    nvidiaGPU.cpp
-    motherboard.h
-    motherboard.cpp
-    RAM.h
-    RAM.cpp
-    cooler.h
-    cooler.cpp
-    AIO.h
-    AIO.cpp
-    airCooler.h
-    airCooler.cpp
-    psu.h
-    psu.cpp
-    storage.h
-    storage.cpp
-    sataSSD.h
-    sataSSD.cpp
-    hdd.h
-    hdd.cpp
-    m2SSD.h
-    m2SSD.cpp
-    pcCase.h
-    pcCase.cpp
-    dataholder.h
-    dataholder.cpp
-    compatibility.h
-    compatibility.cpp
-    fileWriter.h
-    fileWriter.cpp
-    filereader.h
-    filereader.cpp
-    specbuilder.h
-    specbuilder.cpp
-    dbtests.h
-    dbtests.cpp
+    # PC Part classes
+    include/PC_Parts/CPU/cpu.h
+    src/PC_Parts/CPU/cpu.cpp
+    include/PC_Parts/CPU/amdcpu.h
+    src/PC_Parts/CPU/amdcpu.cpp
+    include/PC_Parts/CPU/intelcpu.h
+    src/PC_Parts/CPU/intelcpu.cpp
+    include/PC_Parts/GPU/gpu.h
+    src/PC_Parts/GPU/gpu.cpp
+    include/PC_Parts/GPU/amdgpu.h
+    src/PC_Parts/GPU/amdgpu.cpp
+    include/PC_Parts/GPU/intelgpu.h
+    src/PC_Parts/GPU/intelgpu.cpp
+    include/PC_Parts/GPU/nvidiagpu.h
+    src/PC_Parts/GPU/nvidiagpu.cpp
+    include/PC_Parts/Motherboard/motherboard.h
+    src/PC_Parts/Motherboard/motherboard.cpp
+    include/PC_Parts/RAM/ram.h
+    src/PC_Parts/RAM/ram.cpp
+    include/PC_Parts/Cooler/cooler.h
+    src/PC_Parts/Cooler/cooler.cpp
+    include/PC_Parts/Cooler/aio.h
+    src/PC_Parts/Cooler/aio.cpp
+    include/PC_Parts/Cooler/aircooler.h
+    src/PC_Parts/Cooler/aircooler.cpp
+    include/PC_Parts/PSU/psu.h
+    src/PC_Parts/PSU/psu.cpp
+    include/PC_Parts/Storage/storage.h
+    src/PC_Parts/Storage/storage.cpp
+    include/PC_Parts/Storage/satassd.h
+    src/PC_Parts/Storage/satassd.cpp
+    include/PC_Parts/Storage/hdd.h
+    src/PC_Parts/Storage/hdd.cpp
+    include/PC_Parts/Storage/m2ssd.h
+    src/PC_Parts/Storage/m2ssd.cpp
+    include/PC_Parts/Case/pccase.h
+    src/PC_Parts/Case/pccase.cpp
+
+    # Database classes
+    include/Database/dataholder.h
+    src/Database/dataholder.cpp
+    include/Database/filewriter.h
+    src/Database/filewriter.cpp
+    include/Database/filereader.h
+    src/Database/filereader.cpp
+
+    # Logic classes
+    include/Logic/compatibility.h
+    src/Logic/compatibility.cpp
+    include/Logic/specbuilder.h
+    src/Logic/specbuilder.cpp
+
+    # Test classes
+    Test/include/dbtests.h
+    Test/src/dbtests.cpp
+    Test/include/specbuildertests.h
+    Test/src/specbuildertests.cpp
 )
 
 

@@ -1,7 +1,6 @@
-#include "dbtests.h"
+//#include "Test/include/dbtests.h"
 
 #include <QCoreApplication>
-#include <QList>
 
 int main(int argc, char *argv[])
 {
