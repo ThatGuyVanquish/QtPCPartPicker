@@ -15,10 +15,6 @@ class dbtests : public QObject
     Q_OBJECT
 public:
     explicit dbtests(QString dir, QObject *parent = nullptr);
-
-private:
-    QString m_testDir;
-private slots:
     void cpuTests(dataHolder *h);
     void gpuTests(dataHolder *h);
     void moboTests(dataHolder *h);
@@ -28,6 +24,10 @@ private slots:
     void psuTests(dataHolder *h);
     void caseTests(dataHolder *h);
 
+private:
+    QString m_testDir;
+
+public slots:
     void runTests();
 };
 

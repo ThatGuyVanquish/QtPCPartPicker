@@ -893,5 +893,13 @@ void dbtests::caseTests(dataHolder *h)
 
 void dbtests::runTests()
 {
-    dataHolder h("/home/nave/Documents/QtProjects/build-PCPartPicker-Desktop_Qt_6_0_4_GCC_64bit-Debug/Unit-Tests/");
+    dataHolder h("/home/nave/Documents/QtProjects/PCPartPicker/Test/");
+    cpuTests(&h);
+    gpuTests(&h);
+    moboTests(&h);
+    ramTests(&h);
+    coolerTests(&h);
+    psuTests(&h);
+    storageTests(&h);
+    caseTests(&h);
 }
