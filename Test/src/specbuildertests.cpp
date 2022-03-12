@@ -594,8 +594,8 @@ void specBuilderTests::createStorage(dataHolder *h)
 void specBuilderTests::createCases(dataHolder *h)
 {
     /*
-     * ATX, matx, itx - 1 with 15cm cooler height, 1 with rad support, 1 with 20cm cooler height
-     * 1 with just 3 pcie slots, 1 with 5 hdd slots and 2 ssd slots
+     * Mid Tower = ATX, matx, itx - 1 with 15cm cooler height, 1 with rad support, 1 with 20cm cooler height
+     * 1 with just 3 pcie slots
      *
      * ITX with just 2 pcie slots, 1 with rad support, 1 with 14cm cooler height
      *
@@ -606,7 +606,41 @@ void specBuilderTests::createCases(dataHolder *h)
      *     int price, bool rad = false, bool audio = true)
     */
 
+    // Mid Towers
+    pcCase *mid1 = new pcCase("ATX, mATX, ITX 15cm Cooler, 40$", "Mid Tower", {"ATX", "mATX", "ITX"}, 30, 15, 6, 4, 3, 1, 2, 50, 25, 48, 40);
+    mid1->setObjectName("ATX, mATX, ITX 15cm Cooler, 40$");
+    h->addCase(mid1);
+    pcCase *mid2 = new pcCase("ATX, mATX, ITX RAD, 80$", "Mid Tower", {"ATX", "mATX", "ITX"}, 30, 18, 6, 5, 3, 2, 2, 50, 25, 48, 80, true);
+    mid2->setObjectName("ATX, mATX, ITX RAD, 80$");
+    h->addCase(mid2);
+    pcCase *mid3 = new pcCase("ATX, mATX, ITX 20cm Cooler, 60$", "Mid Tower", {"ATX", "mATX", "ITX"}, 30, 20, 6, 5, 3, 2, 2, 50, 25, 48, 60);
+    mid3->setObjectName("ATX, mATX, ITX 20cm Cooler, 60$");
+    h->addCase(mid3);
+    pcCase *mid4 = new pcCase("ATX, mATX, ITX 20cm Cooler, 3 PCIE slots, 50$", "Mid Tower", {"ATX", "mATX", "ITX"}, 28, 20, 3, 5, 3, 2, 2, 50, 25, 48, 50);
+    mid4->setObjectName("ATX, mATX, ITX 20cm Cooler, 3 PCIE slots, 50$");
+    h->addCase(mid4);
 
+    // SFX
+    pcCase *sfx1 = new pcCase("ITX RAD 100$", "SFX", {"SFF"}, 24, 7, 3, 4, 0, 2, 1, 30, 30, 30, 100, true, false);
+    sfx1->setObjectName("ITX RAD 100$");
+    h->addCase(sfx1);
+    pcCase *sfx2 = new pcCase("ITX 14cm Cooler 100$", "SFX", {"SFF"}, 29, 14, 3, 4, 0, 2, 1, 30, 30, 30, 100, true, false);
+    sfx2->setObjectName("ITX 14cm Cooler 100$");
+    h->addCase(sfx2);
+
+    // Server
+    pcCase *server1 = new pcCase("Server 5hdd 200$", "Server", {"E-ATX"}, 34, 10, 6, 4, 5, 1, 0, 20, 60, 80, 200);
+    server1->setObjectName("Server 5hdd 200$");
+    h->addCase(server1);
+    pcCase *server2 = new pcCase("Server 10hdd 1300$", "Server", {"E-ATX"}, 34, 10, 6, 4, 10, 1, 0, 20, 60, 80, 1300);
+    server2->setObjectName("Server 10hdd 1300$");
+    h->addCase(server2);
+    pcCase *server3 = new pcCase("Server 20hdd 2000$", "Server", {"E-ATX"}, 34, 10, 6, 4, 20, 1, 0, 20, 60, 80, 2000);
+    server3->setObjectName("Server 20hdd 2000$");
+    h->addCase(server3);
+    pcCase *server4 = new pcCase("Server 60hdd 4000$", "Server", {"E-ATX"}, 34, 10, 6, 4, 60, 1, 0, 20, 60, 80, 4000);
+    server4->setObjectName("Server 60hdd 4000$");
+    h->addCase(server4);
 }
 
 void specBuilderTests::createDB(dataHolder *h)
