@@ -15,9 +15,9 @@ Efficiency getEfficiency(QString str)
     return Efficiency::Titanium;
 }
 
-PSU::PSU(QObject *parent)
-    : QObject{parent}
-{}
+//PSU::PSU(QObject *parent)
+//    : QObject{parent}
+//{}
 
 PSU::PSU(QString model, QString modularity, QString formFactor, Efficiency efficiency, int wattage,
          int price, bool fan):

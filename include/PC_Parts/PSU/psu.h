@@ -31,7 +31,6 @@ private:
     double effPercentage();
 
 public:
-    explicit PSU(QObject *parent = nullptr);
     PSU(QString model, QString modularity, QString ff, Efficiency efficiency, int wattage, int price, bool fan = true);
 
     QString getModel();

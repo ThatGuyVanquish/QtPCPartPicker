@@ -1,4 +1,4 @@
-#include "../include/specbuildertests.h"
+﻿#include "../include/specbuildertests.h"
 
 void specBuilderTests::backup(dataHolder *h)
 {
@@ -27,6 +27,7 @@ void specBuilderTests::createCPUs(dataHolder *h)
     CPU *intel2 = new intelCPU("2 Cores LGA2", "LGA2", 2, 3.0, 10, 10, 16, 30, 50, true, true);
     intel2->setObjectName("Intel 2 Cores LGA2 30W 50$ Cooler");
     h->addCPU(intel2);
+
     // 6 Cores
     CPU *intel3 = new intelCPU("6 Cores LGA2", "LGA2", 6, 3.5, 10, 10, 16, 50, 100, true, true);
     intel3->setObjectName("Intel 6 Cores LGA2 50W 100$ Cooler");
@@ -34,6 +35,7 @@ void specBuilderTests::createCPUs(dataHolder *h)
     CPU *intel4 = new intelCPU("6 Cores LGA3", "LGA3", 6, 3.8, 15, 15, 20, 65, 140, true, false, 12, 4.3, true);
     intel4->setObjectName("Intel 6 Cores LGA3 65W 140$ OC");
     h->addCPU(intel4);
+
     // 8 Cores
     CPU *intel5 = new intelCPU("8 Cores LGA2", "LGA2", 8, 3.5, 10, 10, 16, 50, 160, true, true);
     intel5->setObjectName("Intel 8 Cores LGA2 50W 160$ Cooler");
@@ -41,6 +43,7 @@ void specBuilderTests::createCPUs(dataHolder *h)
     CPU *intel6 = new intelCPU("8 Cores LGA3", "LGA3", 8, 4.2, 15, 15, 24, 65, 210, true, false, 16, 4.3, true);
     intel6->setObjectName("Intel 8 Cores LGA3 65W 210$ OC");
     h->addCPU(intel6);
+
     // OC
     CPU *intel7 = new intelCPU("10 Cores LGA2", "LGA2", 10, 3.5, 10, 10, 16, 90, 300, true, false, 20, 4.5, true);
     intel7->setObjectName("Intel 10 Cores LGA2 90W 300$ OC");
@@ -48,6 +51,7 @@ void specBuilderTests::createCPUs(dataHolder *h)
     CPU *intel8 = new intelCPU("12 Cores LGA3", "LGA3", 12, 4.2, 15, 15, 24, 105, 350, true, false, 24, 4.7, true);
     intel8->setObjectName("Intel 12 Cores LGA3 105W 350$ OC");
     h->addCPU(intel8);
+
     // Server
     CPU *intel9 = new intelCPU("16 Cores IN1", "IN1", 16, 3.5, 10, 10, 48, 155, 3000, true, false, 32, 4.5, true);
     intel9->setObjectName("Intel 16 Cores IN1 155W 3000$ OC");
@@ -68,6 +72,7 @@ void specBuilderTests::createCPUs(dataHolder *h)
     CPU *amd2 = new amdCPU("2 Cores AM2", "AM2", 2, 3.2, 10, 10, 16, 30, 40, false, true);
     amd2->setObjectName("AMD 2 Cores AM2 30W 40$ Cooler OC");
     h->addCPU(amd2);
+
     // 6 Cores
     CPU *amd3 = new amdCPU("6 Cores AM1", "AM1", 6, 3.3, 10, 10, 16, 30, 100, true, true, 12, 3.7);
     amd3->setObjectName("AMD 6 Cores AM1 APU 30W 150$ Cooler OC");
@@ -75,6 +80,7 @@ void specBuilderTests::createCPUs(dataHolder *h)
     CPU *amd4 = new amdCPU("6 Cores AM2", "AM2", 6, 3.5, 10, 10, 16, 30, 120, false, true, 12, 3.8);
     amd4->setObjectName("AMD 6 Cores AM2 30W 120$ Cooler OC");
     h->addCPU(amd4);
+
     // 8 Cores
     CPU *amd5 = new amdCPU("8 Cores AM1", "AM1", 8, 3.3, 10, 10, 16, 60, 250, false, false, 16, 3.7);
     amd5->setObjectName("AMD 8 Cores AM1 60W 250$ OC");
@@ -82,6 +88,7 @@ void specBuilderTests::createCPUs(dataHolder *h)
     CPU *amd6 = new amdCPU("8 Cores AM2", "AM2", 8, 3.5, 10, 10, 16, 75, 300, false, false, 16, 4);
     amd6->setObjectName("AMD 8 Cores AM2 75W 300$ OC");
     h->addCPU(amd6);
+
     // OC or X variants cause all AMD CPUs are set to unlocked
     CPU *amd7 = new amdCPU("8 Cores AM1", "AM1", 8, 4.1, 10, 10, 16, 120, 350, false, false, 16, 4.7);
     amd7->setObjectName("AMD 8 Cores AM1 120W 350$ OC");
@@ -89,6 +96,7 @@ void specBuilderTests::createCPUs(dataHolder *h)
     CPU *amd8 = new amdCPU("8 Cores AM2", "AM2", 8, 4.3, 10, 10, 16, 150, 400, false, false, 16, 4.8);
     amd8->setObjectName("AMD 8 Cores AM2 150W 400$ OC");
     h->addCPU(amd8);
+
     // Server
     CPU *amd9 = new amdCPU("16 Cores EP1", "EP1", 16, 3.3, 10, 10, 72, 210, 2000, false, false, 32);
     amd9->setObjectName("AMD 16 Cores EP1 210W 2000$ OC");
@@ -191,6 +199,7 @@ void specBuilderTests::createMobos(dataHolder *h)
                                           6, 3, 7, "ITX", 17, 17, 6, {"HDMI"}, {}, 150);
     intel3->setObjectName("Intel LGA1 ITX DDR3 2 DIMMs 150$");
     h->addMotherboard(intel3);
+
     // LGA2
     motherboard *intel4 = new motherboard("Intel LGA2 mATX DDR4 4 DIMMs 75$", "Intel", "LGA2", 4, "DDR4", 32, 2, 3,
                                           3, 3, 5, "mATX", 24, 24, 6, {"HDMI"}, {}, 50);
@@ -204,6 +213,7 @@ void specBuilderTests::createMobos(dataHolder *h)
                                           6, 3, 7, "ITX", 17, 17, 6, {"HDMI"}, {}, 250);
     intel6->setObjectName("Intel LGA2 ITX DDR4 2 DIMMs 250$");
     h->addMotherboard(intel6);
+
     // LGA3
     motherboard *intel7 = new motherboard("Intel LGA3 mATX DDR5 4 DIMMs 110$", "Intel", "LGA3", 4, "DDR5", 32, 2, 3,
                                           3, 3, 5, "mATX", 24, 24, 6, {"HDMI"}, {}, 110);
@@ -217,6 +227,7 @@ void specBuilderTests::createMobos(dataHolder *h)
                                           6, 3, 7, "ITX", 17, 17, 6, {"HDMI"}, {}, 350);
     intel9->setObjectName("Intel LGA3 ITX DDR5 2 DIMMs 350$");
     h->addMotherboard(intel9);
+
     // IN1
     motherboard *intel10 = new motherboard("Intel IN1 E-ATX DDR4 4 DIMMs 375$", "Intel", "IN1", 4, "DDR4", 64, 2, 3,
                                           10, 3, 5, "E-ATX", 30, 33, 6, {"HDMI"}, {}, 375);
@@ -255,6 +266,7 @@ void specBuilderTests::createMobos(dataHolder *h)
                                         2, 1, 4, "ITX", 17, 17, 4, {"HDMI"}, {}, 120);
     amd3->setObjectName("AMD AM1 ITX DDR4 2 DIMMs 120$");
     h->addMotherboard(amd3);
+
     // AM2
     motherboard *amd4 = new motherboard("AMD AM2 mATX DDR5 4 DIMMs 150$", "AMD", "AM2", 4, "DDR5", 32, 2, 3,
                                         4, 1, 5, "mATX", 24, 24, 4, {"HDMI"}, {}, 150);
@@ -268,6 +280,7 @@ void specBuilderTests::createMobos(dataHolder *h)
                                         2, 1, 4, "ITX", 17, 17, 4, {"HDMI"}, {}, 320);
     amd6->setObjectName("AMD AM2 ITX DDR5 2 DIMMs 320$");
     h->addMotherboard(amd6);
+
     // EP1
     motherboard *amd7 = new motherboard("AMD EP1 E-ATX DDR4 4 DIMMs 350$", "AMD", "EP1", 4, "DDR4", 128, 4, 4,
                                         10, 2, 6, "E-ATX", 30, 33, 4, {"HDMI"}, {}, 350);
@@ -285,6 +298,7 @@ void specBuilderTests::createMobos(dataHolder *h)
                                         40, 2, 6, "E-ATX", 30, 33, 4, {"HDMI"}, {}, 1650);
     amd10->setObjectName("AMD EP1 E-ATX DDR4 6 DIMMs 1650$");
     h->addMotherboard(amd10);
+
     // EP2
     motherboard *amd11 = new motherboard("AMD EP2 E-ATX DDR5 4 DIMMs 450$", "AMD", "EP2", 4, "DDR5", 128, 4, 4,
                                         10, 2, 6, "E-ATX", 30, 33, 4, {"HDMI"}, {}, 450);
@@ -312,26 +326,286 @@ void specBuilderTests::createMobos(dataHolder *h)
 
 void specBuilderTests::createRAM(dataHolder *h)
 {
+    /*
+     * DDR3 -> 2x2gb, 4x1gb, 2x4gb, 2x8gb, 4x4gb, 2x16gb
+     * DDR4 -> 1x4gb, 2x4gb, 1x8gb, 2x8gb, 2x16gb, 4x16gb, 8x16gb, 8x32gb
+     * DDR5 -> 2x4gb, 1x8gb, 2x8gb, 2x16gb, 4x16gb, 8x16gb, 8x32gb, 6x64gb
+     *
+     *  RAM(QString model, QString version, int size, int dimms, int speed,
+     *      QList<int> timing, int price, bool hs = true)
+    */
 
+    // DDR3
+    RAM *three1 = new RAM("DDR3 2x2GB, 20$", "DDR3", 4, 2, 1133, {4, 6, 7, 8}, 20);
+    three1->setObjectName("DDR3 2x2GB, 20$");
+    h->addRAM(three1);
+    RAM *three2 = new RAM("DDR3 4x1GB, 15$", "DDR3", 4, 4, 1133, {4, 6, 7, 8}, 15);
+    three2->setObjectName("DDR3 4x1GB, 15$");
+    h->addRAM(three2);
+    RAM *three3 = new RAM("DDR3 2x4GB, 40$", "DDR3", 8, 2, 1333, {4, 6, 7, 8}, 40);
+    three3->setObjectName("DDR3 2x4GB, 40$");
+    h->addRAM(three3);
+    RAM *three4 = new RAM("DDR3 2x8GB, 80$", "DDR3", 16, 2, 1600, {4, 6, 7, 8}, 80);
+    three4->setObjectName("DDR3 2x8GB, 80$");
+    h->addRAM(three4);
+    RAM *three5 = new RAM("DDR3 4x4GB, 70$", "DDR3", 16, 4, 1600, {4, 6, 7, 8}, 70);
+    three5->setObjectName("DDR3 4x4GB, 70$");
+    h->addRAM(three5);
+    RAM *three6 = new RAM("DDR3 2x16GB, 200$", "DDR3", 32, 2, 1600, {4, 6, 7, 8}, 200);
+    three6->setObjectName("DDR3 2x16GB, 200$");
+    h->addRAM(three6);
+
+    // DDR4
+    RAM *four1 = new RAM("DDR4 1x4GB, 35$", "DDR4", 4, 1, 2133, {14, 16, 17, 18}, 35);
+    four1->setObjectName("DDR4 1x4GB, 35$");
+    h->addRAM(four1);
+    RAM *four2 = new RAM("DDR4 2x4GB, 75$", "DDR4", 8, 2, 2133, {14, 16, 17, 18}, 75);
+    four2->setObjectName("DDR4 2x4GB, 75$");
+    h->addRAM(four2);
+    RAM *four3 = new RAM("DDR4 1x8GB, 85$", "DDR4", 8, 1, 2133, {14, 16, 17, 18}, 85);
+    four3->setObjectName("DDR4 1x8GB, 85$");
+    h->addRAM(four3);
+    RAM *four4 = new RAM("DDR4 2x8GB, 200$", "DDR4", 16, 2, 2666, {16, 18, 17, 18}, 200);
+    four4->setObjectName("DDR4 2x8GB, 200$");
+    h->addRAM(four4);
+    RAM *four5 = new RAM("DDR4 2x16GB, 415$", "DDR4", 32, 2, 3133, {18, 16, 19, 18}, 415);
+    four5->setObjectName("DDR4 2x16GB, 415$");
+    h->addRAM(four5);
+    RAM *four6 = new RAM("DDR4 4x16GB, 820$", "DDR4", 64, 4, 3133, {17, 16, 17, 18}, 820);
+    four6->setObjectName("DDR4 4x16GB, 820$");
+    h->addRAM(four6);
+    RAM *four7 = new RAM("DDR4 8x16GB, 1550$", "DDR4", 128, 8, 2666, {19, 19, 21, 18}, 1550);
+    four7->setObjectName("DDR4 8x16GB, 1550$");
+    h->addRAM(four7);
+    RAM *four8 = new RAM("DDR4 8x32GB, 3460$", "DDR4", 256, 8, 2400, {20, 21, 17, 19}, 3460);
+    four8->setObjectName("DDR4 8x32GB, 3460$");
+    h->addRAM(four8);
+
+    // DDR5
+    RAM *five1 = new RAM("DDR5 2x4GB, 90$", "DDR5", 8, 2, 4133, {14, 16, 17, 18}, 90);
+    five1->setObjectName("DDR5 2x4GB, 90$");
+    h->addRAM(five1);
+    RAM *five2 = new RAM("DDR5 1x8GB, 100$", "DDR5", 8, 1, 4133, {14, 16, 17, 18}, 100);
+    five2->setObjectName("DDR5 1x8GB, 100$");
+    h->addRAM(five2);
+    RAM *five3 = new RAM("DDR5 2x8GB, 215$", "DDR5", 16, 2, 4666, {16, 18, 17, 18}, 215);
+    five3->setObjectName("DDR5 2x8GB, 215$");
+    h->addRAM(five3);
+    RAM *five4 = new RAM("DDR5 2x16GB, 430$", "DDR5", 32, 2, 5133, {18, 16, 19, 18}, 430);
+    five4->setObjectName("DDR5 2x16GB, 430$");
+    h->addRAM(five4);
+    RAM *five5 = new RAM("DDR5 4x16GB, 850$", "DDR5", 64, 4, 5133, {17, 16, 17, 18}, 850);
+    five5->setObjectName("DDR5 4x16GB, 850$");
+    h->addRAM(five5);
+    RAM *five6 = new RAM("DDR5 8x16GB, 1600$", "DDR5", 128, 8, 4133, {19, 19, 21, 18}, 1600);
+    five6->setObjectName("DDR5 8x16GB, 1600$");
+    h->addRAM(five6);
+    RAM *five7 = new RAM("DDR5 8x32GB, 3500$", "DDR5", 256, 8, 4133, {20, 21, 17, 19}, 3500);
+    five7->setObjectName("DDR5 8x32GB, 3500$");
+    h->addRAM(five7);
+    RAM *five8 = new RAM("DDR5 6x64GB, 7254$", "DDR5", 364, 6, 4133, {20, 21, 17, 19}, 7254);
+    five8->setObjectName("DDR5 6x64GB, 7254$");
+    h->addRAM(five8);
 }
 
 void specBuilderTests::createCoolers(dataHolder *h)
 {
+    /*
+     * AIOs - 120 80w, 120 100w, 240 200w, 240 250w, 360 400w
+     * Air - 12 40w, 12 100w, 13 150w, 16 250w, 18 350w, 8 500w (server -> expensive)
+     *
+    */
 
+    // AIOs
+    // AIO(QString model, int tdp, int fans, int maxFans, int rads, int h, QStringList sockets, int price)
+    cooler *aio1 = new AIO("120mm LGA1, AM1 80W 30$", 80, 1, 2, 120, 3, {"LGA1", "AM1"}, 30);
+    aio1->setObjectName("120mm LGA1, AM1 80W 30$");
+    h->addCooler(aio1);
+    cooler *aio2 = new AIO("120mm LGA1, LGA2, AM1 100W 40$", 100, 1, 2, 120, 3, {"LGA1", "LGA2", "AM1"}, 40);
+    aio2->setObjectName("120mm LGA1, LGA2, AM1 100W 40$");
+    h->addCooler(aio2);
+    cooler *aio3 = new AIO("240mm LGA1, LGA2, AM1, AM2 200W 80$", 200, 2, 4, 240, 3, {"LGA1", "LGA2", "AM1", "AM2"}, 80);
+    aio3->setObjectName("240mm LGA1, LGA2, AM1, AM2 200W 80$");
+    h->addCooler(aio3);
+    cooler *aio4 = new AIO("240mm LGA2, LGA3, AM1, AM2 250W 100$", 250, 2, 4, 240, 3, {"LGA2", "LGA3", "AM1", "AM2"}, 100);
+    aio4->setObjectName("240mm LGA2, LGA3, AM1, AM2 250W 100$");
+    h->addCooler(aio4);
+    cooler *aio5 = new AIO("360mm LGA2, LGA3, AM2 400W 200$", 400, 3, 6, 360, 3, {"LGA2", "LGA3", "AM2"}, 200);
+    aio5->setObjectName("360mm LGA2, LGA3, AM2 400W 200$");
+    h->addCooler(aio5);
+
+    // Air Coolers
+    // airCooler(QString model, int tdp, int fans, int maxFans, int h, QStringList sockets, int price)
+    cooler *air1 = new airCooler("12cm 40W LGA1, AM1 15$", 40, 1, 1, 12, {"LGA1", "AM1"}, 15);
+    air1->setObjectName("12cm 40W LGA1, AM1 15$");
+    h->addCooler(air1);
+    cooler *air2 = new airCooler("12cm 100W LGA1, LGA2, AM1, AM2 25$", 100, 1, 1, 12, {"LGA1", "LGA2", "AM1", "AM2"}, 25);
+    air2->setObjectName("12cm 100W LGA1, LGA2, AM1, AM2 25$");
+    h->addCooler(air2);
+    cooler *air3 = new airCooler("13cm 150W LGA2, LGA3, AM1, AM2 45$", 150, 1, 2, 13, {"LGA3", "LGA2", "AM1", "AM2"}, 45);
+    air3->setObjectName("13cm 150W LGA2, LGA3, AM1, AM2 45$");
+    h->addCooler(air3);
+    cooler *air4 = new airCooler("16cm 250W LGA1, LGA2, LGA3, AM1, AM2 80$", 250, 2, 2, 16, {"LGA3", "LGA2", "LGA1", "AM1", "AM2"}, 80);
+    air4->setObjectName("16cm 250W LGA1, LGA2, LGA3, AM1, AM2 80$");
+    h->addCooler(air4);
+    cooler *air5 = new airCooler("18cm 350W LGA1, LGA2, LGA3, AM1, AM2 120$", 350, 2, 2, 18, {"LGA3", "LGA2", "LGA1", "AM1", "AM2"}, 120);
+    air5->setObjectName("18cm 350W LGA1, LGA2, LGA3, AM1, AM2 120$");
+    h->addCooler(air5);
+    cooler *air6 = new airCooler("8cm 500W IN1, IN2, EP1, EP2 400$", 500, 0, 0, 8, {"IN1", "IN2", "EP1", "EP2"}, 400);
+    air6->setObjectName("8cm 500W IN1, IN2, EP1, EP2 400$ SERVER");
+    h->addCooler(air6);
 }
 
 void specBuilderTests::createPSUs(dataHolder *h)
 {
+    /*
+     * SFF - 450, 650, 850, 1000
+     * ATX - 600(1 silver 1 none), 800 (1 Gold 1 none), 1000 (1 silver 1 platinum), 1200, 1500, 2000
+     * Server - 1000, 1500, 2000, 3000, 4000
+     *
+     * PSU(QString model, QString modularity, QString ff, Efficiency efficiency, int wattage, int price, bool fan = true)
+    */
 
+    // SFF
+    PSU *sff1 = new PSU("sff 450w Gold 80$", "Fully Modular", "SFF", Efficiency::Gold, 450, 80);
+    sff1->setObjectName("sff 450w Gold 80$");
+    h->addPSU(sff1);
+    PSU *sff2 = new PSU("sff 650w Gold 140$", "Fully Modular", "SFF", Efficiency::Gold, 650, 140);
+    sff2->setObjectName("sff 650w Gold 140$");
+    h->addPSU(sff2);
+    PSU *sff3 = new PSU("sff 850w Platinum 200$", "Fully Modular", "SFF", Efficiency::Platinum, 850, 80);
+    sff3->setObjectName("sff 850w Platinum 200$");
+    h->addPSU(sff3);
+    PSU *sff4 = new PSU("sff 1000w Titanium 340$", "Fully Modular", "SFF", Efficiency::Titanium, 1000, 340);
+    sff4->setObjectName("sff 1000w Titanium 340$");
+    h->addPSU(sff4);
+
+    // ATX
+    PSU *atx1 = new PSU("ATX 600w None 40$", "Not modular", "ATX", Efficiency::None, 600, 40);
+    atx1->setObjectName("ATX 600w None 40$");
+    h->addPSU(atx1);
+    PSU *atx2 = new PSU("ATX 600w Silver 50$", "Semi Modular", "ATX", Efficiency::Silver, 600, 50);
+    atx2->setObjectName("ATX 600w Silver 50$");
+    h->addPSU(atx2);
+    PSU *atx3 = new PSU("ATX 800w None 60$", "Not modular", "ATX", Efficiency::None, 800, 60);
+    atx3->setObjectName("ATX 800w None 60$");
+    h->addPSU(atx3);
+    PSU *atx4 = new PSU("ATX 800w Gold 75$", "Semi Modular", "ATX", Efficiency::Gold, 800, 75);
+    atx4->setObjectName("ATX 800w Gold 75$");
+    h->addPSU(atx4);
+    PSU *atx5 = new PSU("ATX 1000w Silver 100$", "Semi Modular", "ATX", Efficiency::Silver, 1000, 100);
+    atx5->setObjectName("ATX 1000w Silver 100$");
+    h->addPSU(atx5);
+    PSU *atx6 = new PSU("ATX 1000w Platinum 125$", "Fully Modular", "ATX", Efficiency::Platinum, 1000, 125);
+    atx6->setObjectName("ATX 1000w Platinum 125$");
+    h->addPSU(atx6);
+    PSU *atx7 = new PSU("ATX 1200w Platinum 150$", "Fully Modular", "ATX", Efficiency::Platinum, 1200, 150);
+    atx7->setObjectName("ATX 1200w Platinum 150$");
+    h->addPSU(atx7);
+    PSU *atx8 = new PSU("ATX 1500w Titanium 200$", "Fully Modular", "ATX", Efficiency::Titanium, 1500, 200);
+    atx8->setObjectName("ATX 1500w Titanium 200$");
+    h->addPSU(atx8);
+    PSU *atx9 = new PSU("ATX 2000w Platinum 400$", "Fully Modular", "ATX", Efficiency::Platinum, 2000, 400);
+    atx9->setObjectName("ATX 2000w Platinum 400$");
+    h->addPSU(atx9);
+
+    // Server
+    PSU *server1 = new PSU("Server 1000w Gold 300$", "Not modular", "Server", Efficiency::Gold, 1000, 300);
+    server1->setObjectName("Server 1000w Gold 300$");
+    h->addPSU(server1);
+    PSU *server2 = new PSU("Server 1500w Gold 800$", "Not modular", "Server", Efficiency::Gold, 1500, 800);
+    server2->setObjectName("Server 1500w Gold 800$");
+    h->addPSU(server2);
+    PSU *server3 = new PSU("Server 2000w Gold 1700$", "Not modular", "Server", Efficiency::Gold, 2000, 1700);
+    server3->setObjectName("Server 2000w Gold 1700$");
+    h->addPSU(server3);
+    PSU *server4 = new PSU("Server 3000w Gold 2500$", "Not modular", "Server", Efficiency::Gold, 3000, 2500);
+    server4->setObjectName("Server 3000w Gold 2500$");
+    h->addPSU(server4);
+    PSU *server5 = new PSU("Server 4000w Gold 3000$", "Not modular", "Server", Efficiency::Gold, 4000, 3000);
+    server5->setObjectName("Server 4000w Gold 3000$");
+    h->addPSU(server5);
 }
 
 void specBuilderTests::createStorage(dataHolder *h)
 {
+    /*
+     * HDDs - 500gb, 1tb, 2tb, 4tb, 8tb, 16tb
+     * Sata SSDs - 250gb, 500gb, 1tb, 2tb, 4tb
+     * m.2 SSDs - 250gb, 500gb, 1tb, 2tb
+     *
+    */
 
+    // HDDs
+    // hdd(QString model, QString port, QString size, int read, int write, int cache, int price)
+    storage *hdd1 = new hdd("hdd 500gb 30$", "SATA3", "500GB", 350, 250, 32, 30);
+    hdd1->setObjectName("hdd 500gb 30$");
+    h->addStorage(hdd1);
+    storage *hdd2 = new hdd("hdd 1TB 55$", "SATA3", "1TB", 350, 275, 32, 55);
+    hdd2->setObjectName("hdd 1TB 55$");
+    h->addStorage(hdd2);
+    storage *hdd3 = new hdd("hdd 2TB 100$", "SATA3", "2TB", 330, 220, 32, 100);
+    hdd3->setObjectName("hdd 2TB 100$");
+    h->addStorage(hdd3);
+    storage *hdd4 = new hdd("hdd 4TB 190$", "SATA3", "4TB", 350, 250, 32, 190);
+    hdd4->setObjectName("hdd 4TB 190$");
+    h->addStorage(hdd4);
+    storage *hdd5 = new hdd("hdd 8TB 365$", "SATA3", "8TB", 350, 250, 32, 365);
+    hdd5->setObjectName("hdd 8TB 365$");
+    h->addStorage(hdd5);
+    storage *hdd6 = new hdd("hdd 16TB 1000$", "SATA3", "16TB", 350, 250, 32, 1000);
+    hdd6->setObjectName("hdd 16TB 1000$");
+    h->addStorage(hdd6);
+
+    // Sata SSDs
+    // sataSSD(QString model, QString size, int read, int write, int cache, int price)
+    storage *ssd1 = new sataSSD("sata ssd 250gb 30$", "250GB", 423, 356, 32, 30);
+    ssd1->setObjectName("sata ssd 250gb 30$");
+    h->addStorage(ssd1);
+    storage *ssd2 = new sataSSD("sata ssd 500gb 63$", "500GB", 423, 356, 32, 63);
+    ssd2->setObjectName("sata ssd 500gb 63$");
+    h->addStorage(ssd2);
+    storage *ssd3 = new sataSSD("sata ssd 1TB 130$", "1TB", 423, 356, 32, 130);
+    ssd3->setObjectName("sata ssd 1TB 130$");
+    h->addStorage(ssd3);
+    storage *ssd4 = new sataSSD("sata ssd 2TB 230$", "2TB", 423, 356, 32, 230);
+    ssd4->setObjectName("sata ssd 2TB 230$");
+    h->addStorage(ssd4);
+    storage *ssd5 = new sataSSD("sata ssd 4TB 530$", "4TB", 423, 356, 32, 530);
+    ssd5->setObjectName("sata ssd 4TB 530$");
+    h->addStorage(ssd5);
+
+    // M.2 SSDs
+    // m2SSD(QString model, QString size, int read, int write, int cache, int price)
+    storage *m21 = new m2SSD("m.2 250gb 50$", "250GB", 1780, 1600, 128, 50);
+    m21->setObjectName("m.2 250gb 50$");
+    h->addStorage(m21);
+    storage *m22 = new m2SSD("m.2 500gb 120$", "500GB", 1780, 1600, 128, 120);
+    m22->setObjectName("m.2 500gb 120$");
+    h->addStorage(m22);
+    storage *m23 = new m2SSD("m.2 1TB 270$", "1TB", 2780, 2400, 128, 270);
+    m23->setObjectName("m.2 1TB 270$");
+    h->addStorage(m23);
+    storage *m24 = new m2SSD("m.2 2TB 632$", "2TB", 3380, 3100, 128, 632);
+    m24->setObjectName("m.2 2TB 632$");
+    h->addStorage(m24);
 }
 
 void specBuilderTests::createCases(dataHolder *h)
 {
+    /*
+     * ATX, matx, itx - 1 with 15cm cooler height, 1 with rad support, 1 with 20cm cooler height
+     * 1 with just 3 pcie slots, 1 with 5 hdd slots and 2 ssd slots
+     *
+     * ITX with just 2 pcie slots, 1 with rad support, 1 with 14cm cooler height
+     *
+     * E-ATX with 6 pcie slots, 5 hdd slots, 10 hdd slots, 20 hdd slots
+     *
+     *  pcCase(QString model, QString ff, QStringList mbff, int gpu, int cooler, int pcieSlots,
+     *     int fans, int hdds, int ssds, int usbs, int height, int width, int length,
+     *     int price, bool rad = false, bool audio = true)
+    */
+
 
 }
 
