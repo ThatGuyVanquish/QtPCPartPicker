@@ -80,6 +80,8 @@ add_executable(PCPartPicker
     Test/src/dbtests.cpp
     Test/include/specbuildertests.h
     Test/src/specbuildertests.cpp
+    Test/include/sbtestsreceiver.h
+    Test/src/sbtestsreceiver.cpp
 )
 
 
