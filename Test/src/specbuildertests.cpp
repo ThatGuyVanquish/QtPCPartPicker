@@ -137,7 +137,7 @@ void specBuilderTests::createGPUs(dataHolder *h)
     GPU *amd1 = new amdGPU("PCIE3 30W 40$", 3, 2, 1300, 32, 30, 1, 15, 23, 40, {"HDMI"});
     amd1->setObjectName("AMD PCIE3 30W 40$");
     h->addGPU(amd1);
-    GPU *amd2 = new amdGPU("PCIE3 30W 40$ RT", 3, 8, 1887, 128, 210, 3, 18, 31, 400, {"HDMI"}, 2070, true);
+    GPU *amd2 = new amdGPU("PCIE3 210W 400$ RT", 3, 8, 1887, 128, 210, 3, 18, 31, 400, {"HDMI"}, 2070, true);
     amd2->setObjectName("AMD PCIE3 210W 400$ RT");
     h->addGPU(amd2);
     GPU *amd3 = new amdGPU("PCIE4 250W 600$ RT", 4, 12, 1948, 256, 250, 2, 17, 29, 600, {"HDMI"}, 2110, true);
@@ -156,10 +156,10 @@ void specBuilderTests::createGPUs(dataHolder *h)
     GPU *nv2 = new nvidiaGPU("PCIE3 150W 350$ DLSS", 3, 8, 1850, 128, 150, 2, 17, 28, 350, {"HDMI"}, 2008, false);
     nv2->setObjectName("Nvidia PCIE3 150W 350$ DLSS");
     h->addGPU(nv2);
-    GPU *nv3 = new nvidiaGPU("PCIE4 300W 650$ RT DLSS", 4, 12, 1887, 256, 300, 1, 17, 31, 650, {"HDMI"}, 2187, true);
+    GPU *nv3 = new nvidiaGPU("PCIE4 300W 650$ RT DLSS", 4, 12, 1887, 256, 300, 3, 17, 31, 650, {"HDMI"}, 2187, true);
     nv3->setObjectName("Nvidia PCIE4 300W 650$ RT DLSS");
     h->addGPU(nv3);
-    GPU *nv4 = new nvidiaGPU("PCIE4 400W 950$ RT DLSS", 4, 24, 1995, 512, 400, 1, 18, 32, 950, {"HDMI"}, 2230, true);
+    GPU *nv4 = new nvidiaGPU("PCIE4 400W 950$ RT DLSS", 4, 24, 1995, 512, 400, 3, 18, 32, 950, {"HDMI"}, 2230, true);
     nv4->setObjectName("Nvidia PCIE4 400W 950$RT DLSS");
     h->addGPU(nv4);
 }
@@ -247,9 +247,9 @@ void specBuilderTests::createMobos(dataHolder *h)
     h->addMotherboard(intel13);
 
     // Mining
-    motherboard *intel14 = new motherboard("Intel Mining LGA2 2 DIMMs 300$", "Intel", "LGA2", 2, "DDR4", 32, 2, 10,
+    motherboard *intel14 = new motherboard("Intel Mining LGA2 300$", "Intel", "LGA2", 2, "DDR4", 32, 2, 10,
                                            4, 1, 10, "mATX", 24, 24, 2, {"HDMI"}, {}, 300);
-    intel14->setObjectName("Intel Mining LGA2 2 DIMMs 300$");
+    intel14->setObjectName("Intel Mining LGA2 300$");
     h->addMotherboard(intel14);
 
     // AMD Mobos
@@ -318,9 +318,9 @@ void specBuilderTests::createMobos(dataHolder *h)
     h->addMotherboard(amd14);
 
     // Mining
-    motherboard *amd15 = new motherboard("AMD Mining AM1 2 DIMMs 200$", "AMD", "AM1", 2, "DDR4", 32, 2, 3,
+    motherboard *amd15 = new motherboard("AMD Mining AM1 200$", "AMD", "AM1", 2, "DDR4", 32, 2, 10,
                                          10, 1, 10, "ATX", 30, 24, 4, {"HDMI"}, {}, 200);
-    amd15->setObjectName("AMD Mining AM1 2 DIMMs 200$");
+    amd15->setObjectName("AMD Mining AM1 200$");
     h->addMotherboard(amd15);
 }
 
@@ -334,7 +334,6 @@ void specBuilderTests::createRAM(dataHolder *h)
      *  RAM(QString model, QString version, int size, int dimms, int speed,
      *      QList<int> timing, int price, bool hs = true)
     */
-
     // DDR3
     RAM *three1 = new RAM("DDR3 2x2GB, 20$", "DDR3", 4, 2, 1133, {4, 6, 7, 8}, 20);
     three1->setObjectName("DDR3 2x2GB, 20$");
@@ -641,6 +640,11 @@ void specBuilderTests::createCases(dataHolder *h)
     pcCase *server4 = new pcCase("Server 60hdd 4000$", "Server", {"E-ATX"}, 34, 10, 6, 4, 60, 1, 0, 20, 60, 80, 4000);
     server4->setObjectName("Server 60hdd 4000$");
     h->addCase(server4);
+
+    // Mining
+    pcCase *mining = new pcCase("Mining case 200$", "Mining", {"ATX", "mATX", "ITX"}, 100, 100, 30, 0, 1, 1, 0, 100, 100, 100, 200);
+    mining->setObjectName("Mining case 200$");
+    h->addCase(mining);
 }
 
 void specBuilderTests::createDB(dataHolder *h)
@@ -660,7 +664,6 @@ void specBuilderTests::initialize(dataHolder *h)
     qDebug() << "Initializing database";
     backup(h);
     createDB(h);
-
 }
 
 void specBuilderTests::restore(dataHolder *h)
@@ -678,7 +681,19 @@ specBuilderTests::specBuilderTests(QString dir, QObject *parent)
 
 void specBuilderTests::testMining(dataHolder *h)
 {
+    // 1st Test @ 500$
+    // Intel
+    CPU *intel500 = h->CPUMap()->value("Price").at(2);
 
+    // AMD
+    CPU *amd500 = h->CPUMap()->value("Price").at(0);
+    // 2nd Test @ 1000$
+
+    // 3rd Test @ 2000$
+
+    // 4th Test @ 3000$
+
+    // 5th Test @ 4000$
 }
 
 void specBuilderTests::testServer(dataHolder *h)
@@ -709,10 +724,12 @@ void specBuilderTests::testGeneral(dataHolder *h)
 void specBuilderTests::runTests()
 {
     dataHolder h("/home/nave/Documents/QtProjects/PCPartPicker/Test/");
+    initialize(&h);
     testMining(&h);
     testServer(&h);
     testOffice(&h);
     testGaming(&h);
     testOverclocking(&h);
     testGeneral(&h);
+    restore(&h);
 }
