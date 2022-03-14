@@ -1411,20 +1411,6 @@ void specBuilderTests::testGaming(dataHolder *h)
     QObject::connect(&sb, &specbuilder::specs, &rec, &sbtestsreceiver::specs);
 }
 
-void specBuilderTests::testOverclocking(dataHolder *h)
-{
-    specbuilder sb(h);
-    sbtestsreceiver rec;
-    QObject::connect(&sb, &specbuilder::specs, &rec, &sbtestsreceiver::specs);
-}
-
-void specBuilderTests::testGeneral(dataHolder *h)
-{
-    specbuilder sb(h);
-    sbtestsreceiver rec;
-    QObject::connect(&sb, &specbuilder::specs, &rec, &sbtestsreceiver::specs);
-}
-
 int specBuilderTests::totalCost(sbtestsreceiver *sbr)
 {
     int sum = sbr->m_cpu->getPrice() + sbr->m_mobo->getPrice() + sbr->m_ram->getPrice() +
@@ -1442,7 +1428,5 @@ void specBuilderTests::runTests()
     testServer(&h);
     testOffice(&h);
     testGaming(&h);
-    testOverclocking(&h);
-    testGeneral(&h);
     restore(&h);
 }

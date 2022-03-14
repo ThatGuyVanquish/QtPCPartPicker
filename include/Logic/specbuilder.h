@@ -20,8 +20,6 @@ public:
     void server(int budget);
     void office(int budget);
     void gaming(int budget);
-    void overclocking(int budget);
-    void general(int budget);
 
 public slots:
     void build();

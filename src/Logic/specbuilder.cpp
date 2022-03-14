@@ -28,18 +28,6 @@ void specbuilder::gaming(int budget)
     // emit specs(CPU *cpu, GPU *gpu, motherboard *mobo, RAM *ram, storage *storage, cooler *cooler, pcCase *pcCase)
 }
 
-void specbuilder::overclocking(int budget)
-{
-    // logic here
-    // emit specs(CPU *cpu, GPU *gpu, motherboard *mobo, RAM *ram, storage *storage, cooler *cooler, pcCase *pcCase)
-}
-
-void specbuilder::general(int budget)
-{
-    // logic here
-    // emit specs(CPU *cpu, GPU *gpu, motherboard *mobo, RAM *ram, storage *storage, cooler *cooler, pcCase *pcCase)
-}
-
 void specbuilder::build()
 {
     cout << "What is the budget of your build?\r\n";
@@ -56,12 +44,8 @@ void specbuilder::build()
         mining(budget);
     else if (purpose == "office")
         office(budget);
-    else if (purpose == "overclocking")
-        overclocking(budget);
     else if (purpose == "server")
         server(budget);
-    else
-        general(budget);
     return;
 }
 

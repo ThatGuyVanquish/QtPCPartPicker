@@ -34,8 +34,8 @@ public:
     void testServer(dataHolder *h);
     void testOffice(dataHolder *h);
     void testGaming(dataHolder *h);
-    void testOverclocking(dataHolder *h);
-    void testGeneral(dataHolder *h);
+
+    int totalCost(sbtestsreceiver *sbr);
 
 public slots:
 
