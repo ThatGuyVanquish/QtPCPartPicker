@@ -27,7 +27,7 @@ public slots:
     void build();
 
 signals:
-    void specs(QList<CPU*> cpus, QList<GPU*> gpus, motherboard *mobo, RAM *ram, QList<storage*> storage, cooler *cooler, pcCase *pcCase);
+    void specs(CPU *cpu, QList<GPU*> gpus, motherboard *mobo, RAM *ram, QList<storage*> storage, cooler *cooler, pcCase *pcCase);
 };
 
 static QStringList requests();

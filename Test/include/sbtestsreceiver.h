@@ -12,7 +12,7 @@ class sbtestsreceiver : public QObject
 public:
     explicit sbtestsreceiver(QObject *parent = nullptr);
 
-    QList<CPU*> m_cpus;
+    CPU *m_cpu;
     QList<GPU*> m_gpus;
     RAM *m_ram;
     motherboard *m_mobo;
@@ -22,7 +22,7 @@ public:
     pcCase *m_case;
 
 public slots:
-    void specs(QList<CPU*> cpus, QList<GPU*> gpus, motherboard *mobo, RAM *ram, QList<storage*> storage, cooler *cooler, pcCase *pcCase);
+    void specs(CPU *cpu, QList<GPU*> gpus, motherboard *mobo, RAM *ram, QList<storage*> storage, cooler *cooler, pcCase *pcCase);
 
 };
 
