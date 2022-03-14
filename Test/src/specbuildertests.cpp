@@ -926,6 +926,7 @@ void specBuilderTests::testServer(dataHolder *h)
     QVERIFY2(rec.m_cpu == intelcpu16k, "Wrong CPU");
     QVERIFY2(rec.m_mobo == intelmobo16k, "Wrong Motherboard");
     QVERIFY2(rec.m_ram == intelram16k, "Wrong RAM");
+    QVERIFY2(rec.m_cooler == cooler, "Wrong cooler");
     QVERIFY2(rec.m_psu == intelpsu16k, "Wrong PSU");
     QVERIFY2(rec.m_case == intelcase16k, "Wrong Case");
     QVERIFY2(rec.m_storage.at(0) == intelcache16k, "Wrong Cache M.2 SSD");
@@ -944,6 +945,7 @@ void specBuilderTests::testServer(dataHolder *h)
     QVERIFY2(rec.m_cpu == intelcpu26k, "Wrong CPU");
     QVERIFY2(rec.m_mobo == intelmobo26k, "Wrong Motherboard");
     QVERIFY2(rec.m_ram == intelram26k, "Wrong RAM");
+    QVERIFY2(rec.m_cooler == cooler, "Wrong cooler");
     QVERIFY2(rec.m_psu == intelpsu26k, "Wrong PSU");
     QVERIFY2(rec.m_case == intelcase26k, "Wrong Case");
     QVERIFY2(rec.m_storage.at(0) == intelcache26k, "Wrong Cache M.2 SSD");
@@ -963,6 +965,7 @@ void specBuilderTests::testServer(dataHolder *h)
     QVERIFY2(rec.m_cpu == intelcpu35k, "Wrong CPU");
     QVERIFY2(rec.m_mobo == intelmobo35k, "Wrong Motherboard");
     QVERIFY2(rec.m_ram == intelram35k, "Wrong RAM");
+    QVERIFY2(rec.m_cooler == cooler, "Wrong cooler");
     QVERIFY2(rec.m_psu == intelpsu35k, "Wrong PSU");
     QVERIFY2(rec.m_case == intelcase35k, "Wrong Case");
     QVERIFY2(rec.m_storage.at(0) == intelcache35k, "Wrong Cache M.2 SSD");
@@ -982,6 +985,7 @@ void specBuilderTests::testServer(dataHolder *h)
     QVERIFY2(rec.m_cpu == intelcpurich, "Wrong CPU");
     QVERIFY2(rec.m_mobo == intelmoborich, "Wrong Motherboard");
     QVERIFY2(rec.m_ram == intelramrich, "Wrong RAM");
+    QVERIFY2(rec.m_cooler == cooler, "Wrong cooler");
     QVERIFY2(rec.m_psu == intelpsurich, "Wrong PSU");
     QVERIFY2(rec.m_case == intelcaserich, "Wrong Case");
     QVERIFY2(rec.m_storage.at(0) == intelcacherich, "Wrong Cache M.2 SSD");
@@ -1000,6 +1004,7 @@ void specBuilderTests::testServer(dataHolder *h)
     QVERIFY2(rec.m_cpu == amdcpu15, "Wrong CPU");
     QVERIFY2(rec.m_mobo == amdmobo15, "Wrong Motherboard");
     QVERIFY2(rec.m_ram == amdram15, "Wrong RAM");
+    QVERIFY2(rec.m_cooler == cooler, "Wrong cooler");
     QVERIFY2(rec.m_psu == amdpsu15, "Wrong PSU");
     QVERIFY2(rec.m_case == amdcase15, "Wrong Case");
     QVERIFY2(rec.m_storage.at(0) == amdcache15, "Wrong Cache M.2 SSD");
@@ -1018,6 +1023,7 @@ void specBuilderTests::testServer(dataHolder *h)
     QVERIFY2(rec.m_cpu == amdcpu23, "Wrong CPU");
     QVERIFY2(rec.m_mobo == amdmobo23, "Wrong Motherboard");
     QVERIFY2(rec.m_ram == amdram23, "Wrong RAM");
+    QVERIFY2(rec.m_cooler == cooler, "Wrong cooler");
     QVERIFY2(rec.m_psu == amdpsu23, "Wrong PSU");
     QVERIFY2(rec.m_case == amdcase23, "Wrong Case");
     QVERIFY2(rec.m_storage.at(0) == amdcache23, "Wrong Cache M.2 SSD");
@@ -1037,6 +1043,7 @@ void specBuilderTests::testServer(dataHolder *h)
     QVERIFY2(rec.m_cpu == amdcpu31, "Wrong CPU");
     QVERIFY2(rec.m_mobo == amdmobo31, "Wrong Motherboard");
     QVERIFY2(rec.m_ram == amdram31, "Wrong RAM");
+    QVERIFY2(rec.m_cooler == cooler, "Wrong cooler");
     QVERIFY2(rec.m_psu == amdpsu31, "Wrong PSU");
     QVERIFY2(rec.m_case == amdcase31, "Wrong Case");
     QVERIFY2(rec.m_storage.at(0) == amdcache31, "Wrong Cache M.2 SSD");
@@ -1056,6 +1063,7 @@ void specBuilderTests::testServer(dataHolder *h)
     QVERIFY2(rec.m_cpu == amdcpuover31, "Wrong CPU");
     QVERIFY2(rec.m_mobo == amdmoboover31, "Wrong Motherboard");
     QVERIFY2(rec.m_ram == amdramover31, "Wrong RAM");
+    QVERIFY2(rec.m_cooler == cooler, "Wrong cooler");
     QVERIFY2(rec.m_psu == amdpsuover31, "Wrong PSU");
     QVERIFY2(rec.m_case == amdcaseover31, "Wrong Case");
     QVERIFY2(rec.m_storage.at(0) == amdcacheover31, "Wrong Cache M.2 SSD");
@@ -1074,6 +1082,7 @@ void specBuilderTests::testServer(dataHolder *h)
     QVERIFY2(rec.m_cpu == amd5cpu17, "Wrong CPU");
     QVERIFY2(rec.m_mobo == amd5mobo17, "Wrong Motherboard");
     QVERIFY2(rec.m_ram == amd5ram17, "Wrong RAM");
+    QVERIFY2(rec.m_cooler == cooler, "Wrong cooler");
     QVERIFY2(rec.m_psu == amd5psu17, "Wrong PSU");
     QVERIFY2(rec.m_case == amd5case17, "Wrong Case");
     QVERIFY2(rec.m_storage.at(0) == amd5cache17, "Wrong Cache M.2 SSD");
@@ -1092,6 +1101,7 @@ void specBuilderTests::testServer(dataHolder *h)
     QVERIFY2(rec.m_cpu == amd5cpu25, "Wrong CPU");
     QVERIFY2(rec.m_mobo == amd5mobo25, "Wrong Motherboard");
     QVERIFY2(rec.m_ram == amd5ram25, "Wrong RAM");
+    QVERIFY2(rec.m_cooler == cooler, "Wrong cooler");
     QVERIFY2(rec.m_psu == amd5psu25, "Wrong PSU");
     QVERIFY2(rec.m_case == amd5case25, "Wrong Case");
     QVERIFY2(rec.m_storage.at(0) == amd5cache25, "Wrong Cache M.2 SSD");
@@ -1111,6 +1121,7 @@ void specBuilderTests::testServer(dataHolder *h)
     QVERIFY2(rec.m_cpu == amd5cpu35, "Wrong CPU");
     QVERIFY2(rec.m_mobo == amd5mobo35, "Wrong Motherboard");
     QVERIFY2(rec.m_ram == amd5ram35, "Wrong RAM");
+    QVERIFY2(rec.m_cooler == cooler, "Wrong cooler");
     QVERIFY2(rec.m_psu == amd5psu35, "Wrong PSU");
     QVERIFY2(rec.m_case == amd5case35, "Wrong Case");
     QVERIFY2(rec.m_storage.at(0) == amd5cache35, "Wrong Cache M.2 SSD");
@@ -1130,6 +1141,7 @@ void specBuilderTests::testServer(dataHolder *h)
     QVERIFY2(rec.m_cpu == amd5cpuover35, "Wrong CPU");
     QVERIFY2(rec.m_mobo == amd5moboover35, "Wrong Motherboard");
     QVERIFY2(rec.m_ram == amd5ramover35, "Wrong RAM");
+    QVERIFY2(rec.m_cooler == cooler, "Wrong cooler");
     QVERIFY2(rec.m_psu == amd5psuover35, "Wrong PSU");
     QVERIFY2(rec.m_case == amd5caseover35, "Wrong Case");
     QVERIFY2(rec.m_storage.at(0) == amd5cacheover35, "Wrong Cache M.2 SSD");
@@ -1193,7 +1205,7 @@ void specBuilderTests::testOffice(dataHolder *h)
     // Intel 500$ < Budget < 1000$
     CPU *intelcpu1000 = h->CPUMap()->value("Intel").at(3);
     motherboard *intelmobo1000 = h->MOBOMap()->value("Intel").at(6);
-    RAM *intelram1000 = h->RAMMap()->value("DDR5").at(6);
+    RAM *intelram1000 = h->RAMMap()->value("DDR5").at(5);
     cooler *intelcooler1000 = h->COOLERMap()->value("Air").at(2);
     PSU *intelpsu1000 = h->PSUMap()->value("ATX").at(3);
     pcCase *intelcase1000 = h->CASEMap()->value("ATX").at(0);
@@ -1216,7 +1228,7 @@ void specBuilderTests::testOffice(dataHolder *h)
     // Intel 1000$ < Budget < 1500$
     CPU *intelcpu1500 = h->CPUMap()->value("Intel").at(5);
     motherboard *intelmobo1500 = h->MOBOMap()->value("Intel").at(7);
-    RAM *intelram1500 = h->RAMMap()->value("DDR5").at(6);
+    RAM *intelram1500 = h->RAMMap()->value("DDR5").at(5);
     cooler *intelcooler1500 = h->COOLERMap()->value("Air").at(2);
     PSU *intelpsu1500 = h->PSUMap()->value("ATX").at(3);
     pcCase *intelcase1500 = h->CASEMap()->value("ATX").at(0);
@@ -1262,7 +1274,7 @@ void specBuilderTests::testOffice(dataHolder *h)
     // Intel Budget > 2000$
     CPU *intelcpuover2000 = h->CPUMap()->value("Intel").at(7);
     motherboard *intelmoboover2000 = h->MOBOMap()->value("Intel").at(7);
-    RAM *intelramover2000 = h->RAMMap()->value("DDR5").at(6);
+    RAM *intelramover2000 = h->RAMMap()->value("DDR5").at(5);
     cooler *intelcoolerover2000 = h->COOLERMap()->value("Air").at(2);
     PSU *intelpsuover2000 = h->PSUMap()->value("ATX").at(3);
     pcCase *intelcaseover2000 = h->CASEMap()->value("ATX").at(0);
@@ -1280,6 +1292,116 @@ void specBuilderTests::testOffice(dataHolder *h)
     QVERIFY2(rec.m_storage.at(1) == intelhddover2000, "Wrong  HDD");
     QVERIFY2(rec.m_gpus.size() == 0, "No GPUs should be purchased");
     QVERIFY2(totalCost(&rec) >= 2000, "Too cheap!");
+
+    // AMD
+    // General
+    GPU *amdgpu = h->GPUMap()->value("AMD").at(0);
+    pcCase *amdCase = h->CASEMap()->value("ATX").at(0);
+
+    // AMD Budget < 500$
+    CPU *amdcpu500 = h->CPUMap()->value("AMD").at(0);
+    motherboard *amdmobo500 = h->MOBOMap()->value("AMD").at(0);
+    RAM *amdram500 = h->RAMMap()->value("DDR4").at(5);
+    cooler *amdcooler500 = nullptr;
+    PSU *amdpsu500 = h->PSUMap()->value("ATX").at(0);
+    storage *amdssd500 = h->STORAGEMap()->value("SSD").at(0);
+    storage *amdhdd500 = h->STORAGEMap()->value("HDD").at(1);
+    qInfo() << "Office Budget < 500$ AMD:";
+    sb.build();
+    QVERIFY2(rec.m_cpu == amdcpu500, "Wrong CPU");
+    QVERIFY2(rec.m_mobo == amdmobo500, "Wrong Motherboard");
+    QVERIFY2(rec.m_ram == amdram500, "Wrong RAM");
+    QVERIFY2(rec.m_cooler == nullptr, "No need for cooler as it's included with CPU");
+    QVERIFY2(rec.m_psu == amdpsu500, "Wrong PSU");
+    QVERIFY2(rec.m_storage.at(0) == amdssd500, "Wrong  SSD");
+    QVERIFY2(rec.m_storage.at(1) == amdhdd500, "Wrong  HDD");
+    QVERIFY2(rec.m_gpus.at(0) == amdgpu, "Wrong GPU or no GPU");
+    QVERIFY2(totalCost(&rec) <= 500, "Too expensive!");
+
+    // AMD 500$ < Budget < 1000$
+    CPU *amdcpu1000 = h->CPUMap()->value("AMD").at(2);
+    motherboard *amdmobo1000 = h->MOBOMap()->value("AMD").at(0);
+    RAM *amdram1000 = h->RAMMap()->value("DDR4").at(5);
+    cooler *amdcooler1000 = nullptr;
+    PSU *amdpsu1000 = h->PSUMap()->value("ATX").at(0);
+    storage *amdssd1000 = h->STORAGEMap()->value("SSD").at(2);
+    storage *amdhdd1000 = h->STORAGEMap()->value("HDD").at(4);
+    qInfo() << "Office 500$ < Budget < 1000$ AMD:";
+    sb.build();
+    QVERIFY2(rec.m_cpu == amdcpu1000, "Wrong CPU");
+    QVERIFY2(rec.m_mobo == amdmobo1000, "Wrong Motherboard");
+    QVERIFY2(rec.m_ram == amdram1000, "Wrong RAM");
+    QVERIFY2(rec.m_cooler == nullptr, "No need for cooler as it's included with CPU");
+    QVERIFY2(rec.m_psu == amdpsu1000, "Wrong PSU");
+    QVERIFY2(rec.m_storage.at(0) == amdssd1000, "Wrong  SSD");
+    QVERIFY2(rec.m_storage.at(1) == amdhdd1000, "Wrong  HDD");
+    QVERIFY2(rec.m_gpus.size() == 0, "GPU unnecessary, cpu is an APU");
+    QVERIFY2(totalCost(&rec) >= 500, "Too cheap!");
+    QVERIFY2(totalCost(&rec) <= 1000, "Too expensive!");
+
+    // AMD 1000$ < Budget < 1500$
+    CPU *amdcpu1500 = h->CPUMap()->value("AMD").at(5);
+    motherboard *amdmobo1500 = h->MOBOMap()->value("AMD").at(4);
+    RAM *amdram1500 = h->RAMMap()->value("DDR5").at(5);
+    cooler *amdcooler1500 = h->COOLERMap()->value("Air").at(1);
+    PSU *amdpsu1500 = h->PSUMap()->value("ATX").at(3);
+    storage *amdssd1500 = h->STORAGEMap()->value("M.2").at(0);
+    storage *amdhdd1500 = h->STORAGEMap()->value("HDD").at(4);
+    qInfo() << "Office 1000$ < Budget < 1500$ AMD:";
+    sb.build();
+    QVERIFY2(rec.m_cpu == amdcpu1500, "Wrong CPU");
+    QVERIFY2(rec.m_mobo == amdmobo1500, "Wrong Motherboard");
+    QVERIFY2(rec.m_ram == amdram1500, "Wrong RAM");
+    QVERIFY2(rec.m_cooler == amdcooler1500, "Wrong cooler");
+    QVERIFY2(rec.m_psu == amdpsu1500, "Wrong PSU");
+    QVERIFY2(rec.m_storage.at(0) == amdssd1500, "Wrong  SSD");
+    QVERIFY2(rec.m_storage.at(1) == amdhdd1500, "Wrong  HDD");
+    QVERIFY2(rec.m_gpus.at(0) == amdgpu, "Wrong GPU or no GPU");
+    QVERIFY2(totalCost(&rec) >= 1000, "Too cheap!");
+    QVERIFY2(totalCost(&rec) <= 1500, "Too expensive!");
+
+    // AMD 1500$ < Budget < 2000$
+    CPU *amdcpu2000 = h->CPUMap()->value("AMD").at(6);
+    motherboard *amdmobo2000 = h->MOBOMap()->value("AMD").at(4);
+    RAM *amdram2000 = h->RAMMap()->value("DDR5").at(5);
+    cooler *amdcooler2000 = h->COOLERMap()->value("Air").at(2);
+    PSU *amdpsu2000 = h->PSUMap()->value("ATX").at(3);
+    storage *amdssd2000 = h->STORAGEMap()->value("M.2").at(2);
+    storage *amdhdd2000 = h->STORAGEMap()->value("HDD").at(4);
+    qInfo() << "Office 1500$ < Budget < 2000$ AMD:";
+    sb.build();
+    QVERIFY2(rec.m_cpu == amdcpu2000, "Wrong CPU");
+    QVERIFY2(rec.m_mobo == amdmobo2000, "Wrong Motherboard");
+    QVERIFY2(rec.m_ram == amdram2000, "Wrong RAM");
+    QVERIFY2(rec.m_cooler == amdcooler2000, "Wrong cooler");
+    QVERIFY2(rec.m_psu == amdpsu2000, "Wrong PSU");
+    QVERIFY2(rec.m_storage.at(0) == amdssd2000, "Wrong  SSD");
+    QVERIFY2(rec.m_storage.at(1) == amdhdd2000, "Wrong  HDD");
+    QVERIFY2(rec.m_gpus.at(0) == amdgpu, "Wrong GPU or no GPU");
+    QVERIFY2(totalCost(&rec) >= 1500, "Too cheap!");
+    QVERIFY2(totalCost(&rec) <= 2000, "Too expensive!");
+
+    // AMD 2000$ < Budget
+    CPU *amdcpuover2000 = h->CPUMap()->value("AMD").at(7);
+    motherboard *amdmoboover2000 = h->MOBOMap()->value("AMD").at(4);
+    RAM *amdramover2000 = h->RAMMap()->value("DDR5").at(5);
+    cooler *amdcoolerover2000 = h->COOLERMap()->value("Air").at(2);
+    PSU *amdpsuover2000 = h->PSUMap()->value("ATX").at(3);
+    storage *amdssdover2000 = h->STORAGEMap()->value("M.2").at(3);
+    storage *amdhddover2000 = h->STORAGEMap()->value("HDD").at(5);
+    qInfo() << "Office 2000$ < Budget AMD:";
+    sb.build();
+    QVERIFY2(rec.m_cpu == amdcpuover2000, "Wrong CPU");
+    QVERIFY2(rec.m_mobo == amdmoboover2000, "Wrong Motherboard");
+    QVERIFY2(rec.m_ram == amdramover2000, "Wrong RAM");
+    QVERIFY2(rec.m_cooler == amdcoolerover2000, "Wrong cooler");
+    QVERIFY2(rec.m_psu == amdpsuover2000, "Wrong PSU");
+    QVERIFY2(rec.m_storage.at(0) == amdssdover2000, "Wrong  SSD");
+    QVERIFY2(rec.m_storage.at(1) == amdhddover2000, "Wrong  HDD");
+    QVERIFY2(rec.m_gpus.at(0) == amdgpu, "Wrong GPU or no GPU");
+    QVERIFY2(totalCost(&rec) >= 2000, "Too cheap!");
+
+    qDebug() << "Completed Office Spec Builder Unit Tests";
 }
 
 void specBuilderTests::testGaming(dataHolder *h)
