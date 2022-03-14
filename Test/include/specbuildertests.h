@@ -3,8 +3,11 @@
 
 #include "../../include/Database/filewriter.h"
 #include "../../include/Database/filereader.h"
+#include "../../include/Logic/specbuilder.h"
+#include "sbtestsreceiver.h"
 
 #include <QObject>
+#include <QTest>
 
 class specBuilderTests : public QObject
 {

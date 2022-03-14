@@ -681,19 +681,211 @@ specBuilderTests::specBuilderTests(QString dir, QObject *parent)
 
 void specBuilderTests::testMining(dataHolder *h)
 {
-    // 1st Test @ 500$
-    // Intel
-    CPU *intel500 = h->CPUMap()->value("Price").at(2);
+    specbuilder sb(h);
+    sbtestsreceiver rec;
+    QObject::connect(&sb, &specbuilder::specs, &rec, &sbtestsreceiver::specs);
 
+    // General core specs
+    RAM *ram = h->RAMMap()->value("Price").at(2);
+    storage *storage = h->STORAGEMap()->value("HDD").at(0);
+    cooler *cooler = nullptr;
+    // Intel
+    CPU *intelcpu = h->CPUMap()->value("Intel").at(1);
+    motherboard *intelmobo = h->MOBOMap()->value("Intel").at(13);
     // AMD
-    CPU *amd500 = h->CPUMap()->value("Price").at(0);
+    CPU *amdcpu = h->CPUMap()->value("AMD").at(0);
+    motherboard *amdmobo = h->MOBOMap()->value("AMD").at(14);
+
+    // 1st Test @ 500$
+    pcCase *case500 = h->CASEMap()->value("Price").at(0);
+    PSU *psu500 = h->PSUMap()->value("Price").at(0);
+    // Intel
+    QList<GPU*> intelgpus500; // No spare cash for GPUs
+    // AMD
+    QList<GPU*> amdgpus500;
+    amdgpus500.append(h->GPUMap()->value("AMD").at(0));
+    amdgpus500.append(h->GPUMap()->value("AMD").at(0));
+    amdgpus500.append(h->GPUMap()->value("AMD").at(0));
+
+    qInfo() << "Mining @500$ Intel:";
+    sb.build();
+    QVERIFY2(rec.m_cpus.at(0) == intelcpu, "Wrong Intel CPU received");
+    QVERIFY2(rec.m_gpus.size() == 0, "Included GPUs although there are no funds for them");
+    QVERIFY2(rec.m_mobo == intelmobo, "Wrong Intel Mobo received");
+    QVERIFY2(rec.m_cooler == nullptr, "Added cooler even though CPU comes with one");
+    QVERIFY2(rec.m_storage.at(0) == storage, "Different storage than what's supposed to be");
+    QVERIFY2(rec.m_case == case500, "Wrong case");
+    QVERIFY2(rec.m_psu == psu500, "Wrong PSU");
+    QVERIFY2(rec.m_ram == ram, "Wrong RAM");
+
+    qInfo() << "Mining @500$ AMD:";
+    sb.build();
+    QVERIFY2(rec.m_cpus.at(0) == amdcpu, "Wrong AMD CPU received");
+    QVERIFY2(rec.m_mobo == amdmobo, "Wrong Intel Mobo received");
+    QVERIFY2(rec.m_cooler == nullptr, "Added cooler even though CPU comes with one");
+    QVERIFY2(rec.m_storage.at(0) == storage, "Different storage than what's supposed to be");
+    QVERIFY2(rec.m_case == case500, "Wrong case");
+    QVERIFY2(rec.m_psu == psu500, "Wrong PSU");
+    QVERIFY2(rec.m_ram == ram, "Wrong RAM");
+    for (int i = 0; i < rec.m_gpus.size(); i++)
+        QVERIFY2(rec.m_gpus.at(i) == amdgpus500.at(i), "Wrong GPU added");
+
     // 2nd Test @ 1000$
+    pcCase *case1000 = h->CASEMap()->value("Price").at(0);
+    PSU *psu1000 = h->PSUMap()->value("Price").at(0);
+    // Intel
+    QList<GPU*> intelgpus1000;
+    intelgpus1000.append(h->GPUMap()->value("AMD").at(1));
+    intelgpus1000.append(h->GPUMap()->value("AMD").at(0));
+    intelgpus1000.append(h->GPUMap()->value("AMD").at(0));
+    intelgpus1000.append(h->GPUMap()->value("AMD").at(0));
+    // AMD
+    QList<GPU*> amdgpus1000;
+    amdgpus1000.append(h->GPUMap()->value("Nvidia").at(2));
+    amdgpus1000.append(h->GPUMap()->value("AMD").at(0));
+
+    qInfo() << "Mining @1000$ Intel:";
+    sb.build();
+    QVERIFY2(rec.m_cpus.at(0) == intelcpu, "Wrong Intel CPU received");
+    QVERIFY2(rec.m_mobo == intelmobo, "Wrong Intel Mobo received");
+    QVERIFY2(rec.m_cooler == nullptr, "Added cooler even though CPU comes with one");
+    QVERIFY2(rec.m_storage.at(0) == storage, "Different storage than what's supposed to be");
+    QVERIFY2(rec.m_case == case1000, "Wrong case");
+    QVERIFY2(rec.m_psu == psu1000, "Wrong PSU");
+    QVERIFY2(rec.m_ram == ram, "Wrong RAM");
+    for (int i = 0; i < rec.m_gpus.size(); i++)
+        QVERIFY2(rec.m_gpus.at(i) == intelgpus1000.at(i), "Wrong GPU added");
+
+    qInfo() << "Mining @1000$ AMD:";
+    sb.build();
+    QVERIFY2(rec.m_cpus.at(0) == amdcpu, "Wrong AMD CPU received");
+    QVERIFY2(rec.m_mobo == amdmobo, "Wrong Intel Mobo received");
+    QVERIFY2(rec.m_cooler == nullptr, "Added cooler even though CPU comes with one");
+    QVERIFY2(rec.m_storage.at(0) == storage, "Different storage than what's supposed to be");
+    QVERIFY2(rec.m_case == case1000, "Wrong case");
+    QVERIFY2(rec.m_psu == psu1000, "Wrong PSU");
+    QVERIFY2(rec.m_ram == ram, "Wrong RAM");
+    for (int i = 0; i < rec.m_gpus.size(); i++)
+        QVERIFY2(rec.m_gpus.at(i) == amdgpus1000.at(i), "Wrong GPU added");
 
     // 3rd Test @ 2000$
+    pcCase *case2000 = h->CASEMap()->value("Price").at(0);
+    PSU *psu2000 = h->PSUMap()->value("ATX").at(5);
+    // Intel
+    QList<GPU*> intelgpus2000;
+    intelgpus2000.append(h->GPUMap()->value("Nvidia").at(3));
+    intelgpus2000.append(h->GPUMap()->value("AMD").at(1));
+    // AMD
+    QList<GPU*> amdgpus2000;
+    amdgpus2000.append(h->GPUMap()->value("Nvidia").at(3));
+    amdgpus2000.append(h->GPUMap()->value("AMD").at(2));
+
+    qInfo() << "Mining @2000$ Intel:";
+    sb.build();
+    QVERIFY2(rec.m_cpus.at(0) == intelcpu, "Wrong Intel CPU received");
+    QVERIFY2(rec.m_mobo == intelmobo, "Wrong Intel Mobo received");
+    QVERIFY2(rec.m_cooler == nullptr, "Added cooler even though CPU comes with one");
+    QVERIFY2(rec.m_storage.at(0) == storage, "Different storage than what's supposed to be");
+    QVERIFY2(rec.m_case == case2000, "Wrong case");
+    QVERIFY2(rec.m_psu == psu2000, "Wrong PSU");
+    QVERIFY2(rec.m_ram == ram, "Wrong RAM");
+    for (int i = 0; i < rec.m_gpus.size(); i++)
+        QVERIFY2(rec.m_gpus.at(i) == intelgpus2000.at(i), "Wrong GPU added");
+
+    qInfo() << "Mining @2000$ AMD:";
+    sb.build();
+    QVERIFY2(rec.m_cpus.at(0) == amdcpu, "Wrong AMD CPU received");
+    QVERIFY2(rec.m_mobo == amdmobo, "Wrong Intel Mobo received");
+    QVERIFY2(rec.m_cooler == nullptr, "Added cooler even though CPU comes with one");
+    QVERIFY2(rec.m_storage.at(0) == storage, "Different storage than what's supposed to be");
+    QVERIFY2(rec.m_case == case2000, "Wrong case");
+    QVERIFY2(rec.m_psu == psu2000, "Wrong PSU");
+    QVERIFY2(rec.m_ram == ram, "Wrong RAM");
+    for (int i = 0; i < rec.m_gpus.size(); i++)
+        QVERIFY2(rec.m_gpus.at(i) == amdgpus2000.at(i), "Wrong GPU added");
 
     // 4th Test @ 3000$
+    pcCase *case3000 = h->CASEMap()->value("ATX").at(4);
+    PSU *psu3000 = h->PSUMap()->value("ATX").at(7);
+    // Intel
+    QList<GPU*> intelgpus3000;
+    for(int i = 0; i < 3; i++)
+        intelgpus3000.append(h->GPUMap()->value("Nvidia").at(2));
+    for(int i = 0; i < 5; i++)
+        intelgpus3000.append(h->GPUMap()->value("AMD").at(0));
+    // AMD
+    QList<GPU*> amdgpus3000;
+    for(int i = 0; i < 3; i++)
+        amdgpus3000.append(h->GPUMap()->value("Nvidia").at(2));
+    for(int i = 0; i < 7; i++)
+        amdgpus3000.append(h->GPUMap()->value("AMD").at(0));
+
+    qInfo() << "Mining @3000$ Intel:";
+    sb.build();
+    QVERIFY2(rec.m_cpus.at(0) == intelcpu, "Wrong Intel CPU received");
+    QVERIFY2(rec.m_mobo == intelmobo, "Wrong Intel Mobo received");
+    QVERIFY2(rec.m_cooler == nullptr, "Added cooler even though CPU comes with one");
+    QVERIFY2(rec.m_storage.at(0) == storage, "Different storage than what's supposed to be");
+    QVERIFY2(rec.m_case == case3000, "Wrong case");
+    QVERIFY2(rec.m_psu == psu3000, "Wrong PSU");
+    QVERIFY2(rec.m_ram == ram, "Wrong RAM");
+    for (int i = 0; i < rec.m_gpus.size(); i++)
+        QVERIFY2(rec.m_gpus.at(i) == intelgpus3000.at(i), "Wrong GPU added");
+
+    qInfo() << "Mining @3000$ AMD:";
+    sb.build();
+    QVERIFY2(rec.m_cpus.at(0) == amdcpu, "Wrong AMD CPU received");
+    QVERIFY2(rec.m_mobo == amdmobo, "Wrong Intel Mobo received");
+    QVERIFY2(rec.m_cooler == nullptr, "Added cooler even though CPU comes with one");
+    QVERIFY2(rec.m_storage.at(0) == storage, "Different storage than what's supposed to be");
+    QVERIFY2(rec.m_case == case3000, "Wrong case");
+    QVERIFY2(rec.m_psu == psu3000, "Wrong PSU");
+    QVERIFY2(rec.m_ram == ram, "Wrong RAM");
+    for (int i = 0; i < rec.m_gpus.size(); i++)
+        QVERIFY2(rec.m_gpus.at(i) == amdgpus3000.at(i), "Wrong GPU added");
 
     // 5th Test @ 4000$
+    pcCase *case4000 = h->CASEMap()->value("ATX").at(4);
+    PSU *psu4000 = h->PSUMap()->value("ATX").at(8);
+    // Intel
+    QList<GPU*> intelgpus4000;
+    for(int i = 0; i < 4; i++)
+        intelgpus4000.append(h->GPUMap()->value("Nvidia").at(2));
+    for(int i = 0; i < 2; i++)
+        intelgpus4000.append(h->GPUMap()->value("Intel").at(1));
+    for(int i = 0; i < 4; i++)
+        intelgpus4000.append(h->GPUMap()->value("AMD").at(0));
+    // AMD
+    QList<GPU*> amdgpus4000;
+    for(int i = 0; i < 4; i++)
+        amdgpus4000.append(h->GPUMap()->value("Nvidia").at(2));
+    amdgpus4000.append(h->GPUMap()->value("AMD").at(1));
+    for(int i = 0; i < 2; i++)
+        amdgpus4000.append(h->GPUMap()->value("AMD").at(0));
+
+    qInfo() << "Mining @4000$ Intel:";
+    sb.build();
+    QVERIFY2(rec.m_cpus.at(0) == intelcpu, "Wrong Intel CPU received");
+    QVERIFY2(rec.m_mobo == intelmobo, "Wrong Intel Mobo received");
+    QVERIFY2(rec.m_cooler == nullptr, "Added cooler even though CPU comes with one");
+    QVERIFY2(rec.m_storage.at(0) == storage, "Different storage than what's supposed to be");
+    QVERIFY2(rec.m_case == case4000, "Wrong case");
+    QVERIFY2(rec.m_psu == psu4000, "Wrong PSU");
+    QVERIFY2(rec.m_ram == ram, "Wrong RAM");
+    for (int i = 0; i < rec.m_gpus.size(); i++)
+        QVERIFY2(rec.m_gpus.at(i) == intelgpus4000.at(i), "Wrong GPU added");
+
+    qInfo() << "Mining @4000$ AMD:";
+    sb.build();
+    QVERIFY2(rec.m_cpus.at(0) == amdcpu, "Wrong AMD CPU received");
+    QVERIFY2(rec.m_mobo == amdmobo, "Wrong Intel Mobo received");
+    QVERIFY2(rec.m_cooler == nullptr, "Added cooler even though CPU comes with one");
+    QVERIFY2(rec.m_storage.at(0) == storage, "Different storage than what's supposed to be");
+    QVERIFY2(rec.m_case == case4000, "Wrong case");
+    QVERIFY2(rec.m_psu == psu4000, "Wrong PSU");
+    QVERIFY2(rec.m_ram == ram, "Wrong RAM");
+    for (int i = 0; i < rec.m_gpus.size(); i++)
+        QVERIFY2(rec.m_gpus.at(i) == amdgpus4000.at(i), "Wrong GPU added");
 }
 
 void specBuilderTests::testServer(dataHolder *h)
