@@ -194,7 +194,7 @@ void specBuilderTests::createMobos(dataHolder *h)
     motherboard *intel2 = new motherboard("Intel LGA1 ATX DDR3 4 DIMMs 150$ OC", "Intel", "LGA1", 4, "DDR3", 64, 2, 3,
                                           3, 1, 5, "ATX", 30, 24, 6, {"HDMI"}, {}, 150);
     intel2->setObjectName("Intel LGA1 ATX DDR3 4 DIMMs 150$ OC");
-    h->addMotherboard(intel2);
+    h->addMotherboard(intel2, "OC");
     motherboard *intel3 = new motherboard("Intel LGA1 ITX DDR3 2 DIMMs 150$", "Intel", "LGA1", 2, "DDR3", 32, 2, 5,
                                           6, 3, 7, "ITX", 17, 17, 6, {"HDMI"}, {}, 150);
     intel3->setObjectName("Intel LGA1 ITX DDR3 2 DIMMs 150$");
@@ -208,7 +208,7 @@ void specBuilderTests::createMobos(dataHolder *h)
     motherboard *intel5 = new motherboard("Intel LGA2 ATX DDR4 4 DIMMs 200$ OC", "Intel", "LGA2", 4, "DDR4", 64, 2, 3,
                                           3, 1, 5, "ATX", 30, 24, 6, {"HDMI"}, {}, 225);
     intel5->setObjectName("Intel LGA2 ATX DDR4 4 DIMMs 225$ OC");
-    h->addMotherboard(intel5);
+    h->addMotherboard(intel5, "OC");
     motherboard *intel6 = new motherboard("Intel LGA2 ITX DDR4 2 DIMMs 250$", "Intel", "LGA2", 2, "DDR4", 32, 2, 5,
                                           6, 3, 7, "ITX", 17, 17, 6, {"HDMI"}, {}, 250);
     intel6->setObjectName("Intel LGA2 ITX DDR4 2 DIMMs 250$");
@@ -222,7 +222,7 @@ void specBuilderTests::createMobos(dataHolder *h)
     motherboard *intel8 = new motherboard("Intel LGA3 ATX DDR5 4 DIMMs 275$ OC", "Intel", "LGA3", 4, "DDR5", 64, 2, 3,
                                           3, 1, 5, "ATX", 30, 24, 6, {"HDMI"}, {}, 275);
     intel8->setObjectName("Intel LGA3 ATX DDR5 4 DIMMs 275$ OC");
-    h->addMotherboard(intel8);
+    h->addMotherboard(intel8, "OC");
     motherboard *intel9 = new motherboard("Intel LGA3 ITX DDR5 2 DIMMs 350$", "Intel", "LGA3", 2, "DDR5", 32, 2, 5,
                                           6, 3, 7, "ITX", 17, 17, 6, {"HDMI"}, {}, 350);
     intel9->setObjectName("Intel LGA3 ITX DDR5 2 DIMMs 350$");
@@ -232,25 +232,25 @@ void specBuilderTests::createMobos(dataHolder *h)
     motherboard *intel10 = new motherboard("Intel IN1 E-ATX DDR4 4 DIMMs 375$", "Intel", "IN1", 4, "DDR4", 64, 2, 3,
                                           10, 3, 5, "E-ATX", 30, 33, 6, {"HDMI"}, {}, 375);
     intel10->setObjectName("Intel IN1 E-ATX DDR4 4 DIMMs 375$");
-    h->addMotherboard(intel10);
+    h->addMotherboard(intel10, "Server");
     motherboard *intel11 = new motherboard("Intel IN1 E-ATX DDR4 4 DIMMs 875$", "Intel", "IN1", 4, "DDR4", 256, 4, 3,
                                           22, 3, 5, "E-ATX", 30, 33, 6, {"HDMI"}, {}, 875);
     intel11->setObjectName("Intel IN1 E-ATX DDR4 4 DIMMs 875$");
-    h->addMotherboard(intel11);
+    h->addMotherboard(intel11, "Server");
     motherboard *intel12 = new motherboard("Intel IN1 E-ATX DDR4 6 DIMMs 575$", "Intel", "IN1", 6, "DDR4", 96, 3, 3,
                                           18, 3, 5, "E-ATX", 30, 33, 6, {"HDMI"}, {}, 575);
     intel12->setObjectName("Intel IN1 E-ATX DDR4 6 DIMMs 575$");
-    h->addMotherboard(intel12);
+    h->addMotherboard(intel12, "Server");
     motherboard *intel13 = new motherboard("Intel IN1 E-ATX DDR4 6 DIMMs 1375$", "Intel", "IN1", 6, "DDR4", 384, 6, 3,
                                           26, 3, 5, "E-ATX", 30, 33, 6, {"HDMI"}, {}, 1375);
     intel13->setObjectName("Intel IN1 E-ATX DDR4 6 DIMMs 1375$");
-    h->addMotherboard(intel13);
+    h->addMotherboard(intel13, "Server");
 
     // Mining
     motherboard *intel14 = new motherboard("Intel Mining LGA2 300$", "Intel", "LGA2", 2, "DDR4", 32, 2, 10,
                                            4, 1, 10, "mATX", 24, 24, 2, {"HDMI"}, {}, 300);
     intel14->setObjectName("Intel Mining LGA2 300$");
-    h->addMotherboard(intel14);
+    h->addMotherboard(intel14, "Mining");
 
     // AMD Mobos
     // AM1
@@ -261,11 +261,11 @@ void specBuilderTests::createMobos(dataHolder *h)
     motherboard *amd2 = new motherboard("AMD AM1 ATX DDR4 4 DIMMs 100$", "AMD", "AM1", 4, "DDR4", 64, 2, 3,
                                         4, 2, 5, "ATX", 30, 24, 4, {"HDMI"}, {}, 100);
     amd2->setObjectName("AMD AM1 ATX DDR4 4 DIMMs 100$");
-    h->addMotherboard(amd2);
+    h->addMotherboard(amd2, "OC");
     motherboard *amd3 = new motherboard("AMD AM1 ITX DDR4 2 DIMMs 120$", "AMD", "AM1", 2, "DDR4", 32, 2, 3,
                                         2, 1, 4, "ITX", 17, 17, 4, {"HDMI"}, {}, 120);
     amd3->setObjectName("AMD AM1 ITX DDR4 2 DIMMs 120$");
-    h->addMotherboard(amd3);
+    h->addMotherboard(amd3, "OC");
 
     // AM2
     motherboard *amd4 = new motherboard("AMD AM2 mATX DDR5 4 DIMMs 150$", "AMD", "AM2", 4, "DDR5", 32, 2, 3,
@@ -275,53 +275,53 @@ void specBuilderTests::createMobos(dataHolder *h)
     motherboard *amd5 = new motherboard("AMD AM2 ATX DDR5 4 DIMMs 200$", "AMD", "AM2", 4, "DDR5", 64, 2, 3,
                                         4, 3, 5, "ATX", 30, 24, 4, {"HDMI"}, {}, 200);
     amd5->setObjectName("AMD AM2 ATX DDR5 4 DIMMs 200$");
-    h->addMotherboard(amd5);
+    h->addMotherboard(amd5, "OC");
     motherboard *amd6 = new motherboard("AMD AM2 ITX DDR5 2 DIMMs 320$", "AMD", "AM2", 2, "DDR5", 32, 2, 3,
                                         2, 1, 4, "ITX", 17, 17, 4, {"HDMI"}, {}, 320);
     amd6->setObjectName("AMD AM2 ITX DDR5 2 DIMMs 320$");
-    h->addMotherboard(amd6);
+    h->addMotherboard(amd6, "OC");
 
     // EP1
     motherboard *amd7 = new motherboard("AMD EP1 E-ATX DDR4 4 DIMMs 350$", "AMD", "EP1", 4, "DDR4", 128, 4, 4,
                                         10, 2, 6, "E-ATX", 30, 33, 4, {"HDMI"}, {}, 350);
     amd7->setObjectName("AMD EP1 E-ATX DDR4 4 DIMMs 350$");
-    h->addMotherboard(amd7);
+    h->addMotherboard(amd7, "Server");
     motherboard *amd8 = new motherboard("AMD EP1 E-ATX DDR4 4 DIMMs 650$", "AMD", "EP1", 4, "DDR4", 512, 4, 4,
                                         20, 2, 6, "E-ATX", 30, 33, 4, {"HDMI"}, {}, 650);
     amd8->setObjectName("AMD EP1 E-ATX DDR4 4 DIMMs 650$");
-    h->addMotherboard(amd8);
+    h->addMotherboard(amd8, "Server");
     motherboard *amd9 = new motherboard("AMD EP1 E-ATX DDR4 6 DIMMs 550$", "AMD", "EP1", 6, "DDR4", 160, 6, 4,
                                         16, 2, 6, "E-ATX", 30, 33, 4, {"HDMI"}, {}, 550);
     amd9->setObjectName("AMD EP1 E-ATX DDR4 6 DIMMs 550$");
-    h->addMotherboard(amd9);
+    h->addMotherboard(amd9, "Server");
     motherboard *amd10 = new motherboard("AMD EP1 E-ATX DDR4 6 DIMMs 1650$", "AMD", "EP1", 6, "DDR4", 1024, 6, 4,
                                         40, 2, 6, "E-ATX", 30, 33, 4, {"HDMI"}, {}, 1650);
     amd10->setObjectName("AMD EP1 E-ATX DDR4 6 DIMMs 1650$");
-    h->addMotherboard(amd10);
+    h->addMotherboard(amd10, "Server");
 
     // EP2
     motherboard *amd11 = new motherboard("AMD EP2 E-ATX DDR5 4 DIMMs 450$", "AMD", "EP2", 4, "DDR5", 128, 4, 4,
                                         10, 2, 6, "E-ATX", 30, 33, 4, {"HDMI"}, {}, 450);
     amd11->setObjectName("AMD EP2 E-ATX DDR5 4 DIMMs 450$");
-    h->addMotherboard(amd11);
+    h->addMotherboard(amd11, "Server");
     motherboard *amd12 = new motherboard("AMD EP2 E-ATX DDR5 4 DIMMs 650$", "AMD", "EP2", 4, "DDR5", 512, 4, 4,
                                         20, 2, 6, "E-ATX", 30, 33, 4, {"HDMI"}, {}, 750);
     amd12->setObjectName("AMD EP2 E-ATX DDR5 4 DIMMs 750$");
-    h->addMotherboard(amd12);
+    h->addMotherboard(amd12, "Server");
     motherboard *amd13 = new motherboard("AMD EP2 E-ATX DDR5 6 DIMMs 550$", "AMD", "EP2", 6, "DDR5", 160, 6, 4,
                                         16, 2, 6, "E-ATX", 30, 33, 4, {"HDMI"}, {}, 650);
     amd13->setObjectName("AMD EP2 E-ATX DDR5 6 DIMMs 650$");
-    h->addMotherboard(amd13);
+    h->addMotherboard(amd13, "Server");
     motherboard *amd14 = new motherboard("AMD EP2 E-ATX DDR5 6 DIMMs 1650$", "AMD", "EP2", 6, "DDR5", 1024, 6, 4,
                                         40, 2, 6, "E-ATX", 30, 33, 4, {"HDMI"}, {}, 1450);
     amd14->setObjectName("AMD EP2 E-ATX DDR5 6 DIMMs 1450$");
-    h->addMotherboard(amd14);
+    h->addMotherboard(amd14, "Server");
 
     // Mining
     motherboard *amd15 = new motherboard("AMD Mining AM1 200$", "AMD", "AM1", 2, "DDR4", 32, 2, 10,
                                          10, 1, 10, "ATX", 30, 24, 4, {"HDMI"}, {}, 200);
     amd15->setObjectName("AMD Mining AM1 200$");
-    h->addMotherboard(amd15);
+    h->addMotherboard(amd15, "Mining");
 }
 
 void specBuilderTests::createRAM(dataHolder *h)
@@ -709,7 +709,7 @@ void specBuilderTests::testMining(dataHolder *h)
 
     qInfo() << "Mining @500$ Intel:";
     sb.build();
-    QVERIFY2(rec.m_cpus.at(0) == intelcpu, "Wrong Intel CPU received");
+    QVERIFY2(rec.m_cpu == intelcpu, "Wrong Intel CPU received");
     QVERIFY2(rec.m_gpus.size() == 0, "Included GPUs although there are no funds for them");
     QVERIFY2(rec.m_mobo == intelmobo, "Wrong Intel Mobo received");
     QVERIFY2(rec.m_cooler == nullptr, "Added cooler even though CPU comes with one");
@@ -717,10 +717,11 @@ void specBuilderTests::testMining(dataHolder *h)
     QVERIFY2(rec.m_case == case500, "Wrong case");
     QVERIFY2(rec.m_psu == psu500, "Wrong PSU");
     QVERIFY2(rec.m_ram == ram, "Wrong RAM");
+    QVERIFY2(totalCost(&rec) <= 500, "Too expensive!");
 
     qInfo() << "Mining @500$ AMD:";
     sb.build();
-    QVERIFY2(rec.m_cpus.at(0) == amdcpu, "Wrong AMD CPU received");
+    QVERIFY2(rec.m_cpu == amdcpu, "Wrong AMD CPU received");
     QVERIFY2(rec.m_mobo == amdmobo, "Wrong Intel Mobo received");
     QVERIFY2(rec.m_cooler == nullptr, "Added cooler even though CPU comes with one");
     QVERIFY2(rec.m_storage.at(0) == storage, "Different storage than what's supposed to be");
@@ -729,6 +730,7 @@ void specBuilderTests::testMining(dataHolder *h)
     QVERIFY2(rec.m_ram == ram, "Wrong RAM");
     for (int i = 0; i < rec.m_gpus.size(); i++)
         QVERIFY2(rec.m_gpus.at(i) == amdgpus500.at(i), "Wrong GPU added");
+    QVERIFY2(totalCost(&rec) <= 500, "Too expensive!");
 
     // 2nd Test @ 1000$
     pcCase *case1000 = h->CASEMap()->value("Price").at(0);
@@ -746,7 +748,7 @@ void specBuilderTests::testMining(dataHolder *h)
 
     qInfo() << "Mining @1000$ Intel:";
     sb.build();
-    QVERIFY2(rec.m_cpus.at(0) == intelcpu, "Wrong Intel CPU received");
+    QVERIFY2(rec.m_cpu == intelcpu, "Wrong Intel CPU received");
     QVERIFY2(rec.m_mobo == intelmobo, "Wrong Intel Mobo received");
     QVERIFY2(rec.m_cooler == nullptr, "Added cooler even though CPU comes with one");
     QVERIFY2(rec.m_storage.at(0) == storage, "Different storage than what's supposed to be");
@@ -755,10 +757,12 @@ void specBuilderTests::testMining(dataHolder *h)
     QVERIFY2(rec.m_ram == ram, "Wrong RAM");
     for (int i = 0; i < rec.m_gpus.size(); i++)
         QVERIFY2(rec.m_gpus.at(i) == intelgpus1000.at(i), "Wrong GPU added");
+    QVERIFY2(totalCost(&rec) >= 500, "Too cheap!");
+    QVERIFY2(totalCost(&rec) <= 1000, "Too expensive!");
 
     qInfo() << "Mining @1000$ AMD:";
     sb.build();
-    QVERIFY2(rec.m_cpus.at(0) == amdcpu, "Wrong AMD CPU received");
+    QVERIFY2(rec.m_cpu == amdcpu, "Wrong AMD CPU received");
     QVERIFY2(rec.m_mobo == amdmobo, "Wrong Intel Mobo received");
     QVERIFY2(rec.m_cooler == nullptr, "Added cooler even though CPU comes with one");
     QVERIFY2(rec.m_storage.at(0) == storage, "Different storage than what's supposed to be");
@@ -767,6 +771,8 @@ void specBuilderTests::testMining(dataHolder *h)
     QVERIFY2(rec.m_ram == ram, "Wrong RAM");
     for (int i = 0; i < rec.m_gpus.size(); i++)
         QVERIFY2(rec.m_gpus.at(i) == amdgpus1000.at(i), "Wrong GPU added");
+    QVERIFY2(totalCost(&rec) >= 500, "Too cheap!");
+    QVERIFY2(totalCost(&rec) <= 1000, "Too expensive!");
 
     // 3rd Test @ 2000$
     pcCase *case2000 = h->CASEMap()->value("Price").at(0);
@@ -782,7 +788,7 @@ void specBuilderTests::testMining(dataHolder *h)
 
     qInfo() << "Mining @2000$ Intel:";
     sb.build();
-    QVERIFY2(rec.m_cpus.at(0) == intelcpu, "Wrong Intel CPU received");
+    QVERIFY2(rec.m_cpu == intelcpu, "Wrong Intel CPU received");
     QVERIFY2(rec.m_mobo == intelmobo, "Wrong Intel Mobo received");
     QVERIFY2(rec.m_cooler == nullptr, "Added cooler even though CPU comes with one");
     QVERIFY2(rec.m_storage.at(0) == storage, "Different storage than what's supposed to be");
@@ -791,10 +797,12 @@ void specBuilderTests::testMining(dataHolder *h)
     QVERIFY2(rec.m_ram == ram, "Wrong RAM");
     for (int i = 0; i < rec.m_gpus.size(); i++)
         QVERIFY2(rec.m_gpus.at(i) == intelgpus2000.at(i), "Wrong GPU added");
+    QVERIFY2(totalCost(&rec) >= 1000, "Too cheap!");
+    QVERIFY2(totalCost(&rec) <= 2000, "Too expensive!");
 
     qInfo() << "Mining @2000$ AMD:";
     sb.build();
-    QVERIFY2(rec.m_cpus.at(0) == amdcpu, "Wrong AMD CPU received");
+    QVERIFY2(rec.m_cpu == amdcpu, "Wrong AMD CPU received");
     QVERIFY2(rec.m_mobo == amdmobo, "Wrong Intel Mobo received");
     QVERIFY2(rec.m_cooler == nullptr, "Added cooler even though CPU comes with one");
     QVERIFY2(rec.m_storage.at(0) == storage, "Different storage than what's supposed to be");
@@ -803,6 +811,8 @@ void specBuilderTests::testMining(dataHolder *h)
     QVERIFY2(rec.m_ram == ram, "Wrong RAM");
     for (int i = 0; i < rec.m_gpus.size(); i++)
         QVERIFY2(rec.m_gpus.at(i) == amdgpus2000.at(i), "Wrong GPU added");
+    QVERIFY2(totalCost(&rec) >= 1000, "Too cheap!");
+    QVERIFY2(totalCost(&rec) <= 2000, "Too expensive!");
 
     // 4th Test @ 3000$
     pcCase *case3000 = h->CASEMap()->value("ATX").at(4);
@@ -822,7 +832,7 @@ void specBuilderTests::testMining(dataHolder *h)
 
     qInfo() << "Mining @3000$ Intel:";
     sb.build();
-    QVERIFY2(rec.m_cpus.at(0) == intelcpu, "Wrong Intel CPU received");
+    QVERIFY2(rec.m_cpu == intelcpu, "Wrong Intel CPU received");
     QVERIFY2(rec.m_mobo == intelmobo, "Wrong Intel Mobo received");
     QVERIFY2(rec.m_cooler == nullptr, "Added cooler even though CPU comes with one");
     QVERIFY2(rec.m_storage.at(0) == storage, "Different storage than what's supposed to be");
@@ -831,10 +841,12 @@ void specBuilderTests::testMining(dataHolder *h)
     QVERIFY2(rec.m_ram == ram, "Wrong RAM");
     for (int i = 0; i < rec.m_gpus.size(); i++)
         QVERIFY2(rec.m_gpus.at(i) == intelgpus3000.at(i), "Wrong GPU added");
+    QVERIFY2(totalCost(&rec) >= 2000, "Too cheap!");
+    QVERIFY2(totalCost(&rec) <= 3000, "Too expensive!");
 
     qInfo() << "Mining @3000$ AMD:";
     sb.build();
-    QVERIFY2(rec.m_cpus.at(0) == amdcpu, "Wrong AMD CPU received");
+    QVERIFY2(rec.m_cpu == amdcpu, "Wrong AMD CPU received");
     QVERIFY2(rec.m_mobo == amdmobo, "Wrong Intel Mobo received");
     QVERIFY2(rec.m_cooler == nullptr, "Added cooler even though CPU comes with one");
     QVERIFY2(rec.m_storage.at(0) == storage, "Different storage than what's supposed to be");
@@ -843,6 +855,8 @@ void specBuilderTests::testMining(dataHolder *h)
     QVERIFY2(rec.m_ram == ram, "Wrong RAM");
     for (int i = 0; i < rec.m_gpus.size(); i++)
         QVERIFY2(rec.m_gpus.at(i) == amdgpus3000.at(i), "Wrong GPU added");
+    QVERIFY2(totalCost(&rec) >= 2000, "Too cheap!");
+    QVERIFY2(totalCost(&rec) <= 3000, "Too expensive!");
 
     // 5th Test @ 4000$
     pcCase *case4000 = h->CASEMap()->value("ATX").at(4);
@@ -865,7 +879,7 @@ void specBuilderTests::testMining(dataHolder *h)
 
     qInfo() << "Mining @4000$ Intel:";
     sb.build();
-    QVERIFY2(rec.m_cpus.at(0) == intelcpu, "Wrong Intel CPU received");
+    QVERIFY2(rec.m_cpu == intelcpu, "Wrong Intel CPU received");
     QVERIFY2(rec.m_mobo == intelmobo, "Wrong Intel Mobo received");
     QVERIFY2(rec.m_cooler == nullptr, "Added cooler even though CPU comes with one");
     QVERIFY2(rec.m_storage.at(0) == storage, "Different storage than what's supposed to be");
@@ -874,10 +888,11 @@ void specBuilderTests::testMining(dataHolder *h)
     QVERIFY2(rec.m_ram == ram, "Wrong RAM");
     for (int i = 0; i < rec.m_gpus.size(); i++)
         QVERIFY2(rec.m_gpus.at(i) == intelgpus4000.at(i), "Wrong GPU added");
+    QVERIFY2(totalCost(&rec) >= 3000, "Too cheap!");
 
     qInfo() << "Mining @4000$ AMD:";
     sb.build();
-    QVERIFY2(rec.m_cpus.at(0) == amdcpu, "Wrong AMD CPU received");
+    QVERIFY2(rec.m_cpu == amdcpu, "Wrong AMD CPU received");
     QVERIFY2(rec.m_mobo == amdmobo, "Wrong Intel Mobo received");
     QVERIFY2(rec.m_cooler == nullptr, "Added cooler even though CPU comes with one");
     QVERIFY2(rec.m_storage.at(0) == storage, "Different storage than what's supposed to be");
@@ -886,31 +901,279 @@ void specBuilderTests::testMining(dataHolder *h)
     QVERIFY2(rec.m_ram == ram, "Wrong RAM");
     for (int i = 0; i < rec.m_gpus.size(); i++)
         QVERIFY2(rec.m_gpus.at(i) == amdgpus4000.at(i), "Wrong GPU added");
+    QVERIFY2(totalCost(&rec) >= 3000, "Too cheap!");
+
+    qDebug() << "Completed Mining Spec Builder Unit Tests";
 }
 
 void specBuilderTests::testServer(dataHolder *h)
 {
+    specbuilder sb(h);
+    sbtestsreceiver rec;
+    QObject::connect(&sb, &specbuilder::specs, &rec, &sbtestsreceiver::specs);
 
+    // General Specs
+    cooler *cooler = h->COOLERMap()->value("Air").at(5);
+    // Intel Under 16K$
+    CPU *intelcpu16k = h->CPUMap()->value("Intel").at(8);
+    motherboard *intelmobo16k = h->MOBOMap()->value("Server").at(0);
+    RAM *intelram16k = h->RAMMap()->value("DDR4").at(6);
+    PSU *intelpsu16k = h->PSUMap()->value("Server").at(0);
+    pcCase *intelcase16k = h->CASEMap()->value("E-ATX").at(1);
+    storage *intelcache16k = h->STORAGEMap()->value("M.2").at(0);
+    qInfo() << "Server @<16K$ Intel:";
+    sb.build();
+    QVERIFY2(rec.m_cpu == intelcpu16k, "Wrong CPU");
+    QVERIFY2(rec.m_mobo == intelmobo16k, "Wrong Motherboard");
+    QVERIFY2(rec.m_ram == intelram16k, "Wrong RAM");
+    QVERIFY2(rec.m_psu == intelpsu16k, "Wrong PSU");
+    QVERIFY2(rec.m_case == intelcase16k, "Wrong Case");
+    QVERIFY2(rec.m_storage.at(0) == intelcache16k, "Wrong Cache M.2 SSD");
+    QVERIFY2(rec.m_gpus.size() == 0, "No GPUs should be purchased");
+    QVERIFY2(totalCost(&rec) <= 16000, "Too expensive!");
+
+    // Intel @ 16K$ < Budget < 26K$
+    CPU *intelcpu26k = h->CPUMap()->value("Intel").at(8);
+    motherboard *intelmobo26k = h->MOBOMap()->value("Server").at(2);
+    RAM *intelram26k = h->RAMMap()->value("DDR4").at(7);
+    PSU *intelpsu26k = h->PSUMap()->value("Server").at(1);
+    pcCase *intelcase26k = h->CASEMap()->value("E-ATX").at(2);
+    storage *intelcache26k = h->STORAGEMap()->value("M.2").at(1);
+    qInfo() << "Server @ 16K$ < Budet < 26K$ Intel:";
+    sb.build();
+    QVERIFY2(rec.m_cpu == intelcpu26k, "Wrong CPU");
+    QVERIFY2(rec.m_mobo == intelmobo26k, "Wrong Motherboard");
+    QVERIFY2(rec.m_ram == intelram26k, "Wrong RAM");
+    QVERIFY2(rec.m_psu == intelpsu26k, "Wrong PSU");
+    QVERIFY2(rec.m_case == intelcase26k, "Wrong Case");
+    QVERIFY2(rec.m_storage.at(0) == intelcache26k, "Wrong Cache M.2 SSD");
+    QVERIFY2(rec.m_gpus.size() == 0, "No GPUs should be purchased");
+    QVERIFY2(totalCost(&rec) >= 16000, "Too cheap!");
+    QVERIFY2(totalCost(&rec) <= 26000, "Too expensive!");
+
+    // Intel @ 26K$ < Budget < 35K$
+    CPU *intelcpu35k = h->CPUMap()->value("Intel").at(9);
+    motherboard *intelmobo35k = h->MOBOMap()->value("Server").at(1);
+    RAM *intelram35k = h->RAMMap()->value("DDR4").at(7);
+    PSU *intelpsu35k = h->PSUMap()->value("Server").at(3);
+    pcCase *intelcase35k = h->CASEMap()->value("E-ATX").at(3);
+    storage *intelcache35k = h->STORAGEMap()->value("M.2").at(2);
+    qInfo() << "Server @ 26K$ < Budget < 35K$ Intel:";
+    sb.build();
+    QVERIFY2(rec.m_cpu == intelcpu35k, "Wrong CPU");
+    QVERIFY2(rec.m_mobo == intelmobo35k, "Wrong Motherboard");
+    QVERIFY2(rec.m_ram == intelram35k, "Wrong RAM");
+    QVERIFY2(rec.m_psu == intelpsu35k, "Wrong PSU");
+    QVERIFY2(rec.m_case == intelcase35k, "Wrong Case");
+    QVERIFY2(rec.m_storage.at(0) == intelcache35k, "Wrong Cache M.2 SSD");
+    QVERIFY2(rec.m_gpus.size() == 0, "No GPUs should be purchased");
+    QVERIFY2(totalCost(&rec) >= 26000, "Too cheap!");
+    QVERIFY2(totalCost(&rec) <= 35000, "Too expensive!");
+
+    // Intel @ 35K$ < Budget
+    CPU *intelcpurich = h->CPUMap()->value("Intel").at(9);
+    motherboard *intelmoborich = h->MOBOMap()->value("Server").at(3);
+    RAM *intelramrich = h->RAMMap()->value("DDR4").at(5);
+    PSU *intelpsurich = h->PSUMap()->value("Server").at(4);
+    pcCase *intelcaserich = h->CASEMap()->value("E-ATX").at(3);
+    storage *intelcacherich = h->STORAGEMap()->value("M.2").at(3);
+    qInfo() << "Server @ 35K$ < Budget Intel:";
+    sb.build();
+    QVERIFY2(rec.m_cpu == intelcpurich, "Wrong CPU");
+    QVERIFY2(rec.m_mobo == intelmoborich, "Wrong Motherboard");
+    QVERIFY2(rec.m_ram == intelramrich, "Wrong RAM");
+    QVERIFY2(rec.m_psu == intelpsurich, "Wrong PSU");
+    QVERIFY2(rec.m_case == intelcaserich, "Wrong Case");
+    QVERIFY2(rec.m_storage.at(0) == intelcacherich, "Wrong Cache M.2 SSD");
+    QVERIFY2(rec.m_gpus.size() == 0, "No GPUs should be purchased");
+    QVERIFY2(totalCost(&rec) >= 35000, "Too cheap!");
+
+    // AMD DDR4 Under 15K$
+    CPU *amdcpu15 = h->CPUMap()->value("AMD").at(8);
+    motherboard *amdmobo15 = h->MOBOMap()->value("Server").at(4);
+    RAM *amdram15 = h->RAMMap()->value("DDR4").at(6);
+    PSU *amdpsu15 = h->PSUMap()->value("Server").at(0);
+    pcCase *amdcase15 = h->CASEMap()->value("E-ATX").at(1);
+    storage *amdcache15 = h->STORAGEMap()->value("M.2").at(0);
+    qInfo() << "Server @ <15K AMD DDR4:";
+    sb.build();
+    QVERIFY2(rec.m_cpu == amdcpu15, "Wrong CPU");
+    QVERIFY2(rec.m_mobo == amdmobo15, "Wrong Motherboard");
+    QVERIFY2(rec.m_ram == amdram15, "Wrong RAM");
+    QVERIFY2(rec.m_psu == amdpsu15, "Wrong PSU");
+    QVERIFY2(rec.m_case == amdcase15, "Wrong Case");
+    QVERIFY2(rec.m_storage.at(0) == amdcache15, "Wrong Cache M.2 SSD");
+    QVERIFY2(rec.m_gpus.size() == 0, "No GPUs should be purchased");
+    QVERIFY2(totalCost(&rec) <= 15000, "Too expensive!");
+
+    // AMD DDR4 @ 15K$ < Budget < 23K$
+    CPU *amdcpu23 = h->CPUMap()->value("AMD").at(8);
+    motherboard *amdmobo23 = h->MOBOMap()->value("Server").at(6);
+    RAM *amdram23 = h->RAMMap()->value("DDR4").at(7);
+    PSU *amdpsu23 = h->PSUMap()->value("Server").at(1);
+    pcCase *amdcase23 = h->CASEMap()->value("E-ATX").at(2);
+    storage *amdcache23 = h->STORAGEMap()->value("M.2").at(1);
+    qInfo() << "Server @ 15K < Budget < 23K AMD DDR4:";
+    sb.build();
+    QVERIFY2(rec.m_cpu == amdcpu23, "Wrong CPU");
+    QVERIFY2(rec.m_mobo == amdmobo23, "Wrong Motherboard");
+    QVERIFY2(rec.m_ram == amdram23, "Wrong RAM");
+    QVERIFY2(rec.m_psu == amdpsu23, "Wrong PSU");
+    QVERIFY2(rec.m_case == amdcase23, "Wrong Case");
+    QVERIFY2(rec.m_storage.at(0) == amdcache23, "Wrong Cache M.2 SSD");
+    QVERIFY2(rec.m_gpus.size() == 0, "No GPUs should be purchased");
+    QVERIFY2(totalCost(&rec) >= 15000, "Too cheap!");
+    QVERIFY2(totalCost(&rec) <= 23000, "Too expensive!");
+
+    // AMD DDR4 @ 23$ < Budget < 31K$
+    CPU *amdcpu31 = h->CPUMap()->value("AMD").at(8);
+    motherboard *amdmobo31 = h->MOBOMap()->value("Server").at(5);
+    RAM *amdram31 = h->RAMMap()->value("DDR4").at(7);
+    PSU *amdpsu31 = h->PSUMap()->value("Server").at(3);
+    pcCase *amdcase31 = h->CASEMap()->value("E-ATX").at(3);
+    storage *amdcache31 = h->STORAGEMap()->value("M.2").at(2);
+    qInfo() << "Server @ 23K < Budget < 31K AMD DDR4:";
+    sb.build();
+    QVERIFY2(rec.m_cpu == amdcpu31, "Wrong CPU");
+    QVERIFY2(rec.m_mobo == amdmobo31, "Wrong Motherboard");
+    QVERIFY2(rec.m_ram == amdram31, "Wrong RAM");
+    QVERIFY2(rec.m_psu == amdpsu31, "Wrong PSU");
+    QVERIFY2(rec.m_case == amdcase31, "Wrong Case");
+    QVERIFY2(rec.m_storage.at(0) == amdcache31, "Wrong Cache M.2 SSD");
+    QVERIFY2(rec.m_gpus.size() == 0, "No GPUs should be purchased");
+    QVERIFY2(totalCost(&rec) >= 23000, "Too cheap!");
+    QVERIFY2(totalCost(&rec) <= 31000, "Too expensive!");
+
+    // AMD DDR4 @ Budget > 31K$
+    CPU *amdcpuover31 = h->CPUMap()->value("AMD").at(8);
+    motherboard *amdmoboover31 = h->MOBOMap()->value("Server").at(7);
+    RAM *amdramover31 = h->RAMMap()->value("DDR4").at(5);
+    PSU *amdpsuover31 = h->PSUMap()->value("Server").at(4);
+    pcCase *amdcaseover31 = h->CASEMap()->value("E-ATX").at(3);
+    storage *amdcacheover31 = h->STORAGEMap()->value("M.2").at(3);
+    qInfo() << "Server @ Budget > 31K AMD DDR4:";
+    sb.build();
+    QVERIFY2(rec.m_cpu == amdcpuover31, "Wrong CPU");
+    QVERIFY2(rec.m_mobo == amdmoboover31, "Wrong Motherboard");
+    QVERIFY2(rec.m_ram == amdramover31, "Wrong RAM");
+    QVERIFY2(rec.m_psu == amdpsuover31, "Wrong PSU");
+    QVERIFY2(rec.m_case == amdcaseover31, "Wrong Case");
+    QVERIFY2(rec.m_storage.at(0) == amdcacheover31, "Wrong Cache M.2 SSD");
+    QVERIFY2(rec.m_gpus.size() == 0, "No GPUs should be purchased");
+    QVERIFY2(totalCost(&rec) >= 31000, "Too cheap!");
+
+    // AMD DDR5 Under 17K$
+    CPU *amd5cpu17 = h->CPUMap()->value("AMD").at(9);
+    motherboard *amd5mobo17 = h->MOBOMap()->value("Server").at(8);
+    RAM *amd5ram17 = h->RAMMap()->value("DDR5").at(6);
+    PSU *amd5psu17 = h->PSUMap()->value("Server").at(0);
+    pcCase *amd5case17 = h->CASEMap()->value("E-ATX").at(1);
+    storage *amd5cache17 = h->STORAGEMap()->value("M.2").at(0);
+    qInfo() << "Server @ <17K AMD DDR5:";
+    sb.build();
+    QVERIFY2(rec.m_cpu == amd5cpu17, "Wrong CPU");
+    QVERIFY2(rec.m_mobo == amd5mobo17, "Wrong Motherboard");
+    QVERIFY2(rec.m_ram == amd5ram17, "Wrong RAM");
+    QVERIFY2(rec.m_psu == amd5psu17, "Wrong PSU");
+    QVERIFY2(rec.m_case == amd5case17, "Wrong Case");
+    QVERIFY2(rec.m_storage.at(0) == amd5cache17, "Wrong Cache M.2 SSD");
+    QVERIFY2(rec.m_gpus.size() == 0, "No GPUs should be purchased");
+    QVERIFY2(totalCost(&rec) <= 17000, "Too expensive!");
+
+    // AMD DDR5 @ 17K$ < Budget < 25K$
+    CPU *amd5cpu25 = h->CPUMap()->value("AMD").at(9);
+    motherboard *amd5mobo25 = h->MOBOMap()->value("Server").at(10);
+    RAM *amd5ram25 = h->RAMMap()->value("DDR5").at(7);
+    PSU *amd5psu25 = h->PSUMap()->value("Server").at(1);
+    pcCase *amd5case25 = h->CASEMap()->value("E-ATX").at(2);
+    storage *amd5cache25 = h->STORAGEMap()->value("M.2").at(1);
+    qInfo() << "Server @ 17K < Budget < 25K AMD DDR5:";
+    sb.build();
+    QVERIFY2(rec.m_cpu == amd5cpu25, "Wrong CPU");
+    QVERIFY2(rec.m_mobo == amd5mobo25, "Wrong Motherboard");
+    QVERIFY2(rec.m_ram == amd5ram25, "Wrong RAM");
+    QVERIFY2(rec.m_psu == amd5psu25, "Wrong PSU");
+    QVERIFY2(rec.m_case == amd5case25, "Wrong Case");
+    QVERIFY2(rec.m_storage.at(0) == amd5cache25, "Wrong Cache M.2 SSD");
+    QVERIFY2(rec.m_gpus.size() == 0, "No GPUs should be purchased");
+    QVERIFY2(totalCost(&rec) >= 17000, "Too cheap!");
+    QVERIFY2(totalCost(&rec) <= 25000, "Too expensive!");
+
+    // AMD DDR5 @ 25$ < Budget < 35K$
+    CPU *amd5cpu35 = h->CPUMap()->value("AMD").at(9);
+    motherboard *amd5mobo35 = h->MOBOMap()->value("Server").at(9);
+    RAM *amd5ram35 = h->RAMMap()->value("Price").at(h->RAMMap()->value("Price").size() - 2);
+    PSU *amd5psu35 = h->PSUMap()->value("Server").at(3);
+    pcCase *amd5case35 = h->CASEMap()->value("E-ATX").at(3);
+    storage *amd5cache35 = h->STORAGEMap()->value("M.2").at(2);
+    qInfo() << "Server @ 25K < Budget < 35K AMD DDR5:";
+    sb.build();
+    QVERIFY2(rec.m_cpu == amd5cpu35, "Wrong CPU");
+    QVERIFY2(rec.m_mobo == amd5mobo35, "Wrong Motherboard");
+    QVERIFY2(rec.m_ram == amd5ram35, "Wrong RAM");
+    QVERIFY2(rec.m_psu == amd5psu35, "Wrong PSU");
+    QVERIFY2(rec.m_case == amd5case35, "Wrong Case");
+    QVERIFY2(rec.m_storage.at(0) == amd5cache35, "Wrong Cache M.2 SSD");
+    QVERIFY2(rec.m_gpus.size() == 0, "No GPUs should be purchased");
+    QVERIFY2(totalCost(&rec) >= 25000, "Too cheap!");
+    QVERIFY2(totalCost(&rec) <= 35000, "Too expensive!");
+
+    // AMD DDR5 @ Budget > 35K$
+    CPU *amd5cpuover35 = h->CPUMap()->value("AMD").at(9);
+    motherboard *amd5moboover35 = h->MOBOMap()->value("Server").at(11);
+    RAM *amd5ramover35 = h->RAMMap()->value("Price").at(h->RAMMap()->value("Price").size() - 1);
+    PSU *amd5psuover35 = h->PSUMap()->value("Server").at(4);
+    pcCase *amd5caseover35 = h->CASEMap()->value("E-ATX").at(3);
+    storage *amd5cacheover35 = h->STORAGEMap()->value("M.2").at(3);
+    qInfo() << "Server @ Budget > 35K AMD DDR5:";
+    sb.build();
+    QVERIFY2(rec.m_cpu == amd5cpuover35, "Wrong CPU");
+    QVERIFY2(rec.m_mobo == amd5moboover35, "Wrong Motherboard");
+    QVERIFY2(rec.m_ram == amd5ramover35, "Wrong RAM");
+    QVERIFY2(rec.m_psu == amd5psuover35, "Wrong PSU");
+    QVERIFY2(rec.m_case == amd5caseover35, "Wrong Case");
+    QVERIFY2(rec.m_storage.at(0) == amd5cacheover35, "Wrong Cache M.2 SSD");
+    QVERIFY2(rec.m_gpus.size() == 0, "No GPUs should be purchased");
+    QVERIFY2(totalCost(&rec) >= 35000, "Too cheap!");
+
+    qDebug() << "Completed Server Spec Builder Unit Tests";
 }
 
 void specBuilderTests::testOffice(dataHolder *h)
 {
-
+    specbuilder sb(h);
+    sbtestsreceiver rec;
+    QObject::connect(&sb, &specbuilder::specs, &rec, &sbtestsreceiver::specs);
 }
 
 void specBuilderTests::testGaming(dataHolder *h)
 {
-
+    specbuilder sb(h);
+    sbtestsreceiver rec;
+    QObject::connect(&sb, &specbuilder::specs, &rec, &sbtestsreceiver::specs);
 }
 
 void specBuilderTests::testOverclocking(dataHolder *h)
 {
-
+    specbuilder sb(h);
+    sbtestsreceiver rec;
+    QObject::connect(&sb, &specbuilder::specs, &rec, &sbtestsreceiver::specs);
 }
 
 void specBuilderTests::testGeneral(dataHolder *h)
 {
+    specbuilder sb(h);
+    sbtestsreceiver rec;
+    QObject::connect(&sb, &specbuilder::specs, &rec, &sbtestsreceiver::specs);
+}
 
+int specBuilderTests::totalCost(sbtestsreceiver *sbr)
+{
+    int sum = sbr->m_cpu->getPrice() + sbr->m_mobo->getPrice() + sbr->m_ram->getPrice() +
+            sbr->m_cooler->getPrice() + sbr->m_psu->getPrice() + sbr->m_case->getPrice();
+    foreach(storage *storage, sbr->m_storage)
+        sum += storage->getPrice();
+    return sum;
 }
 
 void specBuilderTests::runTests()
