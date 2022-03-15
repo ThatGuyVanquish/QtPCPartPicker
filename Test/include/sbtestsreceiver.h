@@ -1,7 +1,7 @@
 #ifndef SBTESTSRECEIVER_H
 #define SBTESTSRECEIVER_H
 
-#include "specbuildertests.h"
+#include "../../include/Database/dataholder.h"
 
 #include <QObject>
 
