@@ -1,0 +1,125 @@
+{
+    "AIO": {
+        "120mm LGA1, AM1 80W 30$": {
+            "Cooler Height": "3",
+            "Included Fans": "1",
+            "Maximum Fans": "2",
+            "Model": "120mm LGA1, AM1 80W 30$",
+            "Price": "30",
+            "Radiator Size": "120",
+            "Sockets": "LGA1, AM1",
+            "TDP": "80",
+            "Type": "AIO"
+        },
+        "120mm LGA1, LGA2, AM1 100W 40$": {
+            "Cooler Height": "3",
+            "Included Fans": "1",
+            "Maximum Fans": "2",
+            "Model": "120mm LGA1, LGA2, AM1 100W 40$",
+            "Price": "40",
+            "Radiator Size": "120",
+            "Sockets": "LGA1, LGA2, AM1",
+            "TDP": "100",
+            "Type": "AIO"
+        },
+        "240mm LGA1, LGA2, AM1, AM2 200W 80$": {
+            "Cooler Height": "3",
+            "Included Fans": "2",
+            "Maximum Fans": "4",
+            "Model": "240mm LGA1, LGA2, AM1, AM2 200W 80$",
+            "Price": "80",
+            "Radiator Size": "240",
+            "Sockets": "LGA1, LGA2, AM1, AM2",
+            "TDP": "200",
+            "Type": "AIO"
+        },
+        "240mm LGA2, LGA3, AM1, AM2 250W 100$": {
+            "Cooler Height": "3",
+            "Included Fans": "2",
+            "Maximum Fans": "4",
+            "Model": "240mm LGA2, LGA3, AM1, AM2 250W 100$",
+            "Price": "100",
+            "Radiator Size": "240",
+            "Sockets": "LGA2, LGA3, AM1, AM2",
+            "TDP": "250",
+            "Type": "AIO"
+        },
+        "360mm LGA2, LGA3, AM2 400W 200$": {
+            "Cooler Height": "3",
+            "Included Fans": "3",
+            "Maximum Fans": "6",
+            "Model": "360mm LGA2, LGA3, AM2 400W 200$",
+            "Price": "200",
+            "Radiator Size": "360",
+            "Sockets": "LGA2, LGA3, AM2",
+            "TDP": "400",
+            "Type": "AIO"
+        }
+    },
+    "Air Cooler": {
+        "12cm 100W LGA1, LGA2, AM1, AM2 25$": {
+            "Cooler Height": "12",
+            "Included Fans": "1",
+            "Maximum Fans": "1",
+            "Model": "12cm 100W LGA1, LGA2, AM1, AM2 25$",
+            "Price": "25",
+            "Sockets": "LGA1, LGA2, AM1, AM2",
+            "TDP": "100",
+            "Type": "Air"
+        },
+        "12cm 40W LGA1, AM1 15$": {
+            "Cooler Height": "12",
+            "Included Fans": "1",
+            "Maximum Fans": "1",
+            "Model": "12cm 40W LGA1, AM1 15$",
+            "Price": "15",
+            "Sockets": "LGA1, AM1",
+            "TDP": "40",
+            "Type": "Air"
+        },
+        "13cm 150W LGA2, LGA3, AM1, AM2 45$": {
+            "Cooler Height": "13",
+            "Included Fans": "1",
+            "Maximum Fans": "2",
+            "Model": "13cm 150W LGA2, LGA3, AM1, AM2 45$",
+            "Price": "45",
+            "Radiator Size": "120",
+            "Sockets": "LGA3, LGA2, AM1, AM2",
+            "TDP": "150",
+            "Type": "Air"
+        },
+        "16cm 250W LGA1, LGA2, LGA3, AM1, AM2 80$": {
+            "Cooler Height": "16",
+            "Included Fans": "2",
+            "Maximum Fans": "2",
+            "Model": "16cm 250W LGA1, LGA2, LGA3, AM1, AM2 80$",
+            "Price": "80",
+            "Radiator Size": "240",
+            "Sockets": "LGA3, LGA2, LGA1, AM1, AM2",
+            "TDP": "250",
+            "Type": "Air"
+        },
+        "18cm 350W LGA1, LGA2, LGA3, AM1, AM2 120$": {
+            "Cooler Height": "18",
+            "Included Fans": "2",
+            "Maximum Fans": "2",
+            "Model": "18cm 350W LGA1, LGA2, LGA3, AM1, AM2 120$",
+            "Price": "120",
+            "Radiator Size": "240",
+            "Sockets": "LGA3, LGA2, LGA1, AM1, AM2",
+            "TDP": "350",
+            "Type": "Air"
+        },
+        "8cm 500W IN1, IN2, EP1, EP2 400$": {
+            "Cooler Height": "8",
+            "Included Fans": "0",
+            "Maximum Fans": "0",
+            "Model": "8cm 500W IN1, IN2, EP1, EP2 400$",
+            "Price": "400",
+            "Radiator Size": "360",
+            "Sockets": "IN1, IN2, EP1, EP2",
+            "TDP": "500",
+            "Type": "Air"
+        }
+    }
+}

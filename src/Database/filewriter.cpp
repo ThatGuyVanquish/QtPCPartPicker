@@ -8,6 +8,7 @@ fileWriter::fileWriter(dataHolder *db):
     m_ram(db->getDir() + "RAM.JSON"),
     m_storage(db->getDir() + "Storage.JSON"),
     m_case(db->getDir() + "Case.JSON"),
+    m_psu(db->getDir() + "PSU.JSON"),
     m_cooler(db->getDir() + "Cooler.JSON")
 {}
 
@@ -27,6 +28,9 @@ void fileWriter::closeFiles()
     else return;
     if (m_storage.isOpen())
         m_storage.close();
+    else return;
+    if (m_psu.isOpen())
+        m_psu.close();
     else return;
     if (m_case.isOpen())
         m_case.close();
@@ -75,6 +79,15 @@ int fileWriter::openFiles()
     {
         qCritical() << "Could not write to Storage file!";
         qCritical() << m_storage.errorString();
+        qInfo() << "Closing opened files";
+        closeFiles();
+        return -5;
+    }
+
+    if (!m_psu.open(QIODevice::WriteOnly))
+    {
+        qCritical() << "Could not write to PSU file!";
+        qCritical() << m_psu.errorString();
         qInfo() << "Closing opened files";
         closeFiles();
         return -5;
