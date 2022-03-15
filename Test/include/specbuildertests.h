@@ -34,7 +34,8 @@ public:
     void testServer(dataHolder *h);
     void testOffice(dataHolder *h);
     void testGaming(dataHolder *h);
-
+    void generate(dataHolder *h);
+    void backup2(dataHolder *h);
     int totalCost(sbtestsreceiver *sbr);
 
 public slots:
