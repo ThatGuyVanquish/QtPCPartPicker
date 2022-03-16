@@ -43,6 +43,8 @@ public:
 
     int getWattage();
 
+    int getUsableWattage();
+
     bool hasFan();
 
     int getPrice();
@@ -58,7 +60,7 @@ public:
     virtual string toString();
 
 public slots:
-    void couldPower(QList<CPU*> cpus, QList<GPU*> gpus); // Up to 2 CPUs, multiple GPUs
+    void couldPower(CPU *cpu, QList<GPU*> gpus); // Up to 2 CPUs, multiple GPUs
 
 signals:
 

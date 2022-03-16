@@ -71,6 +71,11 @@ int PSU::getWattage()
     return _wattage;
 }
 
+int PSU::getUsableWattage()
+{
+    return _wattage * effPercentage();
+}
+
 bool PSU::hasFan()
 {
     return _fan;
@@ -144,12 +149,10 @@ double PSU::effPercentage()
     return 0;
 }
 
-void PSU::couldPower(QList<CPU *> cpus, QList<GPU *> gpus)
+void PSU::couldPower(CPU *cpu, QList<GPU *> gpus)
 {
     double eff = effPercentage();
-    int powerUsage = 0;
-    foreach(CPU* cpu, cpus)
-        powerUsage += cpu->getTDP();
+    int powerUsage = cpu->getTDP();
     foreach(GPU* gpu, gpus)
         powerUsage += gpu->getTDP();
     _canPower = powerUsage <= _wattage * eff;
