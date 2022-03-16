@@ -242,7 +242,7 @@
             "Width": "33",
             "Wifi": "0"
         },
-        "AMD EP2 E-ATX DDR5 4 DIMMs 650$": {
+        "AMD EP2 E-ATX DDR5 4 DIMMs 750$": {
             "Audio Outputs": "",
             "CPU Manufacturer": "AMD",
             "Ethernet": "1",
@@ -251,7 +251,7 @@
             "Length": "30",
             "M.2 Slots": "2",
             "Max RAM Size": "512",
-            "Model": "AMD EP2 E-ATX DDR5 4 DIMMs 650$",
+            "Model": "AMD EP2 E-ATX DDR5 4 DIMMs 750$",
             "PCIE Slots": "4",
             "Price": "750",
             "RAM Channels": "4",
@@ -264,7 +264,7 @@
             "Width": "33",
             "Wifi": "0"
         },
-        "AMD EP2 E-ATX DDR5 6 DIMMs 1650$": {
+        "AMD EP2 E-ATX DDR5 6 DIMMs 1450$": {
             "Audio Outputs": "",
             "CPU Manufacturer": "AMD",
             "Ethernet": "1",
@@ -273,7 +273,7 @@
             "Length": "30",
             "M.2 Slots": "2",
             "Max RAM Size": "1024",
-            "Model": "AMD EP2 E-ATX DDR5 6 DIMMs 1650$",
+            "Model": "AMD EP2 E-ATX DDR5 6 DIMMs 1450$",
             "PCIE Slots": "4",
             "Price": "1450",
             "RAM Channels": "6",
@@ -286,7 +286,7 @@
             "Width": "33",
             "Wifi": "0"
         },
-        "AMD EP2 E-ATX DDR5 6 DIMMs 550$": {
+        "AMD EP2 E-ATX DDR5 6 DIMMs 650$": {
             "Audio Outputs": "",
             "CPU Manufacturer": "AMD",
             "Ethernet": "1",
@@ -295,7 +295,7 @@
             "Length": "30",
             "M.2 Slots": "2",
             "Max RAM Size": "160",
-            "Model": "AMD EP2 E-ATX DDR5 6 DIMMs 550$",
+            "Model": "AMD EP2 E-ATX DDR5 6 DIMMs 650$",
             "PCIE Slots": "4",
             "Price": "650",
             "RAM Channels": "6",
@@ -484,7 +484,7 @@
             "Width": "24",
             "Wifi": "0"
         },
-        "Intel LGA2 ATX DDR4 4 DIMMs 200$ OC": {
+        "Intel LGA2 ATX DDR4 4 DIMMs 225$ OC": {
             "Audio Outputs": "",
             "CPU Manufacturer": "Intel",
             "Ethernet": "1",
@@ -493,7 +493,7 @@
             "Length": "30",
             "M.2 Slots": "1",
             "Max RAM Size": "64",
-            "Model": "Intel LGA2 ATX DDR4 4 DIMMs 200$ OC",
+            "Model": "Intel LGA2 ATX DDR4 4 DIMMs 225$ OC",
             "PCIE Slots": "3",
             "Price": "225",
             "RAM Channels": "2",
@@ -539,7 +539,7 @@
             "Max RAM Size": "32",
             "Model": "Intel LGA2 mATX DDR4 4 DIMMs 75$",
             "PCIE Slots": "3",
-            "Price": "50",
+            "Price": "75",
             "RAM Channels": "2",
             "RAM Slots": "4",
             "RAM Version": "DDR4",

@@ -77,11 +77,11 @@
             "Manufacturer": "AMD",
             "Model": "6 Cores AM1",
             "PCIe": "16",
-            "Price": "100",
+            "Price": "150",
             "Socket": "AM1",
             "TDP": "30",
             "Threads": "12",
-            "Unlocked": "0",
+            "Unlocked": "1",
             "iGPU": "1"
         },
         "6 Cores AM2": {
