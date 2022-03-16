@@ -26,8 +26,10 @@ void specbuilder::mining(int budget)
     int firstBudget = budget;
     do {
         firstBudget = firstBudget * 0.35;
-        mobo = m_db->findMobo(moboBudget, false, desiredCPU); // motherboard *findMobo(int budget, bool cheapest, QString manu)
-        firstBudget -= mobo->getPrice();
+        cpu = nullptr;
+        ram = nullptr;
+        cooler = nullptr;
+        mobo = m_db->findMobo(moboBudget, false, desiredCPU, "mining");
         if (mobo == nullptr)
         {
             storage.clear();
@@ -37,42 +39,53 @@ void specbuilder::mining(int budget)
         if (!m_comp->testCompatibility(mobo, storage.at(0)))
         {
             moboBudget = mobo->getPrice() - 1;
+            firstBudget = -1;
             continue;
         }
-        cpu = m_db->findCPU(firstBudget, true, desiredCPU); // CPU *findCPU(int budget, bool cheapest, QString manu)
-        firstBudget -= cpu->getPrice();
+        firstBudget -= mobo->getPrice();
+
+        cpu = m_db->findCPU(firstBudget, true, desiredCPU);
         if (cpu == nullptr || !m_comp->testCompatibility(mobo, cpu))
         {
             moboBudget = mobo->getPrice() - 1;
+            firstBudget = -1;
             continue;
         }
-        ram = m_db->findRAM(firstBudget, true, mobo->getRAMVersion()); // RAM *findRAM(int budget, bool cheapest, QString version)
-        firstBudget -= ram->getPrice();
+        firstBudget -= cpu->getPrice();
+
+        ram = m_db->findRAM(firstBudget, true, mobo->getRAMVersion());
         if (ram == nullptr || !m_comp->testCompatibility(mobo, ram) || firstBudget <= 0)
         {
             moboBudget = mobo->getPrice() - 1;
+            firstBudget = -1;
             continue;
         }
+        firstBudget -= ram->getPrice();
+
         if (!cpu->includesCooler())
         {
-            cooler = m_db->findCooler(firstBudget, true, mobo->getSocket(), cpu->getTDP()); // cooler *findCooler(int budget, bool cheapest, QString socket, int TDP)
-            firstBudget -= cooler->getPrice();
+            cooler = m_db->findCooler(firstBudget, true, mobo->getSocket(), cpu->getTDP());
             if (cooler == nullptr || !m_comp->testCompatibility(mobo, cooler))
+            {
                 moboBudget = mobo->getPrice() - 1;
+                firstBudget = -1;
                 continue;
+            }
+            firstBudget -= cooler->getPrice();
         }
         else
             cooler = nullptr;
-        if (firstBudget < 0)
-            moboBudget = mobo->getPrice() - 1;
     }
     while(firstBudget < 0);
+
     remaining -= budget * 0.35 - firstBudget;
+
     int secondBudget = budget * 0.15;
     do
     {
+        psu = nullptr;
         secondBudget = budget * 0.15;
-        pcCase = m_db->findCase(caseBudget, mobo, cooler, "mining"); // pcCase *findCase(int budget, bool cheapest, motherboard *mobo, cooler *cooler, QString purpose)
+        pcCase = m_db->findCase(caseBudget, "mining", mobo, gpus, cooler);
     if (pcCase == nullptr)
     {
         storage.clear();
@@ -82,35 +95,346 @@ void specbuilder::mining(int budget)
     if (!m_comp->testCompatibility(pcCase, mobo) || !m_comp->testCompatibility(pcCase, storage.at(0)) ||
             !m_comp->testCompatibility(pcCase, cooler))
     secondBudget -= pcCase->getPrice();
-    psu = m_db->findPSU(secondBudget, "mining"); // PSU *findPSU(int budget, QString purpose)
+    psu = m_db->findPSU(secondBudget, "mining");
     if (psu == nullptr)
     {
         caseBudget = pcCase->getPrice() - 1;
+        secondBudget = -1;
         continue;
     }
     secondBudget -= psu->getPrice();
     }
     while (secondBudget < 0);
+
     remaining -= budget * 0.15 - secondBudget;
-    gpus = m_db->findGPUs(remaining, "mining", pcCase->getExpansionSlots(), psu->getWattage(), mobo->getPCIeSlots());
+
+    gpus = m_db->findGPUs(remaining, "mining", pcCase->getExpansionSlots(), mobo->getPCIeSlots(), psu->getWattage());
+
     emit specs(cpu, gpus, mobo, ram, storage, cooler, pcCase);
 }
 
 void specbuilder::server(int budget)
 {
-    // emit specs(CPU *cpu, GPU *gpu, motherboard *mobo, RAM *ram, storage *storage, cooler *cooler, pcCase *pcCase)
+    int remaining = budget;
+    QString desiredCPU = requests();
+    CPU *cpu;
+    int cpuBudget = budget * 0.2;
+    QList<GPU*> gpus;
+    motherboard *mobo;
+    RAM *ram;
+    cooler *cooler;
+    QList<storage*> storage;
+    PSU *psu;
+    int psuBudget = budget * 0.1;
+    pcCase *pcCase;
+    int firstBudget;
+    do {
+        firstBudget = budget * 0.4;
+        mobo = nullptr;
+        ram = nullptr;
+        cooler = nullptr;
+        cpu = m_db->findCPU(cpuBudget, true, desiredCPU, "server");
+        if (cpu == nullptr)
+        {
+            emit specs(nullptr, gpus, nullptr, nullptr, storage, nullptr, nullptr);
+            return;
+        }
+        firstBudget -= cpu->getPrice();
+
+        int coolerBudget = cpuBudget - cpu->getPrice();
+        if (!cpu->includesCooler())
+        {
+            cooler = m_db->findCooler(coolerBudget, true, cpu->getSocket(), cpu->getTDP());
+            if (cooler == nullptr)
+            {
+                cpuBudget = cpu->getPrice() - 1;
+                firstBudget = -1;
+                continue;
+            }
+        }
+        if (cooler != nullptr)
+            firstBudget -= cooler->getPrice();
+        int moboBudget = budget * 0.3 - (cpu->getPrice() + cooler->getPrice());
+        mobo = m_db->findMobo(moboBudget, false, desiredCPU, cpu->getSocket());
+        if (mobo == nullptr)
+        {
+            cpuBudget = cpu->getPrice() - 1;
+            firstBudget = -1;
+            continue;
+        }
+        firstBudget -= mobo->getPrice() + cpu->getPrice();
+
+        ram = m_db->findRAM(firstBudget, true, mobo->getRAMVersion());
+        if (ram == nullptr || !m_comp->testCompatibility(mobo, ram) || firstBudget <= 0)
+        {
+            moboBudget = mobo->getPrice() - 1;
+            firstBudget = -1;
+            continue;
+        }
+        firstBudget -= ram->getPrice();
+    }
+    while(firstBudget < 0);
+
+    remaining -= budget * 0.4 - firstBudget;
+
+    int secondBudget;
+    do
+    {
+        secondBudget = budget * 0.2;
+        pcCase = nullptr;
+        psu = m_db->findPSU(psuBudget, "server");
+        if (psu == nullptr || !m_comp->testCompatibility(psu, cpu, gpus))
+        {
+            emit specs(nullptr, gpus, nullptr, nullptr, storage, nullptr, nullptr);
+            return;
+        }
+        secondBudget -= psu->getPrice();
+        pcCase = m_db->findCase(secondBudget, "server", mobo, gpus, cooler);
+    if (pcCase == nullptr)
+    {
+        psuBudget = psu->getPrice() - 1;
+        secondBudget = -1;
+        continue;
+    }
+    secondBudget -= pcCase->getPrice();
+    }
+    while (secondBudget < 0);
+
+    remaining -= budget * 0.2 - secondBudget;
+
+    storage = m_db->findStorage(remaining, "server", pcCase, mobo);
+
+    emit specs(cpu, gpus, mobo, ram, storage, cooler, pcCase);
 }
 
 void specbuilder::office(int budget)
 {
-    // logic here
-    // emit specs(CPU *cpu, GPU *gpu, motherboard *mobo, RAM *ram, storage *storage, cooler *cooler, pcCase *pcCase)
+    int remaining = budget;
+    QString desiredCPU = requests();
+    CPU *cpu;
+    int cpuBudget = budget * 0.4;
+    QList<GPU*> gpus;
+    motherboard *mobo;
+    int moboBudget = budget * 0.15;
+    RAM *ram;
+    cooler *cooler;
+    QList<storage*> storage;
+    PSU *psu;
+    pcCase *pcCase;
+    int caseBudget = budget * 0.1;
+    int firstBudget;
+    do {
+        firstBudget = budget * 0.65;
+        mobo = nullptr;
+        ram = nullptr;
+        cooler = nullptr;
+        cpu = m_db->findCPU(cpuBudget, true, desiredCPU, "office");
+        if (cpu == nullptr)
+        {
+            emit specs(nullptr, gpus, nullptr, nullptr, storage, nullptr, nullptr);
+            return;
+        }
+        if (!cpu->hasGraphics())
+            gpus.append(m_db->GPUMap()->value("Price").at(0));
+        firstBudget -= cpu->getPrice() + gpus.at(0)->getPrice();
+
+        mobo = m_db->findMobo(moboBudget, false, desiredCPU, cpu->getSocket());
+        if (mobo == nullptr || (mobo->getPCIeSlots() == 0 && gpus.size() != 0))
+        {
+            gpus.clear();
+            emit specs(nullptr, gpus, nullptr, nullptr, storage, nullptr, nullptr);
+            return;
+        }
+        firstBudget -= mobo->getPrice();
+
+        if (!cpu->includesCooler())
+        {
+            cooler = m_db->findCooler(firstBudget, true, cpu->getSocket(), cpu->getTDP());
+            if (cooler == nullptr)
+            {
+                cpuBudget = cpu->getPrice() - 1;
+                firstBudget = -1;
+                continue;
+            }
+            firstBudget -= cooler->getPrice();
+        }
+
+        ram = m_db->findRAM(firstBudget, true, mobo->getRAMVersion());
+        if (ram == nullptr || !m_comp->testCompatibility(mobo, ram))
+        {
+            cpuBudget = cpu->getPrice() - 1;
+            firstBudget = -1;
+            continue;
+        }
+        firstBudget -= ram->getPrice();
+    }
+    while(firstBudget < 0);
+
+    remaining -= budget * 0.65 - firstBudget;
+
+    int secondBudget;
+    do
+    {
+        secondBudget = budget * 0.25;
+        psu = nullptr;
+        pcCase = m_db->findCase(caseBudget, "office", mobo, gpus, cooler);
+        if (pcCase == nullptr)
+        {
+            gpus.clear();
+            emit specs(nullptr, gpus, nullptr, nullptr, storage, nullptr, nullptr);
+            return;
+        }
+        secondBudget -= pcCase->getPrice();
+
+        int tdp = cpu->getTDP();
+        if (gpus.size() > 0)
+            tdp += gpus.at(0)->getTDP();
+        psu = m_db->findPSU(secondBudget, "office", tdp);
+        if (psu == nullptr)
+        {
+            caseBudget = pcCase->getPrice() - 1;
+            secondBudget = -1;
+            continue;
+        }
+        secondBudget -= psu->getPrice();
+    }
+    while (secondBudget < 0);
+
+    remaining -= budget * 0.25 - secondBudget;
+
+    storage = m_db->findStorage(remaining, "office", pcCase, mobo);
+
+    emit specs(cpu, gpus, mobo, ram, storage, cooler, pcCase);
 }
 
 void specbuilder::gaming(int budget)
 {
-    // logic here
-    // emit specs(CPU *cpu, GPU *gpu, motherboard *mobo, RAM *ram, storage *storage, cooler *cooler, pcCase *pcCase)
+    int remaining = budget;
+    QString desiredCPU = requests();
+    CPU *cpu;
+    int cpuBudget = budget * 0.17;
+    QList<GPU*> gpus;
+    int gpuBudget = budget * 0.4;
+    motherboard *mobo;
+    int moboBudget = budget * 0.12;
+    RAM *ram;
+    cooler *cooler;
+    int coolerBudget = budget * 0.03;
+    QList<storage*> storage;
+    PSU *psu;
+    pcCase *pcCase;
+    int firstBudget;
+    do {
+        firstBudget = budget * 0.4;
+        mobo = nullptr;
+        ram = nullptr;
+        cooler = nullptr;
+        cpu = m_db->findCPU(cpuBudget, true, desiredCPU, "gaming");
+        if (cpu == nullptr)
+        {
+            emit specs(nullptr, gpus, nullptr, nullptr, storage, nullptr, nullptr);
+            return;
+        }
+        firstBudget -= cpu->getPrice();
+
+        mobo = m_db->findMobo(moboBudget, false, desiredCPU, cpu->getSocket(), "gaming");
+        if (mobo == nullptr)
+        {
+            cpuBudget = cpu->getPrice() - 1;
+            firstBudget = -1;
+            continue;
+        }
+        firstBudget -= mobo->getPrice();
+
+        if (!cpu->includesCooler())
+        {
+            cooler = m_db->findCooler(coolerBudget, true, cpu->getSocket(), cpu->getTDP());
+            if (cooler == nullptr)
+            {
+                cpuBudget = cpu->getPrice() - 1;
+                firstBudget = -1;
+                continue;
+            }
+            firstBudget -= cooler->getPrice();
+        }
+
+        ram = m_db->findRAM(firstBudget, true, mobo->getRAMVersion());
+        if (ram == nullptr || ram->getSize() < 8 || !m_comp->testCompatibility(mobo, ram))
+        {
+            cpuBudget = cpu->getPrice() - 1;
+            firstBudget = -1;
+            continue;
+        }
+        firstBudget -= ram->getPrice();
+    }
+    while(firstBudget < 0);
+
+    remaining -= budget * 0.4 - firstBudget;
+
+    int secondBudget;
+    do
+    {
+        secondBudget = budget * 0.1;
+        storage = m_db->findStorage(secondBudget, "gaming", nullptr, mobo);
+        if (storage.size() == 0)
+        {
+            emit specs(nullptr, gpus, nullptr, nullptr, storage, nullptr, nullptr);
+            return;
+        }
+    }
+    while (secondBudget < 0);
+
+    remaining -= budget * 0.1 - secondBudget;
+    int lastBudget;
+    do
+    {
+        lastBudget = remaining;
+        int psuBudget;
+        int tdp = cpu->getTDP();
+        gpus = m_db->findGPUs(gpuBudget, "gaming", -1, mobo->getPCIeSlots());
+
+        if (gpus.at(0) != nullptr)
+        {
+            int gpuPrice = gpus.at(0)->getPrice();
+            lastBudget -= gpuPrice;
+            psuBudget = budget * 0.45 - gpuPrice;
+            tdp += gpus.at(0)->getTDP();
+        }
+        else psuBudget = budget * 0.45;
+        psu = m_db->findPSU(psuBudget, "gaming", tdp);
+        if (psu == nullptr)
+        {
+            if (gpus.at(0) == nullptr)
+            {
+                storage.clear();
+                emit specs(nullptr, gpus, nullptr, nullptr, storage, nullptr, nullptr);
+                return;
+            }
+            gpuBudget = gpus.at(0)->getPrice() - 1;
+            lastBudget = -1;
+            continue;
+        }
+        lastBudget -= psu->getPrice();
+
+        pcCase = m_db->findCase(lastBudget, "gaming", mobo, gpus, cooler);
+        if (pcCase == nullptr)
+        {
+            if (gpus.at(0) != nullptr)
+            {
+                gpuBudget = gpus.at(0)->getPrice() - 1;
+                lastBudget = -1;
+                continue;
+            }
+            else
+            {
+                storage.clear();
+                emit specs(nullptr, gpus, nullptr, nullptr, storage, nullptr, nullptr);
+                return;
+            }
+        }
+    }
+    while (lastBudget < 0);
+    emit specs(cpu, gpus, mobo, ram, storage, cooler, pcCase);
 }
 
 void specbuilder::build()
