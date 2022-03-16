@@ -92,6 +92,12 @@ int CPU::setPrice(int price)
     return 1;
 }
 
+bool CPU::operator>(CPU *other)
+{
+    return this->_coreCount > other->_coreCount ||
+            (this->_coreCount == other->_coreCount && this->_baseClock >= other->_baseClock);
+}
+
 QMap<QString, QString> CPU::backup()
 {
     QMap<QString, QString> ret;

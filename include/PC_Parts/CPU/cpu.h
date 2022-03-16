@@ -49,6 +49,8 @@ public:
 
     int setPrice(int price);
 
+    bool operator>(CPU *other);
+
     QMap<QString, QString> backup();
 
     virtual string toString();
