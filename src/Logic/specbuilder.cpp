@@ -44,7 +44,7 @@ void specbuilder::mining(int budget)
         }
         firstBudget -= mobo->getPrice();
 
-        cpu = m_db->findCPU(firstBudget, true, desiredCPU);
+        cpu = m_db->findCPU(firstBudget, desiredCPU, "mining");
         if (cpu == nullptr || !m_comp->testCompatibility(mobo, cpu))
         {
             moboBudget = mobo->getPrice() - 1;
@@ -133,7 +133,7 @@ void specbuilder::server(int budget)
         mobo = nullptr;
         ram = nullptr;
         cooler = nullptr;
-        cpu = m_db->findCPU(cpuBudget, true, desiredCPU, "server");
+        cpu = m_db->findCPU(cpuBudget, desiredCPU, "server");
         if (cpu == nullptr)
         {
             emit specs(nullptr, gpus, nullptr, nullptr, storage, nullptr, nullptr);
@@ -228,7 +228,7 @@ void specbuilder::office(int budget)
         mobo = nullptr;
         ram = nullptr;
         cooler = nullptr;
-        cpu = m_db->findCPU(cpuBudget, true, desiredCPU, "office");
+        cpu = m_db->findCPU(cpuBudget, desiredCPU, "office");
         if (cpu == nullptr)
         {
             emit specs(nullptr, gpus, nullptr, nullptr, storage, nullptr, nullptr);
@@ -329,7 +329,7 @@ void specbuilder::gaming(int budget)
         mobo = nullptr;
         ram = nullptr;
         cooler = nullptr;
-        cpu = m_db->findCPU(cpuBudget, true, desiredCPU, "gaming");
+        cpu = m_db->findCPU(cpuBudget, desiredCPU, "gaming");
         if (cpu == nullptr)
         {
             emit specs(nullptr, gpus, nullptr, nullptr, storage, nullptr, nullptr);
