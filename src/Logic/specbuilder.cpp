@@ -3,12 +3,97 @@
 specbuilder::specbuilder(dataHolder *db, QObject *parent)
     : m_db(db),
       QObject{parent}
-{}
+{
+    m_comp = new Compatibility(db);
+}
 
 void specbuilder::mining(int budget)
 {
-    QStringList requestList = requests();
-
+    int remaining = budget;
+    QString desiredCPU = requests();
+    CPU *cpu;
+    QList<GPU*> gpus;
+    motherboard *mobo;
+    int moboBudget = 0.2 * budget;
+    RAM *ram;
+    cooler *cooler;
+    QList<storage*> storage;
+    PSU *psu;
+    pcCase *pcCase;
+    int caseBudget = budget * 0.1;
+    storage.append(m_db->STORAGEMap()->value("Price").at(0));
+    remaining -= storage.at(0)->getPrice();
+    int firstBudget = budget;
+    do {
+        firstBudget = firstBudget * 0.35;
+        mobo = m_db->findMobo(moboBudget, false, desiredCPU); // motherboard *findMobo(int budget, bool cheapest, QString manu)
+        firstBudget -= mobo->getPrice();
+        if (mobo == nullptr)
+        {
+            storage.clear();
+            emit specs(nullptr, gpus, nullptr, nullptr, storage, nullptr, nullptr);
+            return;
+        }
+        if (!m_comp->testCompatibility(mobo, storage.at(0)))
+        {
+            moboBudget = mobo->getPrice() - 1;
+            continue;
+        }
+        cpu = m_db->findCPU(firstBudget, true, desiredCPU); // CPU *findCPU(int budget, bool cheapest, QString manu)
+        firstBudget -= cpu->getPrice();
+        if (cpu == nullptr || !m_comp->testCompatibility(mobo, cpu))
+        {
+            moboBudget = mobo->getPrice() - 1;
+            continue;
+        }
+        ram = m_db->findRAM(firstBudget, true, mobo->getRAMVersion()); // RAM *findRAM(int budget, bool cheapest, QString version)
+        firstBudget -= ram->getPrice();
+        if (ram == nullptr || !m_comp->testCompatibility(mobo, ram) || firstBudget <= 0)
+        {
+            moboBudget = mobo->getPrice() - 1;
+            continue;
+        }
+        if (!cpu->includesCooler())
+        {
+            cooler = m_db->findCooler(firstBudget, true, mobo->getSocket(), cpu->getTDP()); // cooler *findCooler(int budget, bool cheapest, QString socket, int TDP)
+            firstBudget -= cooler->getPrice();
+            if (cooler == nullptr || !m_comp->testCompatibility(mobo, cooler))
+                moboBudget = mobo->getPrice() - 1;
+                continue;
+        }
+        else
+            cooler = nullptr;
+        if (firstBudget < 0)
+            moboBudget = mobo->getPrice() - 1;
+    }
+    while(firstBudget < 0);
+    remaining -= budget * 0.35 - firstBudget;
+    int secondBudget = budget * 0.15;
+    do
+    {
+        secondBudget = budget * 0.15;
+        pcCase = m_db->findCase(caseBudget, mobo, cooler, "mining"); // pcCase *findCase(int budget, bool cheapest, motherboard *mobo, cooler *cooler, QString purpose)
+    if (pcCase == nullptr)
+    {
+        storage.clear();
+        emit specs(nullptr, gpus, nullptr, nullptr, storage, nullptr, nullptr);
+        return;
+    }
+    if (!m_comp->testCompatibility(pcCase, mobo) || !m_comp->testCompatibility(pcCase, storage.at(0)) ||
+            !m_comp->testCompatibility(pcCase, cooler))
+    secondBudget -= pcCase->getPrice();
+    psu = m_db->findPSU(secondBudget, "mining"); // PSU *findPSU(int budget, QString purpose)
+    if (psu == nullptr)
+    {
+        caseBudget = pcCase->getPrice() - 1;
+        continue;
+    }
+    secondBudget -= psu->getPrice();
+    }
+    while (secondBudget < 0);
+    remaining -= budget * 0.15 - secondBudget;
+    gpus = m_db->findGPUs(remaining, "mining", pcCase->getExpansionSlots(), psu->getWattage(), mobo->getPCIeSlots());
+    emit specs(cpu, gpus, mobo, ram, storage, cooler, pcCase);
 }
 
 void specbuilder::server(int budget)
@@ -49,18 +134,11 @@ void specbuilder::build()
     return;
 }
 
-
-QStringList requests()
+QString requests()
 {
-    cout << "Do you have any special requests?\r\n" <<
-            "For example, RAM version, Intel or AMD, preferred GPU manufacturer?\r\n" <<
-            "WRITE: DDRx | CPU INTEL or CPU AMD | GPU INTEL or GPU AMD or GPU NVIDIA\r\n" <<
-            "STORAGE MIN size and\\or STORAGE MAX size | LONGEVITY\r\n" <<
-            "Make sure to have a | between requests";
     string requests;
+    QStringList requestList;
+    cout << "Per CPU, do you prefer Intel or AMD?\r\n";
     cin >> requests;
-    QStringList requestList = QString(requests.c_str()).split("|");
-    foreach(QString val, requestList)
-        val = val.simplified();
-    return requestList;
+    return QString::fromStdString(requests).simplified();
 }

@@ -13,6 +13,7 @@ class specbuilder : public QObject
     Q_OBJECT
 private:
     dataHolder *m_db;
+    Compatibility *m_comp;
 
 public:
     explicit specbuilder(dataHolder *db, QObject *parent = nullptr);
@@ -28,6 +29,6 @@ signals:
     void specs(CPU *cpu, QList<GPU*> gpus, motherboard *mobo, RAM *ram, QList<storage*> storage, cooler *cooler, pcCase *pcCase);
 };
 
-static QStringList requests();
+static QString requests();
 
 #endif // SPECBUILDER_H
