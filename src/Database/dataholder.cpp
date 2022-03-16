@@ -537,9 +537,9 @@ void dataHolder::testCaseCompatibility(cooler *cooler)
     emit coolerSpaceAvailable(cooler);
 }
 
-void dataHolder::testPSUCompatibility(QList<CPU *> cpus, QList<GPU *> gpus)
+void dataHolder::testPSUCompatibility(CPU *cpu, QList<GPU *> gpus)
 {
-    emit psuCompatibility(cpus, gpus);
+    emit psuCompatibility(cpu, gpus);
 }
 
 void toLower(string str)

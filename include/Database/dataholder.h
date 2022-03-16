@@ -116,7 +116,7 @@ public:
     void testCaseCompatibility(cooler *cooler);
     // void testCaseCompatibility(PSU *psu); future addition
 
-    void testPSUCompatibility(QList<CPU*>, QList<GPU*> gpus);
+    void testPSUCompatibility(CPU *cpu, QList<GPU*> gpus);
 
 signals:
     // Motherboard related
@@ -132,7 +132,7 @@ signals:
     void coolerSpaceAvailable(cooler *cooler);
 
     // PSU related
-    void psuCompatibility(QList<CPU*> cpus, QList<GPU*> gpus);
+    void psuCompatibility(CPU *cpu, QList<GPU*> gpus);
 };
 
 static void insertRAMBySpeed(QList<RAM *> *v, RAM *toInsert)

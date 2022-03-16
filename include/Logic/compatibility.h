@@ -24,7 +24,7 @@ public:
     bool testCompatibility(pcCase *pcCase, storage *storage);
     bool testCompatibility(pcCase *pcCase, GPU *gpu);
     bool testCompatibility(pcCase *pcCase, cooler *cooler);
-    bool testCompatibility(PSU *psu, QList<CPU*> cpus, QList<GPU*> gpus);
+    bool testCompatibility(PSU *psu, CPU *cpu, QList<GPU*> gpus);
 
 signals:
 
