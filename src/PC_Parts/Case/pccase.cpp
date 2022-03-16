@@ -146,6 +146,34 @@ int pcCase::calculateCaseVolume()
     return mes[0] * mes[1] * mes[2];
 }
 
+bool pcCase::fitsCooler(cooler *cooler)
+{
+    if (cooler == nullptr) return false;
+    if (cooler->getRadiatorSize() <= 0)
+        return cooler->getHeight() <= _maxCooler;
+    else
+        return fitsRadiators() && cooler->getHeight() <= _maxCooler;
+}
+
+bool pcCase::fitsMobo(motherboard *mobo)
+{
+    if (mobo == nullptr) return false;
+    foreach (QString ff, _moboFF)
+    {
+        if (ff == mobo->getFormFactor())
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
+bool pcCase::fitsGPU(GPU *gpu)
+{
+    if (gpu == nullptr) return false;
+    return gpu->getLength() <= _maxGPU && gpu->getHeight() <= _width;
+}
+
 void pcCase::motherboardCompatibility(motherboard *mobo)
 {
     foreach (QString ff, _moboFF)

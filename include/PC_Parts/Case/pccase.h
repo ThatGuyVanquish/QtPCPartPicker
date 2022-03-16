@@ -79,6 +79,10 @@ public:
 
     int calculateCaseVolume();
 
+    bool fitsCooler(cooler *cooler);
+    bool fitsMobo(motherboard *mobo);
+    bool fitsGPU(GPU *gpu);
+
     bool moboFits();
     void resetMobo();
     bool storageFits();
