@@ -497,6 +497,235 @@ void dataHolder::clearMaps()
     clearCaseMaps();
 }
 
+CPU *dataHolder::findCPU(int budget, QString manu, QString socket, QString purpose)
+{
+    if (budget < 0)
+        return nullptr;
+    if (purpose == "mining")
+    {
+        foreach(CPU *cpu, cpuMap["Price"])
+        {
+            if (cpu->getPrice() > budget)
+                return nullptr;
+            if (cpu->getManu().simplified() == manu.simplified() && cpu->getSocket() == socket)
+                return cpu;
+        }
+    }
+    if (purpose == "server")
+    {
+        for(int i = cpuMap["Price"].size() - 1; i >= 0; i--)
+        {
+            CPU *currentCPU = cpuMap["Price"].at(i);
+            if (currentCPU->getPrice() > budget)
+                continue;
+            if (currentCPU->getManu().simplified() == manu.simplified())
+            {
+                if (manu == "amd")
+                {
+                    if (currentCPU->getSocket() == "EP1" || currentCPU->getSocket() == "EP2")
+                        return currentCPU;
+                    else continue;
+                }
+                if (manu == "intel")
+                {
+                    if (currentCPU->getSocket() == "IN1" || currentCPU->getSocket() == "IN2")
+                        return currentCPU;
+                    else continue;
+                }
+            }
+        }
+    }
+
+    if (purpose == "office")
+    {
+        QList<CPU*> fastest; // Compared based on
+        foreach(CPU *currentCPU, cpuMap["Price"])
+        {
+            if (currentCPU == nullptr || currentCPU->getPrice() > budget)
+                break;
+            if (currentCPU->getManu().simplified() == manu.simplified())
+            {
+                if (fastest.size() < 5)
+                    fastest.append(currentCPU);
+                else
+                {
+                    CPU *slowest = currentCPU;
+                    int toRemoveIndex = 0;
+                    for(int i = 0; i < 5; i++)
+                        if (slowest > fastest.at(i))
+                        {
+                            toRemoveIndex = i;
+                            slowest = fastest.at(i);
+                        }
+                    fastest.replace(toRemoveIndex, currentCPU);
+                }
+            }
+        }
+        for(int i = 4; i >= 0; i--)
+            if (fastest.at(i)->hasGraphics())
+                return fastest.at(i);
+        int cpuBudget = budget - gpuMap["Price"].at(0)->getPrice();
+        for(int i = 4; i >= 0; i--)
+            if (fastest.at(i)->getPrice() <= cpuBudget)
+                return fastest.at(i);
+    }
+
+    if (purpose == "gaming")
+    {
+        CPU *fastest = nullptr;
+        foreach(CPU *currentCPU, cpuMap["Price"])
+        {
+            if (currentCPU == nullptr)
+                return fastest;
+            if (currentCPU->getPrice() > budget)
+                return fastest;
+            if (currentCPU->getManu().simplified() == manu.simplified())
+            {
+                if (fastest == nullptr)
+                    fastest = currentCPU;
+                else
+                    fastest = currentCPU > fastest ? currentCPU : fastest;
+            }
+        }
+    }
+    return nullptr;
+}
+
+QList<GPU *> dataHolder::findGPUs(int budget, QString purpose, int caseSlots, int moboSlots, int wattage)
+{
+
+}
+
+motherboard *dataHolder::findMobo(int budget, bool cheapest, QString manu, QString socket, QString purpose)
+{
+    if (budget < 0)
+        return nullptr;
+    if (purpose == "mining")
+    {
+        motherboard *ret = nullptr;
+        foreach(motherboard *mobo, moboMap["Price"])
+        {
+            if (mobo == nullptr || mobo->getPrice() > budget)
+                return ret;
+            if (mobo->getCPUManufacturer().simplified() == manu.simplified() &&
+                    moboMap["Mining"].contains(mobo))
+            {
+                if (ret == nullptr)
+                    ret = mobo;
+                else if (mobo->getPrice() > ret->getPrice())
+                    ret = mobo;
+            }
+        }
+        return ret;
+    }
+    motherboard *ret = nullptr; // Works for the 3 other spec options as they all have param socket NOTNULL
+    foreach(motherboard *mobo, moboMap["Price"])
+    {
+        if (mobo == nullptr || mobo->getPrice() > budget)
+            return ret;
+        if (mobo->getCPUManufacturer().simplified() == manu.simplified() &&
+                mobo->getSocket() == socket)
+        {
+            if (purpose == "server" && !moboMap["Server"].contains(mobo))
+                continue;
+            if (ret == nullptr)
+                ret = mobo;
+            else if (mobo->getPrice() > ret->getPrice())
+                ret = mobo;
+        }
+    }
+    return ret;
+}
+
+RAM *dataHolder::findRAM(int budget, bool cheapest, QString version)
+{
+    if (budget < 0)
+        return nullptr;
+    RAM *ret = nullptr;
+    foreach(RAM *ram, ramMap["Price"])
+    {
+        if (ram->getPrice() > budget)
+            return ret;
+        if (ram->getVersion() == version)
+        {
+            if (cheapest)
+                return ram;
+            else
+                ret = ram;
+        }
+    }
+    return ret;
+}
+
+cooler *dataHolder::findCooler(int budget, QString socket, int TDP)
+{
+    if (budget < 0)
+        return nullptr;
+    foreach(cooler *cooler, coolerMap["Price"])
+    {
+        if (cooler->getPrice() > budget)
+            return nullptr;
+        if (cooler->canMount(socket) && cooler->canCool(TDP))
+            return cooler;
+    }
+    return nullptr;
+}
+
+PSU *dataHolder::findPSU(int budget, QString purpose, int wattage)
+{
+    if (budget < 0)
+        return nullptr;
+    PSU *ret = nullptr;
+    foreach(PSU *psu, psuMap["Price"])
+    {
+        if (psu->getPrice() > budget)
+            return ret;
+        if ((purpose == "mining" && psu->getFormFactor() != "Server") ||
+                (purpose == "server" && psu->getFormFactor() == "Server"))
+        {
+            if (ret == nullptr || psu->getUsableWattage() > ret->getUsableWattage())
+                ret = psu;
+        }
+
+        else if (purpose != "server" && purpose != "mining")
+            if (psu->getFormFactor() != "Server" && psu->getUsableWattage() > wattage)
+                return psu;
+    }
+    return ret;
+}
+
+pcCase *dataHolder::findCase(int budget, QString purpose, motherboard *mobo, QList<GPU *> gpus, cooler *cooler)
+{
+    if (budget < 0)
+        return nullptr;
+    pcCase *ret = nullptr;
+    foreach(pcCase *pcCase, caseMap["Price"])
+    {
+        if (pcCase->getPrice() > budget)
+            return ret;
+        if (purpose == "mining")
+        {
+            if (pcCase->fitsCooler(cooler) && pcCase->fitsMobo(mobo))
+                if (ret == nullptr || pcCase->getExpansionSlots() > ret->getExpansionSlots())
+                    ret = pcCase;
+        }
+
+        if (purpose == "server")
+        {
+            if (pcCase->fitsCooler(cooler) && pcCase->fitsMobo(mobo))
+            {
+                if (ret == nullptr || pcCase->getHDDSlots() > ret->getHDDSlots())
+                    ret = pcCase;
+            }
+        }
+
+        if (purpose == "office" || purpose == "gaming")
+            if (pcCase->fitsCooler(cooler) && pcCase->fitsMobo(mobo) && pcCase->fitsGPU(gpus.at(0)))
+                return pcCase;
+    }
+    return ret;
+}
+
 void dataHolder::testMoboCompatibility(CPU *cpu)
 {
     emit cpuCompatibility(cpu);

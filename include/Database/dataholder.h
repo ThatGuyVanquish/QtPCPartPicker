@@ -105,11 +105,11 @@ public:
 
     void clearMaps();
 
-    CPU *findCPU(int budget, bool cheapest, QString manu, QString purpose = "");
+    CPU *findCPU(int budget, QString manu, QString socket = "", QString purpose = "");
     QList<GPU*> findGPUs(int budget, QString purpose, int caseSlots, int moboSlots, int wattage = -1);
     motherboard *findMobo(int budget, bool cheapest, QString manu, QString socket = nullptr, QString purpose = "");
     RAM *findRAM(int budget, bool cheapest, QString version);
-    cooler *findCooler(int budget, bool cheapest, QString socket, int TDP);
+    cooler *findCooler(int budget, QString socket, int TDP);
     PSU *findPSU(int budget, QString purpose, int wattage = -1);
     QList<storage*> findStorage(int budget, QString purpose, pcCase *pcCase, motherboard *mobo);
     pcCase *findCase(int budget, QString purpose, motherboard *mobo, QList<GPU*> gpus, cooler *cooler = nullptr);
