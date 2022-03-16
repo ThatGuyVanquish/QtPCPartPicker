@@ -160,7 +160,7 @@ void specBuilderTests::createGPUs(dataHolder *h)
     nv3->setObjectName("Nvidia PCIE4 300W 650$ RT DLSS");
     h->addGPU(nv3);
     GPU *nv4 = new nvidiaGPU("PCIE4 400W 950$ RT DLSS", 4, 24, 1995, 512, 400, 3, 18, 32, 950, {"HDMI"}, 2230, true);
-    nv4->setObjectName("Nvidia PCIE4 400W 950$RT DLSS");
+    nv4->setObjectName("Nvidia PCIE4 400W 950$ RT DLSS");
     h->addGPU(nv4);
 }
 
@@ -609,10 +609,10 @@ void specBuilderTests::createCases(dataHolder *h)
     pcCase *mid1 = new pcCase("ATX, mATX, ITX 15cm Cooler, 40$", "Mid Tower", {"ATX", "mATX", "ITX"}, 30, 15, 6, 4, 3, 1, 2, 50, 25, 48, 40);
     mid1->setObjectName("ATX, mATX, ITX 15cm Cooler, 40$");
     h->addCase(mid1);
-    pcCase *mid2 = new pcCase("ATX, mATX, ITX RAD, 80$", "Mid Tower", {"ATX", "mATX", "ITX"}, 30, 18, 6, 5, 3, 2, 2, 50, 25, 48, 80, true);
+    pcCase *mid2 = new pcCase("ATX, mATX, ITX RAD, 80$", "Mid Tower", {"ATX", "mATX", "ITX"}, 34, 18, 6, 5, 3, 2, 2, 50, 25, 48, 80, true);
     mid2->setObjectName("ATX, mATX, ITX RAD, 80$");
     h->addCase(mid2);
-    pcCase *mid3 = new pcCase("ATX, mATX, ITX 20cm Cooler, 60$", "Mid Tower", {"ATX", "mATX", "ITX"}, 30, 20, 6, 5, 3, 2, 2, 50, 25, 48, 60);
+    pcCase *mid3 = new pcCase("ATX, mATX, ITX 20cm Cooler, 60$", "Mid Tower", {"ATX", "mATX", "ITX"}, 31, 20, 6, 5, 3, 2, 2, 50, 25, 48, 60);
     mid3->setObjectName("ATX, mATX, ITX 20cm Cooler, 60$");
     h->addCase(mid3);
     pcCase *mid4 = new pcCase("ATX, mATX, ITX 20cm Cooler, 3 PCIE slots, 50$", "Mid Tower", {"ATX", "mATX", "ITX"}, 28, 20, 3, 5, 3, 2, 2, 50, 25, 48, 50);
@@ -991,17 +991,113 @@ void specBuilderTests::testGaming(dataHolder *h)
     specbuilder sb(h);
     sbtestsreceiver rec;
     QObject::connect(&sb, &specbuilder::specs, &rec, &sbtestsreceiver::specs);
+
+    // Budget 1: 1500$
+
+    // Intel @1500$
+    CPU *intelcpu1500 = h->CPUMap()->value("Intel").at(5);
+    GPU *intelgpu1500 = h->GPUMap()->value("Nvidia").at(2);
+    motherboard *intelmobo1500 = h->MOBOMap()->value("Intel").at(6);
+    RAM *intelram1500 = h->RAMMap()->value("DDR5").at(5);
+    cooler *intelcooler1500 = h->COOLERMap()->value("Air").at(2);
+    PSU *intelpsu1500 = h->PSUMap()->value("ATX").at(0);
+    pcCase *intelcase1500 = h->CASEMap()->value("ATX").at(2);
+    storage *intelssd1500 = h->STORAGEMap()->value("M.2").at(0);
+    storage *intelhdd1500 = h->STORAGEMap()->value("HDD").at(2);
+    qInfo() << "Gaming @1500$ Intel:";
+    sb.build();
+    QVERIFY2(rec.m_cpu == intelcpu1500, "Wrong CPU");
+    QVERIFY2(rec.m_mobo == intelmobo1500, "Wrong Motherboard");
+    QVERIFY2(rec.m_ram == intelram1500, "Wrong RAM");
+    QVERIFY2(rec.m_cooler == intelcooler1500, "Wrong cooler");
+    QVERIFY2(rec.m_psu == intelpsu1500, "Wrong PSU");
+    QVERIFY2(rec.m_case == intelcase1500, "Wrong Case");
+    QVERIFY2(rec.m_storage.at(0) == intelssd1500, "Wrong  SSD");
+    QVERIFY2(rec.m_storage.at(1) == intelhdd1500, "Wrong  HDD");
+    QVERIFY2(rec.m_gpus.at(0) == intelgpu1500, "Wrong GPU");
+    QVERIFY2(totalCost(&rec) <= 1500, "Too expensive!");
+
+    // AMD @1500$
+    CPU *amdcpu1500 = h->CPUMap()->value("AMD").at(4);
+    GPU *amdgpu1500 = h->GPUMap()->value("Nvidia").at(2);
+    motherboard *amdmobo1500 = h->MOBOMap()->value("AMD").at(2);
+    RAM *amdram1500 = h->RAMMap()->value("DDR4").at(4);
+    cooler *amdcooler1500 = h->COOLERMap()->value("Air").at(1);
+    PSU *amdpsu1500 = h->PSUMap()->value("ATX").at(0);
+    storage *amdssd1500 = h->STORAGEMap()->value("M.2").at(0);
+    storage *amdhdd1500 = h->STORAGEMap()->value("HDD").at(2);
+    pcCase *amdcase1500 = h->CASEMap()->value("ATX").at(2);
+    qInfo() << "Gaming @1500$ AMD:";
+    sb.build();
+    QVERIFY2(rec.m_cpu == amdcpu1500, "Wrong CPU");
+    QVERIFY2(rec.m_mobo == amdmobo1500, "Wrong Motherboard");
+    QVERIFY2(rec.m_ram == amdram1500, "Wrong RAM");
+    QVERIFY2(rec.m_cooler == amdcooler1500, "Wrong cooler");
+    QVERIFY2(rec.m_psu == amdpsu1500, "Wrong PSU");
+    QVERIFY2(rec.m_storage.at(0) == amdssd1500, "Wrong  SSD");
+    QVERIFY2(rec.m_storage.at(1) == amdhdd1500, "Wrong  HDD");
+    QVERIFY2(rec.m_gpus.at(0) == amdgpu1500, "Wrong GPU or no GPU");
+    QVERIFY2(rec.m_case == amdcase1500, "Wrong case");
+    QVERIFY2(totalCost(&rec) <= 1500, "Too expensive!");
+
+    // Intel @3000$
+    CPU *intelcpu3000 = h->CPUMap()->value("Intel").at(7);
+    GPU *intelgpu3000 = h->GPUMap()->value("Nvidia").at(3);
+    motherboard *intelmobo3000 = h->MOBOMap()->value("Intel").at(8);
+    RAM *intelram3000 = h->RAMMap()->value("DDR5").at(6);
+    cooler *intelcooler3000 = h->COOLERMap()->value("Air").at(2);
+    PSU *intelpsu3000 = h->PSUMap()->value("ATX").at(1);
+    pcCase *intelcase3000 = h->CASEMap()->value("ATX").at(1);
+    storage *intelssd3000 = h->STORAGEMap()->value("M.2").at(1);
+    storage *intelhdd3000 = h->STORAGEMap()->value("HDD").at(2);
+    qInfo() << "Gaming @3000$ Intel:";
+    sb.build();
+    QVERIFY2(rec.m_cpu == intelcpu3000, "Wrong CPU");
+    QVERIFY2(rec.m_mobo == intelmobo3000, "Wrong Motherboard");
+    QVERIFY2(rec.m_ram == intelram3000, "Wrong RAM");
+    QVERIFY2(rec.m_cooler == intelcooler3000, "Wrong cooler");
+    QVERIFY2(rec.m_psu == intelpsu3000, "Wrong PSU");
+    QVERIFY2(rec.m_case == intelcase3000, "Wrong Case");
+    QVERIFY2(rec.m_storage.at(0) == intelssd3000, "Wrong  SSD");
+    QVERIFY2(rec.m_storage.at(1) == intelhdd3000, "Wrong  HDD");
+    QVERIFY2(rec.m_gpus.at(0) == intelgpu3000, "Wrong GPU");
+    QVERIFY2(totalCost(&rec) <= 3000, "Too expensive!");
+
+    // AMD @3000$
+    CPU *amdcpu3000 = h->CPUMap()->value("AMD").at(7);
+    GPU *amdgpu3000 = h->GPUMap()->value("Nvidia").at(3);
+    motherboard *amdmobo3000 = h->MOBOMap()->value("AMD").at(5);
+    RAM *amdram3000 = h->RAMMap()->value("DDR5").at(6);
+    cooler *amdcooler3000 = h->COOLERMap()->value("Air").at(2);
+    PSU *amdpsu3000 = h->PSUMap()->value("ATX").at(1);
+    pcCase *amdcase3000 = h->CASEMap()->value("ATX").at(1);
+    storage *amdssd3000 = h->STORAGEMap()->value("M.2").at(1);
+    storage *amdhdd3000 = h->STORAGEMap()->value("HDD").at(2);
+    qInfo() << "Gaming @3000$ AMD:";
+    sb.build();
+    QVERIFY2(rec.m_cpu == amdcpu3000, "Wrong CPU");
+    QVERIFY2(rec.m_mobo == amdmobo3000, "Wrong Motherboard");
+    QVERIFY2(rec.m_ram == amdram3000, "Wrong RAM");
+    QVERIFY2(rec.m_cooler == amdcooler3000, "Wrong cooler");
+    QVERIFY2(rec.m_psu == amdpsu3000, "Wrong PSU");
+    QVERIFY2(rec.m_storage.at(0) == amdssd3000, "Wrong  SSD");
+    QVERIFY2(rec.m_storage.at(1) == amdhdd3000, "Wrong  HDD");
+    QVERIFY2(rec.m_gpus.at(0) == amdgpu3000, "Wrong GPU or no GPU");
+    QVERIFY2(rec.m_case == amdcase3000, "Wrong case");
+    QVERIFY2(totalCost(&rec) <= 3000, "Too expensive!");
+
+    qDebug() << "Completed Office Spec Builder Unit Tests";
 }
 
-void specBuilderTests::generate(dataHolder *h)
-{
-    createDB(h);
-}
+//void specBuilderTests::generate(dataHolder *h)
+//{
+//    createDB(h);
+//}
 
-void specBuilderTests::backup2(dataHolder *h)
-{
-    backup(h);
-}
+//void specBuilderTests::backup2(dataHolder *h)
+//{
+//    backup(h);
+//}
 
 int specBuilderTests::totalCost(sbtestsreceiver *sbr)
 {
