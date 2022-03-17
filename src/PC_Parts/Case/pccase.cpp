@@ -41,6 +41,11 @@ int pcCase::getMaxGPULength()
     return _maxGPU;
 }
 
+int pcCase::getMaxGPUHeight()
+{
+    return _width;
+}
+
 int pcCase::getMaxCoolerHeight()
 {
     return _maxCooler;

@@ -51,6 +51,8 @@ public:
 
     int getMaxGPULength();
 
+    int getMaxGPUHeight();
+
     int getMaxCoolerHeight();
 
     int getExpansionSlots();
