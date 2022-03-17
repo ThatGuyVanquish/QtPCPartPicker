@@ -46,6 +46,11 @@ QList<GPU *> dataHolder::findGPUs(int budget, int caseSlots, int maxLength, int 
     return list2;
 }
 
+QList<storage *> dataHolder::findHDDs(int budget, int hddSlots, int sataSlots)
+{
+
+}
+
 dataHolder::dataHolder(QString dir, QObject *parent)
     : QObject{parent},
       m_dbDirectory(dir),
@@ -751,6 +756,242 @@ PSU *dataHolder::findPSU(int budget, QString purpose, int wattage)
         else if (purpose != "server" && purpose != "mining")
             if (psu->getFormFactor() != "Server" && psu->getUsableWattage() > wattage)
                 return psu;
+    }
+    return ret;
+}
+
+QList<storage *> dataHolder::findStorage(int budget, QString purpose, pcCase *pcCase, motherboard *mobo)
+{
+    QList<storage*> ret;
+    if (budget < 0 || (mobo->getM2Slots() == 0 &&
+                        (mobo->getSATASlots() == 0 || (pcCase->getHDDSlots() == 0 && pcCase->getSSDSlots() == 0))))
+        return ret;
+    if (purpose == "office")
+    {
+        int remaining = budget;
+        storage *m2ToInsert = nullptr;
+        if (mobo->getM2Slots() > 0)
+        {
+            foreach(storage *m2, storageMap["M.2"])
+            {
+                if (m2->getPrice() <= budget / 3)
+                {
+                    if (!m2ToInsert || m2->getSizeNum() > m2ToInsert->getSizeNum())
+                        m2ToInsert = m2;
+                }
+            }
+            if (m2ToInsert)
+            {
+                ret.append(m2ToInsert);
+                remaining -= m2ToInsert->getPrice();
+            }
+        }
+        if (!m2ToInsert)
+        {
+            storage *sataSSDToInsert;
+            if (mobo->getSATASlots() > 1 && (pcCase->getSSDSlots() > 0 || pcCase->getHDDSlots() > 1))
+            {
+                storage *cheapest = storageMap["SSD"].at(0);
+                foreach(storage *ssd, storageMap["SSD"])
+                {
+                    if (ssd->getPrice() <= budget / 3)
+                    {
+                        if (!sataSSDToInsert || ssd->getSizeNum() > sataSSDToInsert->getSizeNum())
+                            sataSSDToInsert = ssd;
+                    }
+                    if (ssd->getPrice() < cheapest->getPrice() ||
+                            (ssd->getPrice() == cheapest->getPrice() && ssd->getSizeNum() > cheapest->getSizeNum()))
+                        cheapest = ssd;
+                }
+                if (sataSSDToInsert)
+                {
+                    ret.append(sataSSDToInsert);
+                    remaining -= sataSSDToInsert->getPrice();
+                }
+                else if (cheapest->getPrice() <= budget)
+                {
+                    ret.append(cheapest);
+                    remaining -= cheapest->getPrice();
+                }
+            }
+        }
+        // Either there is an ssd or there isn't, doesn't matter - get the largest HDD possible
+        storage *hddToInsert = nullptr;
+        foreach(storage* hdd, storageMap["HDD"])
+        {
+            if (hdd->getPrice() <= remaining)
+            {
+                if (!hddToInsert || hdd->getSizeNum() > hddToInsert->getSizeNum())
+                    hddToInsert = hdd;
+            }
+        }
+        if (hddToInsert)
+            ret.append(hddToInsert);
+        return ret;
+    }
+    else if (purpose == "gaming")
+    {
+        int remaining = budget;
+        storage *m2ToInsert = nullptr;
+        foreach(storage *m2, storageMap["M.2"])
+        {
+            if (mobo->getM2Slots() == 0)
+                break;
+            if (m2->getPrice() <= budget / 2)
+            {
+                if (!m2ToInsert || m2->getSizeNum() > m2ToInsert->getSizeNum())
+                    m2ToInsert = m2;
+            }
+        }
+        if (m2ToInsert)
+        {
+            ret.append(m2ToInsert);
+            remaining -= m2ToInsert->getPrice();
+        }
+        else // Couldn't find an M.2 within the budget
+        {
+            if (mobo->getSATASlots() == 0)
+            {
+                ret.clear();
+                return ret;
+            }
+            storage *ssdToInsert = nullptr;
+            storage *biggestSSD = nullptr;
+            foreach(storage *ssd, storageMap["SSD"])
+            {
+                if (ssd->getPrice() <= budget / 2)
+                {
+                    if (!ssdToInsert || ssd->getSizeNum() > ssdToInsert->getSizeNum())
+                        ssdToInsert = ssd;
+                }
+                if (ssd->getPrice() <= budget)
+                {
+                    if (!biggestSSD || ssd->getSizeNum() > biggestSSD->getSizeNum())
+                        biggestSSD = ssd;
+                }
+            }
+            if (ssdToInsert)
+            {
+                ret.append(ssdToInsert);
+                remaining -= ssdToInsert->getPrice();
+            }
+            else if (biggestSSD)
+            {
+                ret.append(biggestSSD);
+                return ret;
+            }
+            else
+            {
+                ret.clear();
+                return ret;
+            }
+        }
+        if (remaining > 0 && (ret.at(0)->getPort() == "M.2" || mobo->getSATASlots() > 1))
+        {
+            storage *hddToInsert = nullptr;
+            foreach(storage *hdd, storageMap["HDD"])
+            {
+                if (hdd->getPrice() <= remaining)
+                {
+                    if (!hddToInsert || hdd->getSizeNum() > hddToInsert->getSizeNum())
+                        hddToInsert = hdd;
+                }
+            }
+            if (hddToInsert)
+                ret.append(hddToInsert);
+        }
+        return ret;
+    }
+    else if (purpose == "server")
+    {
+        int hddSlots = pcCase->getHDDSlots();
+        int sataSlots = mobo->getSATASlots();
+        int remaining = budget;
+        int ssdBudget = budget * 0.05;
+        storage *m2ToInsert = nullptr;
+        storage *cheapestM2 = storageMap["M.2"].at(0);
+        if (mobo->getM2Slots() > 0 && storageMap["M.2"].size() > 0) // Case motherboard has M.2 Slot
+        {
+
+            foreach(storage *m2, storageMap["M.2"])
+            {
+                if (m2->getPrice() <= ssdBudget)
+                {
+                    if (!m2ToInsert || m2->getSizeNum() > m2ToInsert->getSizeNum())
+                        m2ToInsert = m2;
+                }
+                if (m2->getPrice() <= budget)
+                {
+                    if (m2->getPrice() < cheapestM2->getPrice())
+                        cheapestM2 = m2;
+                }
+            }
+        }
+        if (m2ToInsert)
+        {
+            ret.append(m2ToInsert);
+            remaining -= m2ToInsert->getPrice();
+        }
+        else // Can't fit an m.2 within 5% of the budget
+        {
+            storage *ssdToInsert = nullptr;
+            storage *cheapestSSD = storageMap["SSD"].at(0);
+            foreach(storage *ssd, storageMap["SSD"])
+            {
+                if (ssd->getPrice() <= ssdBudget)
+                {
+                    if (!ssdToInsert || ssd->getSizeNum() > ssdToInsert->getSizeNum())
+                        ssdToInsert = ssd;
+                }
+                if (ssd->getPrice() <= budget)
+                {
+                    if (ssd->getPrice() < cheapestSSD->getPrice())
+                        cheapestSSD = ssd;
+                }
+            }
+            if (ssdToInsert) // Can fit a SATA SSD within 5% of the budget
+            {
+                ret.append(ssdToInsert);
+                remaining -= ssdToInsert->getPrice();
+                sataSlots--;
+            }
+            else if (mobo->getM2Slots() > 0) // If not, fit the cheapest M.2 SSD if possible
+            {
+                ret.append(cheapestM2);
+                remaining -= cheapestM2->getPrice();
+            }
+            else if (cheapestSSD->getPrice() <= budget) // If not, fit the cheapest SATA SSD if possible
+            {
+                if (pcCase->getSSDSlots() > 0)
+                {
+                    ret.append(cheapestSSD);
+                    remaining -= cheapestSSD->getPrice();
+                    sataSlots--;
+                }
+                else if (hddSlots > 0)
+                {
+                    ret.append(cheapestSSD);
+                    remaining -= cheapestSSD->getPrice();
+                    hddSlots--;
+                    sataSlots--;
+                }
+                else
+                {
+                    ret.clear();
+                    return ret;
+                }
+            }
+            else
+            {
+                ret.clear();
+                return ret;
+            }
+        }
+        // Fit the largest size of HDDs possible:
+        QList<storage*> hdds = findHDDs(remaining, hddSlots, sataSlots);
+        foreach(storage* hdd, hdds)
+            ret.append(hdd);
+        return ret;
     }
     return ret;
 }
