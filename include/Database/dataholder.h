@@ -55,7 +55,7 @@ private:
     QMap<QString, QList<cooler*>> coolerMap; //aio/air, socket compatibility
 
     QList<GPU*> findGPUs(int budget, int caseSlots, int maxLength, int maxHeight, int moboSlots, int wattage, QList<GPU*> gpuList, int index);
-    QList<storage*> findHDDs(int budget, int hddSlots, int sataSlots);
+    QList<storage*> findHDDs(int budget, int hddSlots, int sataSlots, QList<storage*> list, int index);
 
 public:
     explicit dataHolder(QString dir, QObject *parent = nullptr);

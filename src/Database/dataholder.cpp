@@ -11,7 +11,7 @@ QList<GPU *> dataHolder::findGPUs(int budget, int caseSlots, int maxLength, int 
     if (index >= gpuMap["Price"].size())
         return gpuList;
     // We either pick this one or skip it
-    GPU *currentGPU = gpuMap["Price"].at(index);
+    GPU *currentGPU = gpuMap["Price"].at(gpuMap["Price"].size() - 1 - index);
     // Check if the current GPU fits within our case and power limitations
     if (currentGPU->getLength() > maxLength || currentGPU->getHeight() > maxHeight || currentGPU->getTDP() > wattage)
         return findGPUs(budget, caseSlots, maxLength, maxHeight,
@@ -46,9 +46,52 @@ QList<GPU *> dataHolder::findGPUs(int budget, int caseSlots, int maxLength, int 
     return list2;
 }
 
-QList<storage *> dataHolder::findHDDs(int budget, int hddSlots, int sataSlots)
+QList<storage *> dataHolder::findHDDs(int budget, int hddSlots, int sataSlots, QList<storage*> list, int index)
 {
+    if (budget < 0)
+    {
+        list.pop_back();
+        return list;
+    }
+    if (index >= storageMap["Price"].size())
+        return list;
 
+    // Check if we can insert another hard drive
+    if (hddSlots == 0 || sataSlots == 0)
+        return list;
+
+    // We either pick this one or skip it
+    storage *hdd = storageMap["Price"].at(storageMap["Price"].size() - 1 - index);
+
+    // Check if it's a hard drive or something else:
+    if (hdd->getType() != "hdd")
+        return findHDDs(budget, hddSlots, sataSlots, list, index + 1);
+
+    // We pick this hdd:
+    list.append(hdd);
+    int l1Size = 0;
+    int l1Change = budget;
+    QList<storage*> list1 = findHDDs(budget - hdd->getPrice(), hddSlots - 1, sataSlots - 1, list, index + 1);
+    foreach(storage *drive, list1)
+    {
+        l1Size += drive->getSizeNum();
+        l1Change -= drive->getPrice();
+    }
+
+    // We skip this hdd:
+    list.pop_back();
+    int l2Size = 0;
+    int l2Change = budget;
+    QList<storage*> list2 = findHDDs(budget, hddSlots, sataSlots, list, index + 1);
+    foreach(storage *drive, list2)
+    {
+        l2Size += drive->getSizeNum();
+        l2Change -= drive->getPrice();
+    }
+
+    if (l1Size > l2Size || (l1Size == l2Size && l1Change > l2Change))
+        return list1;
+    return list2;
 }
 
 dataHolder::dataHolder(QString dir, QObject *parent)
@@ -988,7 +1031,8 @@ QList<storage *> dataHolder::findStorage(int budget, QString purpose, pcCase *pc
             }
         }
         // Fit the largest size of HDDs possible:
-        QList<storage*> hdds = findHDDs(remaining, hddSlots, sataSlots);
+        QList<storage*> hdds;
+        hdds = findHDDs(remaining, hddSlots, sataSlots, hdds, 0);
         foreach(storage* hdd, hdds)
             ret.append(hdd);
         return ret;
