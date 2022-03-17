@@ -1,5 +1,51 @@
 #include "../../include/Database/dataholder.h"
 
+QList<GPU *> dataHolder::findGPUs(int budget, int caseSlots, int maxLength, int maxHeight, int moboSlots,
+                                  int wattage, QList<GPU *> gpuList, int index)
+{
+    if (budget < 0)
+    {
+        gpuList.pop_back();
+        return gpuList;
+    }
+    if (index >= gpuMap["Price"].size())
+        return gpuList;
+    // We either pick this one or skip it
+    GPU *currentGPU = gpuMap["Price"].at(index);
+    // Check if the current GPU fits within our case and power limitations
+    if (currentGPU->getLength() > maxLength || currentGPU->getHeight() > maxHeight || currentGPU->getTDP() > wattage)
+        return findGPUs(budget, caseSlots, maxLength, maxHeight,
+                        moboSlots, wattage, gpuList, index + 1);
+
+    // If it does, choose whether to use it or not to use it:
+    // Pick this gpu:
+    gpuList.append(currentGPU);
+    QList<GPU*> list1 = findGPUs(budget - currentGPU->getPrice(), caseSlots - currentGPU->getSlots(), maxLength, maxHeight,
+            moboSlots - 1, wattage - currentGPU->getTDP(), gpuList, index + 1);
+    int l1Wattage = 0;
+    int l1Change = budget;
+    foreach(GPU *gpu, list1)
+    {
+        l1Wattage += gpu->getTDP();
+        l1Change -= gpu->getPrice();
+    }
+    // Skip this gpu:
+    gpuList.pop_back();
+    QList<GPU*> list2 = findGPUs(budget, caseSlots, maxLength, maxHeight,
+            moboSlots, wattage, gpuList, index + 1);
+    int l2Wattage = 0;
+    int l2Change = budget;
+    foreach(GPU *gpu, list2)
+    {
+        l2Wattage += gpu->getTDP();
+        l2Change -= gpu->getPrice();
+    }
+
+    if (l1Wattage > l2Wattage || (l1Wattage == l2Wattage && l1Change > l2Change))
+        return list1;
+    return list2;
+}
+
 dataHolder::dataHolder(QString dir, QObject *parent)
     : QObject{parent},
       m_dbDirectory(dir),
@@ -591,9 +637,24 @@ CPU *dataHolder::findCPU(int budget, QString manu, QString socket, QString purpo
     return nullptr;
 }
 
-QList<GPU *> dataHolder::findGPUs(int budget, QString purpose, int caseSlots, int moboSlots, int wattage)
+QList<GPU *> dataHolder::findGPUs(int budget, QString purpose, int caseSlots, int maxLength, int maxHeight,
+                                  int moboSlots, int wattage)
 {
-
+    QList<GPU*> ret;
+    if (budget < 0 || moboSlots == 0)
+        return ret;
+    if (purpose == "mining")
+        return findGPUs(budget, caseSlots, maxLength, maxHeight, moboSlots, wattage, ret, 0);
+    // Purpose is gaming as office and server don't use findGPUs
+    for (int i = gpuMap["Price"].size() - 1; i >= 0; i--)
+    {
+        if (gpuMap["Price"].at(i)->getPrice() <= budget)
+        {
+            ret.append(gpuMap["Price"].at(i));
+            return ret;
+        }
+    }
+    return ret;
 }
 
 motherboard *dataHolder::findMobo(int budget, bool cheapest, QString manu, QString socket, QString purpose)
