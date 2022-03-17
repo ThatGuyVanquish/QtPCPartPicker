@@ -64,7 +64,7 @@ void specbuilder::mining(int budget)
 
         if (!cpu->includesCooler())
         {
-            cooler = m_db->findCooler(firstBudget, true, mobo->getSocket(), cpu->getTDP());
+            cooler = m_db->findCooler(firstBudget, mobo->getSocket(), cpu->getTDP());
             if (cooler == nullptr || !m_comp->testCompatibility(mobo, cooler))
             {
                 moboBudget = mobo->getPrice() - 1;
@@ -108,7 +108,9 @@ void specbuilder::mining(int budget)
 
     remaining -= budget * 0.15 - secondBudget;
 
-    gpus = m_db->findGPUs(remaining, "mining", pcCase->getExpansionSlots(), mobo->getPCIeSlots(), psu->getWattage());
+    gpus = m_db->findGPUs(remaining, "mining", pcCase->getExpansionSlots(),
+                          pcCase->getMaxGPULength(), pcCase->getMaxGPUHeight(),
+                          mobo->getPCIeSlots(), psu->getWattage() - cpu->getTDP());
 
     emit specs(cpu, gpus, mobo, ram, storage, cooler, pcCase);
 }
@@ -144,7 +146,7 @@ void specbuilder::server(int budget)
         int coolerBudget = cpuBudget - cpu->getPrice();
         if (!cpu->includesCooler())
         {
-            cooler = m_db->findCooler(coolerBudget, true, cpu->getSocket(), cpu->getTDP());
+            cooler = m_db->findCooler(coolerBudget, cpu->getSocket(), cpu->getTDP());
             if (cooler == nullptr)
             {
                 cpuBudget = cpu->getPrice() - 1;
@@ -249,7 +251,7 @@ void specbuilder::office(int budget)
 
         if (!cpu->includesCooler())
         {
-            cooler = m_db->findCooler(firstBudget, true, cpu->getSocket(), cpu->getTDP());
+            cooler = m_db->findCooler(firstBudget, cpu->getSocket(), cpu->getTDP());
             if (cooler == nullptr)
             {
                 cpuBudget = cpu->getPrice() - 1;
@@ -348,7 +350,7 @@ void specbuilder::gaming(int budget)
 
         if (!cpu->includesCooler())
         {
-            cooler = m_db->findCooler(coolerBudget, true, cpu->getSocket(), cpu->getTDP());
+            cooler = m_db->findCooler(coolerBudget, cpu->getSocket(), cpu->getTDP());
             if (cooler == nullptr)
             {
                 cpuBudget = cpu->getPrice() - 1;
@@ -391,7 +393,7 @@ void specbuilder::gaming(int budget)
         lastBudget = remaining;
         int psuBudget;
         int tdp = cpu->getTDP();
-        gpus = m_db->findGPUs(gpuBudget, "gaming", -1, mobo->getPCIeSlots());
+        gpus = m_db->findGPUs(gpuBudget, "gaming", -1, -1, -1, mobo->getPCIeSlots());
 
         if (gpus.at(0) != nullptr)
         {
