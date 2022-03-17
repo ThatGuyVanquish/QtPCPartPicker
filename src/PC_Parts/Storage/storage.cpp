@@ -31,6 +31,24 @@ QString storage::getSize()
     return _size;
 }
 
+int storage::getSizeNum()
+{
+    int num = 0;
+    QString type = "";
+    foreach(QChar ch, _size)
+    {
+        if(ch.isNumber())
+            num = num*10 + ch.digitValue();
+        else
+            type.append(ch);
+    }
+    if (type.toLower() == "tb")
+        return num * 1000;
+    if (type.toLower() == "pb")
+        return num * 1000000;
+    return num;
+}
+
 int storage::getRead()
 {
     return _read;

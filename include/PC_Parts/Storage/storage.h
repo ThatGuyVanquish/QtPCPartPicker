@@ -34,6 +34,8 @@ class storage: public QObject
 
         QString getSize();
 
+        int getSizeNum();
+
         int getRead();
 
         int getWrite();
