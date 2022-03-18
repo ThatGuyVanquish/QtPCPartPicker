@@ -365,7 +365,7 @@ void fileWriter::writeCPU(QFile *target, CPU *cpu)
     toWrite.insert("CPU", QVariant(specs));
     QJsonDocument doc = QJsonDocument::fromVariant(QVariant(toWrite));
     target->write(doc.toJson());
-    qDebug() << "Finished writing CPU";
+    //qDebug() << "Finished writing CPU";
 }
 
 void fileWriter::writeGPUs(QFile *target, QList<GPU *> gpus)
@@ -385,7 +385,7 @@ void fileWriter::writeGPUs(QFile *target, QList<GPU *> gpus)
     toWrite.insert("GPUs", QVariant(gpuMap));
     QJsonDocument doc = QJsonDocument::fromVariant(QVariant(toWrite));
     target->write(doc.toJson());
-    qDebug() << "Finished writing GPUs";
+    //qDebug() << "Finished writing GPUs";
 }
 
 void fileWriter::writeMobo(QFile *target, motherboard *mobo)
@@ -400,7 +400,7 @@ void fileWriter::writeMobo(QFile *target, motherboard *mobo)
     toWrite.insert("Motherboard", QVariant(specs));
     QJsonDocument doc = QJsonDocument::fromVariant(QVariant(toWrite));
     target->write(doc.toJson());
-    qDebug() << "Finished writing Motherboard";
+    //qDebug() << "Finished writing Motherboard";
 }
 
 void fileWriter::writeRAM(QFile *target, RAM *ram)
@@ -415,22 +415,25 @@ void fileWriter::writeRAM(QFile *target, RAM *ram)
     toWrite.insert("RAM", QVariant(specs));
     QJsonDocument doc = QJsonDocument::fromVariant(QVariant(toWrite));
     target->write(doc.toJson());
-    qDebug() << "Finished writing RAM";
+    //qDebug() << "Finished writing RAM";
 }
 
 void fileWriter::writeCooler(QFile *target, cooler *cooler)
 {
     QVariantMap specs;
-    QMap<QString, QString> coolerSpecs = cooler->backup();
-    foreach(QString key, coolerSpecs.keys())
+    if (cooler)
     {
-        specs.insert(key, QVariant(coolerSpecs.value(key)));
+        QMap<QString, QString> coolerSpecs = cooler->backup();
+        foreach(QString key, coolerSpecs.keys())
+        {
+            specs.insert(key, QVariant(coolerSpecs.value(key)));
+        }
     }
     QVariantMap toWrite;
     toWrite.insert("Cooler", QVariant(specs));
     QJsonDocument doc = QJsonDocument::fromVariant(QVariant(toWrite));
     target->write(doc.toJson());
-    qDebug() << "Finished writing Cooler";
+    //qDebug() << "Finished writing Cooler";
 }
 
 void fileWriter::writeStorage(QFile *target, QList<storage *> drives)
@@ -450,7 +453,7 @@ void fileWriter::writeStorage(QFile *target, QList<storage *> drives)
     toWrite.insert("Storage", QVariant(driveMap));
     QJsonDocument doc = QJsonDocument::fromVariant(QVariant(toWrite));
     target->write(doc.toJson());
-    qDebug() << "Finished writing Storage";
+    //qDebug() << "Finished writing Storage";
 }
 
 void fileWriter::writePSU(QFile *target, PSU *psu)
@@ -465,7 +468,7 @@ void fileWriter::writePSU(QFile *target, PSU *psu)
     toWrite.insert("PSU", QVariant(specs));
     QJsonDocument doc = QJsonDocument::fromVariant(QVariant(toWrite));
     target->write(doc.toJson());
-    qDebug() << "Finished writing PSU";
+    //qDebug() << "Finished writing PSU";
 }
 
 void fileWriter::writeCase(QFile *target, pcCase *pcCase)
@@ -480,7 +483,7 @@ void fileWriter::writeCase(QFile *target, pcCase *pcCase)
     toWrite.insert("Case", QVariant(specs));
     QJsonDocument doc = QJsonDocument::fromVariant(QVariant(toWrite));
     target->write(doc.toJson());
-    qDebug() << "Finished writing Case";
+    //qDebug() << "Finished writing Case";
 }
 
 void fileWriter::writeSpecs(QString target, CPU *cpu, QList<GPU *> gpus, motherboard *mobo, RAM *ram,
@@ -503,5 +506,5 @@ void fileWriter::writeSpecs(QString target, CPU *cpu, QList<GPU *> gpus, motherb
     writeCase(&f, pcCase);
 
     f.close();
-    qDebug() << "Finished writing specs! You can now open the file!";
+    //qDebug() << "Finished writing specs! You can now open the file!";
 }

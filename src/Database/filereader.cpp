@@ -428,7 +428,7 @@ void fileReader::restoreCases(QFile *f)
         {
             specs.insert(spec, currentCase.value(spec).toString());
         }
-        pcCase *toInsert = new pcCase(specs["Model"], specs["Form Factor"], specs["Compatible Motherboard"].split(", "),
+        pcCase *toInsert = new pcCase(specs["Model"], specs["Form Factor"], specs["Compatible Motherboards"].split(", "),
                 specs["GPU Length"].toInt(), specs["Cooler Height"].toInt(), specs["Expansion Slots"].toInt(),
                 specs["Fans"].toInt(), specs["HDD Slots"].toInt(), specs["SSD Slots"].toInt(),
                 specs["USB Ports"].toInt(), specs["Height"].toInt(), specs["Width"].toInt(),
