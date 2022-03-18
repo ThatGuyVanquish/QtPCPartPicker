@@ -54,7 +54,7 @@ private:
     QMap<QString, QList<cooler*>> coolerMap; //aio/air, socket compatibility
 
     QList<GPU*> findGPUs(int budget, int caseSlots, int maxLength, int maxHeight, int moboSlots, int wattage, QList<GPU*> gpuList, int index);
-    QList<storage*> findHDDs(int budget, int hddSlots, int sataSlots, QList<storage*> list, int index);
+    QList<storage*> findHDDs(int budget, int slotLimit, QList<storage*> list, int index);
 
 public:
     explicit dataHolder(QString dir, QObject *parent = nullptr);
@@ -109,7 +109,7 @@ public:
 
     CPU *findCPU(int budget, QString manu, QString socket = "", QString purpose = "");
     QList<GPU*> findGPUs(int budget, QString purpose, int caseSlots, int maxLength, int maxHeight, int moboSlots, int wattage = -1);
-    motherboard *findMobo(int budget, bool cheapest, QString manu, QString socket = nullptr, QString purpose = "");
+    motherboard *findMobo(int budget, QString manu, QString socket = nullptr, QString purpose = "");
     RAM *findRAM(int budget, bool cheapest, QString version);
     cooler *findCooler(int budget, QString socket, int TDP);
     PSU *findPSU(int budget, QString purpose, int wattage = -1);

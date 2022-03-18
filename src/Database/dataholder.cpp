@@ -3,12 +3,12 @@
 QList<GPU *> dataHolder::findGPUs(int budget, int caseSlots, int maxLength, int maxHeight, int moboSlots,
                                   int wattage, QList<GPU *> gpuList, int index)
 {
-    if (budget < 0)
+    if (budget < 0 || caseSlots < 0 || moboSlots < 0 || wattage < 0)
     {
         gpuList.pop_back();
         return gpuList;
     }
-    if (index >= gpuMap["Price"].size())
+    if (index >= gpuMap["Price"].size() || caseSlots == 0 || moboSlots == 0 || wattage == 0)
         return gpuList;
     // We either pick this one or skip it
     GPU *currentGPU = gpuMap["Price"].at(gpuMap["Price"].size() - 1 - index);
@@ -21,7 +21,7 @@ QList<GPU *> dataHolder::findGPUs(int budget, int caseSlots, int maxLength, int 
     // Pick this gpu:
     gpuList.append(currentGPU);
     QList<GPU*> list1 = findGPUs(budget - currentGPU->getPrice(), caseSlots - currentGPU->getSlots(), maxLength, maxHeight,
-            moboSlots - 1, wattage - currentGPU->getTDP(), gpuList, index + 1);
+            moboSlots - 1, wattage - currentGPU->getTDP(), gpuList, index);
     int l1Wattage = 0;
     int l1Change = budget;
     foreach(GPU *gpu, list1)
@@ -46,18 +46,14 @@ QList<GPU *> dataHolder::findGPUs(int budget, int caseSlots, int maxLength, int 
     return list2;
 }
 
-QList<storage *> dataHolder::findHDDs(int budget, int hddSlots, int sataSlots, QList<storage*> list, int index)
+QList<storage *> dataHolder::findHDDs(int budget, int slotLimit, QList<storage*> list, int index)
 {
-    if (budget < 0)
+    if (budget < 0 || slotLimit < 0)
     {
         list.pop_back();
         return list;
     }
-    if (index >= storageMap["Price"].size())
-        return list;
-
-    // Check if we can insert another hard drive
-    if (hddSlots == 0 || sataSlots == 0)
+    if (index >= storageMap["Price"].size() || slotLimit == 0)
         return list;
 
     // We either pick this one or skip it
@@ -65,31 +61,31 @@ QList<storage *> dataHolder::findHDDs(int budget, int hddSlots, int sataSlots, Q
 
     // Check if it's a hard drive or something else:
     if (hdd->getType() != "hdd")
-        return findHDDs(budget, hddSlots, sataSlots, list, index + 1);
+        return findHDDs(budget, slotLimit, list, index + 1);
 
     // We pick this hdd:
     list.append(hdd);
     int l1Size = 0;
-    int l1Change = budget;
-    QList<storage*> list1 = findHDDs(budget - hdd->getPrice(), hddSlots - 1, sataSlots - 1, list, index + 1);
+    int l1Cost = 0;
+    QList<storage*> list1 = findHDDs(budget - hdd->getPrice(), slotLimit - 1, list, index);
     foreach(storage *drive, list1)
     {
         l1Size += drive->getSizeNum();
-        l1Change -= drive->getPrice();
+        l1Cost += drive->getPrice();
     }
 
     // We skip this hdd:
     list.pop_back();
     int l2Size = 0;
-    int l2Change = budget;
-    QList<storage*> list2 = findHDDs(budget, hddSlots, sataSlots, list, index + 1);
+    int l2Cost = 0;
+    QList<storage*> list2 = findHDDs(budget, slotLimit, list, index + 1);
     foreach(storage *drive, list2)
     {
         l2Size += drive->getSizeNum();
-        l2Change -= drive->getPrice();
+        l2Cost += drive->getPrice();
     }
 
-    if (l1Size > l2Size || (l1Size == l2Size && l1Change > l2Change))
+    if (l1Size > l2Size || (l1Size == l2Size && l1Cost < l2Cost))
         return list1;
     return list2;
 }
@@ -366,9 +362,17 @@ void dataHolder::addMotherboard(motherboard* toInsert, string purpose)
     // Mapping by CPU manufacturer
     toInsert->getCPUManufacturer() == "Intel" ? moboMap["Intel"].push_back(toInsert) : moboMap["AMD"].push_back(toInsert);
     if (!purpose.empty())
+    {
         purpose = (QString::fromStdString(purpose).toLower()).toStdString();
         purpose == "mining" ? moboMap["Mining"].push_back(toInsert) : (purpose == "server" ? moboMap["Server"].push_back(toInsert) : moboMap["Overclocking"].push_back(toInsert));
-
+    }
+    else
+    {
+        if (toInsert->getSATASlots() > 10)
+            moboMap["Server"].push_back(toInsert);
+        if (toInsert->getPCIeSlots() > 6)
+            moboMap["Mining"].push_back(toInsert);
+    }
     // Mapping to ram slot version
     toInsert->getRAMVersion() == "DDR3" ? moboMap["DDR3"].push_back(toInsert) : (toInsert->getRAMVersion() == "DDR4" ?
     moboMap["DDR4"].push_back(toInsert) : moboMap["DDR5"].push_back(toInsert));
@@ -709,23 +713,23 @@ QList<GPU *> dataHolder::findGPUs(int budget, QString purpose, int caseSlots, in
     return ret;
 }
 
-motherboard *dataHolder::findMobo(int budget, bool cheapest, QString manu, QString socket, QString purpose)
+motherboard *dataHolder::findMobo(int budget, QString manu, QString socket, QString purpose)
 {
     if (budget < 0)
         return nullptr;
     if (purpose == "mining")
     {
         motherboard *ret = nullptr;
-        foreach(motherboard *mobo, moboMap["Price"])
+        foreach(motherboard *mobo, moboMap["Mining"])
         {
-            if (mobo == nullptr || mobo->getPrice() > budget)
+            if (mobo == nullptr)
                 return ret;
-            if (mobo->getCPUManufacturer().toLower() == manu.toLower() &&
-                    moboMap["Mining"].contains(mobo))
+            if (mobo->getPrice() > budget)
+                continue;
+
+            if (mobo->getCPUManufacturer().toLower() == manu.toLower())
             {
-                if (ret == nullptr)
-                    ret = mobo;
-                else if (mobo->getPrice() > ret->getPrice())
+                if (ret == nullptr || mobo->getPCIeSlots() > ret->getPCIeSlots())
                     ret = mobo;
             }
         }
@@ -835,7 +839,7 @@ QList<storage *> dataHolder::findStorage(int budget, QString purpose, pcCase *pc
         }
         if (!m2ToInsert)
         {
-            storage *sataSSDToInsert;
+            storage *sataSSDToInsert = nullptr;
             if (mobo->getSATASlots() > 1 && (pcCase->getSSDSlots() > 0 || pcCase->getHDDSlots() > 1))
             {
                 storage *cheapest = storageMap["SSD"].at(0);
@@ -1036,7 +1040,8 @@ QList<storage *> dataHolder::findStorage(int budget, QString purpose, pcCase *pc
         }
         // Fit the largest size of HDDs possible:
         QList<storage*> hdds;
-        hdds = findHDDs(remaining, hddSlots, sataSlots, hdds, 0);
+        int slotLimit = min(hddSlots, sataSlots);
+        hdds = findHDDs(remaining, slotLimit, hdds, 0);
         foreach(storage* hdd, hdds)
             ret.append(hdd);
         return ret;
