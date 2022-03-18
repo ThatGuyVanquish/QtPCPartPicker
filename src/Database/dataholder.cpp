@@ -129,7 +129,6 @@ QMap<QString, QList<RAM *> > *dataHolder::RAMMap()
     return &ramMap;
 }
 
-
 QMap<QString, QList<cooler *> > *dataHolder::COOLERMap()
 {
     return &coolerMap;
