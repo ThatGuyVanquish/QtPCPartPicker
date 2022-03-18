@@ -6,14 +6,14 @@ fileReader::fileReader(QObject *parent)
 
 fileReader::fileReader(dataHolder *db):
     m_db(db),
-    m_cpu(db->getDir() + "CPU.JSON"),
-    m_gpu(db->getDir() + "GPU.JSON"),
-    m_mobo(db->getDir() + "Motherboard.JSON"),
-    m_ram(db->getDir() + "RAM.JSON"),
-    m_storage(db->getDir() + "Storage.JSON"),
-    m_psu(db->getDir() + "PSU.JSON"),
-    m_case(db->getDir() + "Case.JSON"),
-    m_cooler(db->getDir() + "Cooler.JSON")
+    m_cpu(db->getDir() + "/CPU.JSON"),
+    m_gpu(db->getDir() + "/GPU.JSON"),
+    m_mobo(db->getDir() + "/Motherboard.JSON"),
+    m_ram(db->getDir() + "/RAM.JSON"),
+    m_storage(db->getDir() + "/Storage.JSON"),
+    m_psu(db->getDir() + "/PSU.JSON"),
+    m_case(db->getDir() + "/Case.JSON"),
+    m_cooler(db->getDir() + "/Cooler.JSON")
 {}
 
 void fileReader::closeFiles()
@@ -33,25 +33,28 @@ void fileReader::closeFiles()
     if (m_storage.isOpen())
         m_storage.close();
     else return;
-    if (m_case.isOpen())
-        m_case.close();
-    else return;
     if (m_cooler.isOpen())
         m_cooler.close();
+    else return;
+    if (m_psu.isOpen())
+        m_psu.close();
+    else return;
+    if (m_case.isOpen())
+        m_case.close();
 }
 
 int fileReader::openFiles()
 {
     if (!m_cpu.open(QIODevice::ReadWrite))
     {
-        qCritical() << "Could not write to CPU file!";
+        qCritical() << "Could not read from CPU file!";
         qCritical() << m_cpu.errorString();
         return -1;
     }
 
     if (!m_gpu.open(QIODevice::ReadWrite))
     {
-        qCritical() << "Could not write to GPU file!";
+        qCritical() << "Could not read from GPU file!";
         qCritical() << m_gpu.errorString();
         qInfo() << "Closing opened file";
         closeFiles();
@@ -60,7 +63,7 @@ int fileReader::openFiles()
 
     if (!m_mobo.open(QIODevice::ReadWrite))
     {
-        qCritical() << "Could not write to Motherboard file!";
+        qCritical() << "Could not read from Motherboard file!";
         qCritical() << m_mobo.errorString();
         qInfo() << "Closing opened files";
         closeFiles();
@@ -69,7 +72,7 @@ int fileReader::openFiles()
 
     if (!m_ram.open(QIODevice::ReadWrite))
     {
-        qCritical() << "Could not write to RAM file!";
+        qCritical() << "Could not read from RAM file!";
         qCritical() << m_ram.errorString();
         qInfo() << "Closing opened files";
         closeFiles();
@@ -78,29 +81,38 @@ int fileReader::openFiles()
 
     if (!m_storage.open(QIODevice::ReadWrite))
     {
-        qCritical() << "Could not write to Storage file!";
+        qCritical() << "Could not read from Storage file!";
         qCritical() << m_storage.errorString();
         qInfo() << "Closing opened files";
         closeFiles();
         return -5;
     }
 
-    if (!m_case.open(QIODevice::ReadWrite))
+    if (!m_psu.open(QIODevice::ReadWrite))
     {
-        qCritical() << "Could not write to Case file!";
-        qCritical() << m_case.errorString();
+        qCritical() << "Could not read from PSU file!";
+        qCritical() << m_psu.errorString();
         qInfo() << "Closing opened files";
         closeFiles();
-        return -6;
+        return -7;
     }
 
     if (!m_cooler.open(QIODevice::ReadWrite))
     {
-        qCritical() << "Could not write to Cooler file!";
+        qCritical() << "Could not read from Cooler file!";
         qCritical() << m_cooler.errorString();
         qInfo() << "Closing opened files";
         closeFiles();
         return -7;
+    }
+
+    if (!m_case.open(QIODevice::ReadWrite))
+    {
+        qCritical() << "Could not read from Case file!";
+        qCritical() << m_case.errorString();
+        qInfo() << "Closing opened files";
+        closeFiles();
+        return -6;
     }
 
     return 1;
