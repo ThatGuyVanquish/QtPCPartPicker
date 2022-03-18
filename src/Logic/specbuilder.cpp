@@ -44,7 +44,7 @@ void specbuilder::mining(int budget)
         }
         firstBudget -= mobo->getPrice();
 
-        cpu = m_db->findCPU(firstBudget, desiredCPU, "mining");
+        cpu = m_db->findCPU(firstBudget, desiredCPU, mobo->getSocket(),  "mining");
         if (cpu == nullptr || !m_comp->testCompatibility(mobo, cpu))
         {
             moboBudget = mobo->getPrice() - 1;
@@ -135,7 +135,7 @@ void specbuilder::server(int budget)
         mobo = nullptr;
         ram = nullptr;
         cooler = nullptr;
-        cpu = m_db->findCPU(cpuBudget, desiredCPU, "server");
+        cpu = m_db->findCPU(cpuBudget, desiredCPU, "", "server");
         if (cpu == nullptr)
         {
             emit specs(nullptr, gpus, nullptr, nullptr, drives, nullptr, nullptr, nullptr);
@@ -230,15 +230,18 @@ void specbuilder::office(int budget)
         mobo = nullptr;
         ram = nullptr;
         cooler = nullptr;
-        cpu = m_db->findCPU(cpuBudget, desiredCPU, "office");
+        cpu = m_db->findCPU(cpuBudget, desiredCPU, "", "office");
         if (cpu == nullptr)
         {
             emit specs(nullptr, gpus, nullptr, nullptr, drives, nullptr, nullptr, nullptr);
             return;
         }
+        firstBudget -= cpu->getPrice();
         if (!cpu->hasGraphics())
+        {
             gpus.append(m_db->GPUMap()->value("Price").at(0));
-        firstBudget -= cpu->getPrice() + gpus.at(0)->getPrice();
+            firstBudget -= gpus.at(0)->getPrice();
+        }
 
         mobo = m_db->findMobo(moboBudget, false, desiredCPU, cpu->getSocket());
         if (mobo == nullptr || (mobo->getPCIeSlots() == 0 && gpus.size() != 0))
@@ -331,7 +334,7 @@ void specbuilder::gaming(int budget)
         mobo = nullptr;
         ram = nullptr;
         cooler = nullptr;
-        cpu = m_db->findCPU(cpuBudget, desiredCPU, "gaming");
+        cpu = m_db->findCPU(cpuBudget, desiredCPU, "", "gaming");
         if (cpu == nullptr)
         {
             emit specs(nullptr, gpus, nullptr, nullptr, drives, nullptr, nullptr, nullptr);
@@ -360,7 +363,7 @@ void specbuilder::gaming(int budget)
             firstBudget -= cooler->getPrice();
         }
 
-        ram = m_db->findRAM(firstBudget, true, mobo->getRAMVersion());
+        ram = m_db->findRAM(firstBudget, false, mobo->getRAMVersion());
         if (ram == nullptr || ram->getSize() < 8 || !m_comp->testCompatibility(mobo, ram))
         {
             cpuBudget = cpu->getPrice() - 1;
@@ -445,6 +448,8 @@ void specbuilder::build()
     string temp;
     cin >> temp;
     int budget = atoi(temp.c_str());
+    if (budget <= 0)
+        return;
     cout << "What is the purpose of your build?\r\n";
     cin >> temp;
     QString purpose = QString::fromStdString(temp).simplified().toLower();
