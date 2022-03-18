@@ -29,7 +29,7 @@ void specbuilder::mining(int budget)
         cpu = nullptr;
         ram = nullptr;
         cooler = nullptr;
-        mobo = m_db->findMobo(moboBudget, false, desiredCPU, "mining");
+        mobo = m_db->findMobo(moboBudget, desiredCPU, "", "mining");
         if (mobo == nullptr)
         {
             drives.clear();
@@ -80,7 +80,7 @@ void specbuilder::mining(int budget)
 
     remaining -= budget * 0.35 - firstBudget;
 
-    int secondBudget = budget * 0.15;
+    int secondBudget;
     do
     {
         psu = nullptr;
@@ -110,7 +110,7 @@ void specbuilder::mining(int budget)
 
     gpus = m_db->findGPUs(remaining, "mining", pcCase->getExpansionSlots(),
                           pcCase->getMaxGPULength(), pcCase->getMaxGPUHeight(),
-                          mobo->getPCIeSlots(), psu->getWattage() - cpu->getTDP());
+                          mobo->getPCIeSlots(), psu->getUsableWattage() - cpu->getTDP());
 
     emit specs(cpu, gpus, mobo, ram, drives, cooler, psu, pcCase);
 }
@@ -157,7 +157,7 @@ void specbuilder::server(int budget)
         if (cooler != nullptr)
             firstBudget -= cooler->getPrice();
         int moboBudget = budget * 0.3 - (cpu->getPrice() + cooler->getPrice());
-        mobo = m_db->findMobo(moboBudget, false, desiredCPU, cpu->getSocket());
+        mobo = m_db->findMobo(moboBudget, desiredCPU, cpu->getSocket());
         if (mobo == nullptr)
         {
             cpuBudget = cpu->getPrice() - 1;
@@ -243,7 +243,7 @@ void specbuilder::office(int budget)
             firstBudget -= gpus.at(0)->getPrice();
         }
 
-        mobo = m_db->findMobo(moboBudget, false, desiredCPU, cpu->getSocket());
+        mobo = m_db->findMobo(moboBudget, desiredCPU, cpu->getSocket());
         if (mobo == nullptr || (mobo->getPCIeSlots() == 0 && gpus.size() != 0))
         {
             gpus.clear();
@@ -342,7 +342,7 @@ void specbuilder::gaming(int budget)
         }
         firstBudget -= cpu->getPrice();
 
-        mobo = m_db->findMobo(moboBudget, false, desiredCPU, cpu->getSocket(), "gaming");
+        mobo = m_db->findMobo(moboBudget, desiredCPU, cpu->getSocket(), "gaming");
         if (mobo == nullptr)
         {
             cpuBudget = cpu->getPrice() - 1;
