@@ -1,0 +1,166 @@
+{
+    "PSUs": {
+        "ATX 1000w Platinum 125$": {
+            "Efficiency": "80+ Platinum",
+            "Fan": "1",
+            "Form Factor": "ATX",
+            "Model": "ATX 1000w Platinum 125$",
+            "Modularity": "Fully Modular",
+            "Price": "125",
+            "Wattage": "1000"
+        },
+        "ATX 1000w Silver 100$": {
+            "Efficiency": "80+ Silver",
+            "Fan": "1",
+            "Form Factor": "ATX",
+            "Model": "ATX 1000w Silver 100$",
+            "Modularity": "Semi Modular",
+            "Price": "100",
+            "Wattage": "1000"
+        },
+        "ATX 1200w Platinum 150$": {
+            "Efficiency": "80+ Platinum",
+            "Fan": "1",
+            "Form Factor": "ATX",
+            "Model": "ATX 1200w Platinum 150$",
+            "Modularity": "Fully Modular",
+            "Price": "150",
+            "Wattage": "1200"
+        },
+        "ATX 1500w Titanium 200$": {
+            "Efficiency": "80+ Titanium",
+            "Fan": "1",
+            "Form Factor": "ATX",
+            "Model": "ATX 1500w Titanium 200$",
+            "Modularity": "Fully Modular",
+            "Price": "200",
+            "Wattage": "1500"
+        },
+        "ATX 2000w Platinum 400$": {
+            "Efficiency": "80+ Platinum",
+            "Fan": "1",
+            "Form Factor": "ATX",
+            "Model": "ATX 2000w Platinum 400$",
+            "Modularity": "Fully Modular",
+            "Price": "400",
+            "Wattage": "2000"
+        },
+        "ATX 600w None 40$": {
+            "Efficiency": "None",
+            "Fan": "1",
+            "Form Factor": "ATX",
+            "Model": "ATX 600w None 40$",
+            "Modularity": "Not modular",
+            "Price": "40",
+            "Wattage": "600"
+        },
+        "ATX 600w Silver 50$": {
+            "Efficiency": "80+ Silver",
+            "Fan": "1",
+            "Form Factor": "ATX",
+            "Model": "ATX 600w Silver 50$",
+            "Modularity": "Semi Modular",
+            "Price": "50",
+            "Wattage": "600"
+        },
+        "ATX 800w Gold 75$": {
+            "Efficiency": "80+ Gold",
+            "Fan": "1",
+            "Form Factor": "ATX",
+            "Model": "ATX 800w Gold 75$",
+            "Modularity": "Semi Modular",
+            "Price": "75",
+            "Wattage": "800"
+        },
+        "ATX 800w None 60$": {
+            "Efficiency": "None",
+            "Fan": "1",
+            "Form Factor": "ATX",
+            "Model": "ATX 800w None 60$",
+            "Modularity": "Not modular",
+            "Price": "60",
+            "Wattage": "800"
+        },
+        "Server 1000w Gold 300$": {
+            "Efficiency": "80+ Gold",
+            "Fan": "1",
+            "Form Factor": "Server",
+            "Model": "Server 1000w Gold 300$",
+            "Modularity": "Not modular",
+            "Price": "300",
+            "Wattage": "1000"
+        },
+        "Server 1500w Gold 800$": {
+            "Efficiency": "80+ Gold",
+            "Fan": "1",
+            "Form Factor": "Server",
+            "Model": "Server 1500w Gold 800$",
+            "Modularity": "Not modular",
+            "Price": "800",
+            "Wattage": "1500"
+        },
+        "Server 2000w Gold 1700$": {
+            "Efficiency": "80+ Gold",
+            "Fan": "1",
+            "Form Factor": "Server",
+            "Model": "Server 2000w Gold 1700$",
+            "Modularity": "Not modular",
+            "Price": "1700",
+            "Wattage": "2000"
+        },
+        "Server 3000w Gold 2500$": {
+            "Efficiency": "80+ Gold",
+            "Fan": "1",
+            "Form Factor": "Server",
+            "Model": "Server 3000w Gold 2500$",
+            "Modularity": "Not modular",
+            "Price": "2500",
+            "Wattage": "3000"
+        },
+        "Server 4000w Gold 3000$": {
+            "Efficiency": "80+ Gold",
+            "Fan": "1",
+            "Form Factor": "Server",
+            "Model": "Server 4000w Gold 3000$",
+            "Modularity": "Not modular",
+            "Price": "3000",
+            "Wattage": "4000"
+        },
+        "sff 1000w Titanium 340$": {
+            "Efficiency": "80+ Titanium",
+            "Fan": "1",
+            "Form Factor": "SFF",
+            "Model": "sff 1000w Titanium 340$",
+            "Modularity": "Fully Modular",
+            "Price": "340",
+            "Wattage": "1000"
+        },
+        "sff 450w Gold 80$": {
+            "Efficiency": "80+ Gold",
+            "Fan": "1",
+            "Form Factor": "SFF",
+            "Model": "sff 450w Gold 80$",
+            "Modularity": "Fully Modular",
+            "Price": "80",
+            "Wattage": "450"
+        },
+        "sff 650w Gold 140$": {
+            "Efficiency": "80+ Gold",
+            "Fan": "1",
+            "Form Factor": "SFF",
+            "Model": "sff 650w Gold 140$",
+            "Modularity": "Fully Modular",
+            "Price": "140",
+            "Wattage": "650"
+        },
+        "sff 850w Platinum 200$": {
+            "Efficiency": "80+ Platinum",
+            "Fan": "1",
+            "Form Factor": "SFF",
+            "Model": "sff 850w Platinum 200$",
+            "Modularity": "Fully Modular",
+            "Price": "200",
+            "Wattage": "850"
+        }
+    }
+}

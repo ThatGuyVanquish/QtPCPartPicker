@@ -1,38 +1,158 @@
 {
     "HDDs": {
-        "Seagate Barracuda": {
+        "hdd 16TB 1000$": {
             "Cache": "32",
-            "Model": "Seagate Barracuda",
+            "Model": "hdd 16TB 1000$",
             "Port": "SATA3",
-            "Price": "60",
-            "Read": "500",
+            "Price": "1000",
+            "Read": "350",
+            "Size": "16TB",
+            "Type": "hdd",
+            "Write": "250"
+        },
+        "hdd 1TB 55$": {
+            "Cache": "32",
+            "Model": "hdd 1TB 55$",
+            "Port": "SATA3",
+            "Price": "55",
+            "Read": "350",
+            "Size": "1TB",
+            "Type": "hdd",
+            "Write": "275"
+        },
+        "hdd 2TB 100$": {
+            "Cache": "32",
+            "Model": "hdd 2TB 100$",
+            "Port": "SATA3",
+            "Price": "100",
+            "Read": "330",
             "Size": "2TB",
             "Type": "hdd",
-            "Write": "400"
+            "Write": "220"
+        },
+        "hdd 4TB 190$": {
+            "Cache": "32",
+            "Model": "hdd 4TB 190$",
+            "Port": "SATA3",
+            "Price": "190",
+            "Read": "350",
+            "Size": "4TB",
+            "Type": "hdd",
+            "Write": "250"
+        },
+        "hdd 500gb 30$": {
+            "Cache": "32",
+            "Model": "hdd 500gb 30$",
+            "Port": "SATA3",
+            "Price": "30",
+            "Read": "350",
+            "Size": "500GB",
+            "Type": "hdd",
+            "Write": "250"
+        },
+        "hdd 8TB 365$": {
+            "Cache": "32",
+            "Model": "hdd 8TB 365$",
+            "Port": "SATA3",
+            "Price": "365",
+            "Read": "350",
+            "Size": "8TB",
+            "Type": "hdd",
+            "Write": "250"
         }
     },
     "M.2 SSDs": {
-        "Samsung 970 Pro": {
-            "Cache": "256",
-            "Model": "Samsung 970 Pro",
+        "m.2 1TB 270$": {
+            "Cache": "128",
+            "Model": "m.2 1TB 270$",
             "Port": "M.2",
-            "Price": "350",
-            "Read": "3500",
-            "Size": "512GB",
+            "Price": "270",
+            "Read": "2780",
+            "Size": "1TB",
             "Type": "ssd",
-            "Write": "3200"
+            "Write": "2400"
+        },
+        "m.2 250gb 50$": {
+            "Cache": "128",
+            "Model": "m.2 250gb 50$",
+            "Port": "M.2",
+            "Price": "50",
+            "Read": "1780",
+            "Size": "250GB",
+            "Type": "ssd",
+            "Write": "1600"
+        },
+        "m.2 2TB 632$": {
+            "Cache": "128",
+            "Model": "m.2 2TB 632$",
+            "Port": "M.2",
+            "Price": "632",
+            "Read": "3380",
+            "Size": "2TB",
+            "Type": "ssd",
+            "Write": "3100"
+        },
+        "m.2 500gb 120$": {
+            "Cache": "128",
+            "Model": "m.2 500gb 120$",
+            "Port": "M.2",
+            "Price": "120",
+            "Read": "1780",
+            "Size": "500GB",
+            "Type": "ssd",
+            "Write": "1600"
         }
     },
     "SATA SSDs": {
-        "Samsung 840 EVO": {
-            "Cache": "64",
-            "Model": "Samsung 840 EVO",
+        "sata ssd 1TB 130$": {
+            "Cache": "32",
+            "Model": "sata ssd 1TB 130$",
             "Port": "SATA3",
-            "Price": "110",
-            "Read": "800",
+            "Price": "130",
+            "Read": "423",
             "Size": "1TB",
             "Type": "ssd",
-            "Write": "650"
+            "Write": "356"
+        },
+        "sata ssd 250gb 30$": {
+            "Cache": "32",
+            "Model": "sata ssd 250gb 30$",
+            "Port": "SATA3",
+            "Price": "30",
+            "Read": "423",
+            "Size": "250GB",
+            "Type": "ssd",
+            "Write": "356"
+        },
+        "sata ssd 2TB 230$": {
+            "Cache": "32",
+            "Model": "sata ssd 2TB 230$",
+            "Port": "SATA3",
+            "Price": "230",
+            "Read": "423",
+            "Size": "2TB",
+            "Type": "ssd",
+            "Write": "356"
+        },
+        "sata ssd 4TB 530$": {
+            "Cache": "32",
+            "Model": "sata ssd 4TB 530$",
+            "Port": "SATA3",
+            "Price": "530",
+            "Read": "423",
+            "Size": "4TB",
+            "Type": "ssd",
+            "Write": "356"
+        },
+        "sata ssd 500gb 63$": {
+            "Cache": "32",
+            "Model": "sata ssd 500gb 63$",
+            "Port": "SATA3",
+            "Price": "63",
+            "Read": "423",
+            "Size": "500GB",
+            "Type": "ssd",
+            "Write": "356"
         }
     }
 }

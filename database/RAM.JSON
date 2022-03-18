@@ -1,24 +1,224 @@
 {
     "RAM": {
-        "Corsair Vengeance": {
-            "DIMMS": "4",
-            "Heatsink": "1",
-            "Model": "Corsair Vengeance",
-            "Price": "659",
-            "Size": "32",
-            "Speed": "5133",
-            "Timings": "34, 35, 34, 40",
-            "Version": "DDR5"
-        },
-        "GSkill TridentZ": {
+        "DDR3 2x16GB, 200$": {
             "DIMMS": "2",
             "Heatsink": "1",
-            "Model": "GSkill TridentZ",
-            "Price": "250",
+            "Model": "DDR3 2x16GB, 200$",
+            "Price": "200",
+            "Size": "32",
+            "Speed": "1600",
+            "Timings": "4, 6, 7, 8",
+            "Version": "DDR3"
+        },
+        "DDR3 2x2GB, 20$": {
+            "DIMMS": "2",
+            "Heatsink": "1",
+            "Model": "DDR3 2x2GB, 20$",
+            "Price": "20",
+            "Size": "4",
+            "Speed": "1133",
+            "Timings": "4, 6, 7, 8",
+            "Version": "DDR3"
+        },
+        "DDR3 2x4GB, 40$": {
+            "DIMMS": "2",
+            "Heatsink": "1",
+            "Model": "DDR3 2x4GB, 40$",
+            "Price": "40",
+            "Size": "8",
+            "Speed": "1333",
+            "Timings": "4, 6, 7, 8",
+            "Version": "DDR3"
+        },
+        "DDR3 2x8GB, 80$": {
+            "DIMMS": "2",
+            "Heatsink": "1",
+            "Model": "DDR3 2x8GB, 80$",
+            "Price": "80",
             "Size": "16",
-            "Speed": "3600",
-            "Timings": "15, 15, 17, 34",
+            "Speed": "1600",
+            "Timings": "4, 6, 7, 8",
+            "Version": "DDR3"
+        },
+        "DDR3 4x1GB, 15$": {
+            "DIMMS": "4",
+            "Heatsink": "1",
+            "Model": "DDR3 4x1GB, 15$",
+            "Price": "15",
+            "Size": "4",
+            "Speed": "1133",
+            "Timings": "4, 6, 7, 8",
+            "Version": "DDR3"
+        },
+        "DDR3 4x4GB, 70$": {
+            "DIMMS": "4",
+            "Heatsink": "1",
+            "Model": "DDR3 4x4GB, 70$",
+            "Price": "70",
+            "Size": "16",
+            "Speed": "1600",
+            "Timings": "4, 6, 7, 8",
+            "Version": "DDR3"
+        },
+        "DDR4 1x4GB, 35$": {
+            "DIMMS": "1",
+            "Heatsink": "1",
+            "Model": "DDR4 1x4GB, 35$",
+            "Price": "35",
+            "Size": "4",
+            "Speed": "2133",
+            "Timings": "14, 16, 17, 18",
             "Version": "DDR4"
+        },
+        "DDR4 1x8GB, 85$": {
+            "DIMMS": "1",
+            "Heatsink": "1",
+            "Model": "DDR4 1x8GB, 85$",
+            "Price": "85",
+            "Size": "8",
+            "Speed": "2133",
+            "Timings": "14, 16, 17, 18",
+            "Version": "DDR4"
+        },
+        "DDR4 2x16GB, 415$": {
+            "DIMMS": "2",
+            "Heatsink": "1",
+            "Model": "DDR4 2x16GB, 415$",
+            "Price": "415",
+            "Size": "32",
+            "Speed": "3133",
+            "Timings": "18, 16, 19, 18",
+            "Version": "DDR4"
+        },
+        "DDR4 2x4GB, 75$": {
+            "DIMMS": "2",
+            "Heatsink": "1",
+            "Model": "DDR4 2x4GB, 75$",
+            "Price": "75",
+            "Size": "8",
+            "Speed": "2133",
+            "Timings": "14, 16, 17, 18",
+            "Version": "DDR4"
+        },
+        "DDR4 2x8GB, 200$": {
+            "DIMMS": "2",
+            "Heatsink": "1",
+            "Model": "DDR4 2x8GB, 200$",
+            "Price": "200",
+            "Size": "16",
+            "Speed": "2666",
+            "Timings": "16, 18, 17, 18",
+            "Version": "DDR4"
+        },
+        "DDR4 4x16GB, 820$": {
+            "DIMMS": "4",
+            "Heatsink": "1",
+            "Model": "DDR4 4x16GB, 820$",
+            "Price": "820",
+            "Size": "64",
+            "Speed": "3133",
+            "Timings": "17, 16, 17, 18",
+            "Version": "DDR4"
+        },
+        "DDR4 8x16GB, 1550$": {
+            "DIMMS": "8",
+            "Heatsink": "1",
+            "Model": "DDR4 8x16GB, 1550$",
+            "Price": "1550",
+            "Size": "128",
+            "Speed": "2666",
+            "Timings": "19, 19, 21, 18",
+            "Version": "DDR4"
+        },
+        "DDR4 8x32GB, 3460$": {
+            "DIMMS": "8",
+            "Heatsink": "1",
+            "Model": "DDR4 8x32GB, 3460$",
+            "Price": "3460",
+            "Size": "256",
+            "Speed": "2400",
+            "Timings": "20, 21, 17, 19",
+            "Version": "DDR4"
+        },
+        "DDR5 1x8GB, 100$": {
+            "DIMMS": "1",
+            "Heatsink": "1",
+            "Model": "DDR5 1x8GB, 100$",
+            "Price": "100",
+            "Size": "8",
+            "Speed": "4133",
+            "Timings": "14, 16, 17, 18",
+            "Version": "DDR5"
+        },
+        "DDR5 2x16GB, 430$": {
+            "DIMMS": "2",
+            "Heatsink": "1",
+            "Model": "DDR5 2x16GB, 430$",
+            "Price": "430",
+            "Size": "32",
+            "Speed": "5133",
+            "Timings": "18, 16, 19, 18",
+            "Version": "DDR5"
+        },
+        "DDR5 2x4GB, 90$": {
+            "DIMMS": "2",
+            "Heatsink": "1",
+            "Model": "DDR5 2x4GB, 90$",
+            "Price": "90",
+            "Size": "8",
+            "Speed": "4133",
+            "Timings": "14, 16, 17, 18",
+            "Version": "DDR5"
+        },
+        "DDR5 2x8GB, 215$": {
+            "DIMMS": "2",
+            "Heatsink": "1",
+            "Model": "DDR5 2x8GB, 215$",
+            "Price": "215",
+            "Size": "16",
+            "Speed": "4666",
+            "Timings": "16, 18, 17, 18",
+            "Version": "DDR5"
+        },
+        "DDR5 4x16GB, 850$": {
+            "DIMMS": "4",
+            "Heatsink": "1",
+            "Model": "DDR5 4x16GB, 850$",
+            "Price": "850",
+            "Size": "64",
+            "Speed": "5133",
+            "Timings": "17, 16, 17, 18",
+            "Version": "DDR5"
+        },
+        "DDR5 6x64GB, 7254$": {
+            "DIMMS": "6",
+            "Heatsink": "1",
+            "Model": "DDR5 6x64GB, 7254$",
+            "Price": "7254",
+            "Size": "364",
+            "Speed": "4133",
+            "Timings": "20, 21, 17, 19",
+            "Version": "DDR5"
+        },
+        "DDR5 8x16GB, 1600$": {
+            "DIMMS": "8",
+            "Heatsink": "1",
+            "Model": "DDR5 8x16GB, 1600$",
+            "Price": "1600",
+            "Size": "128",
+            "Speed": "4133",
+            "Timings": "19, 19, 21, 18",
+            "Version": "DDR5"
+        },
+        "DDR5 8x32GB, 3500$": {
+            "DIMMS": "8",
+            "Heatsink": "1",
+            "Model": "DDR5 8x32GB, 3500$",
+            "Price": "3500",
+            "Size": "256",
+            "Speed": "4133",
+            "Timings": "20, 21, 17, 19",
+            "Version": "DDR5"
         }
     }
 }
