@@ -11,12 +11,6 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-set(Boost_USE_STATIC_LIBS ON)
-set(Boost_USE_MULTITHREADED ON)
-set(Boost_USE_STATIC_RUNTIME OFF)
-set(Boost_ALGORITHM_LIBRARY ON)
-set(Boost_INCLUDE_DIRS ON)
-
 find_package(QT NAMES Qt6 Qt5 COMPONENTS Core Concurrent REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core Concurrent REQUIRED)
 find_package(Qt6 REQUIRED COMPONENTS Test)
@@ -74,6 +68,8 @@ add_executable(PCPartPicker
     src/Logic/compatibility.cpp
     include/Logic/specbuilder.h
     src/Logic/specbuilder.cpp
+    include/Logic/specobject.h
+    src/Logic/specobject.cpp
 
     # Test classes
     Test/include/dbtests.h
