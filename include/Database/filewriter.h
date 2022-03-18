@@ -33,6 +33,18 @@ public:
     void caseBackup(QFile *f);
 
     bool backup ();
+
+    void writeCPU(QFile *target, CPU *cpu);
+    void writeGPUs(QFile *target, QList<GPU *> gpus);
+    void writeMobo(QFile *target, motherboard *mobo);
+    void writeRAM(QFile *target, RAM *ram);
+    void writeCooler(QFile *target, cooler *cooler);
+    void writeStorage(QFile *target, QList<storage *> drives);
+    void writePSU(QFile *target, PSU *psu);
+    void writeCase(QFile *target, pcCase *pcCase);
+
+    void writeSpecs(QString target, CPU *cpu, QList<GPU*> gpus, motherboard *mobo,
+                    RAM *ram, cooler *cooler, QList<storage*> drives, PSU *psu, pcCase *pcCase);
 };
 
 

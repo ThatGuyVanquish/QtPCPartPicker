@@ -352,3 +352,155 @@ bool fileWriter::backup()
     closeFiles();
     return true;
 }
+
+void fileWriter::writeCPU(QFile *target, CPU *cpu)
+{
+    QVariantMap specs;
+    QMap<QString, QString> cpuSpecs = cpu->backup();
+    foreach(QString key, cpuSpecs.keys())
+    {
+        specs.insert(key, QVariant(cpuSpecs.value(key)));
+    }
+    QVariantMap toWrite;
+    toWrite.insert("CPU", QVariant(specs));
+    QJsonDocument doc = QJsonDocument::fromVariant(QVariant(toWrite));
+    target->write(doc.toJson());
+    qDebug() << "Finished writing CPU";
+}
+
+void fileWriter::writeGPUs(QFile *target, QList<GPU *> gpus)
+{
+    QVariantMap gpuMap;
+    QVariantMap specs;
+    foreach(GPU *gpu, gpus)
+    {
+        QMap<QString, QString> gpuSpecs = gpu->backup();
+        foreach(QString key, gpuSpecs.keys())
+        {
+            specs.insert(key, QVariant(gpuSpecs.value(key)));
+        }
+        gpuMap.insert(gpu->getModel(), QVariant(specs));
+    }
+    QVariantMap toWrite;
+    toWrite.insert("GPUs", QVariant(gpuMap));
+    QJsonDocument doc = QJsonDocument::fromVariant(QVariant(toWrite));
+    target->write(doc.toJson());
+    qDebug() << "Finished writing GPUs";
+}
+
+void fileWriter::writeMobo(QFile *target, motherboard *mobo)
+{
+    QVariantMap specs;
+    QMap<QString, QString> moboSpecs = mobo->backup();
+    foreach(QString key, moboSpecs.keys())
+    {
+        specs.insert(key, QVariant(moboSpecs.value(key)));
+    }
+    QVariantMap toWrite;
+    toWrite.insert("Motherboard", QVariant(specs));
+    QJsonDocument doc = QJsonDocument::fromVariant(QVariant(toWrite));
+    target->write(doc.toJson());
+    qDebug() << "Finished writing Motherboard";
+}
+
+void fileWriter::writeRAM(QFile *target, RAM *ram)
+{
+    QVariantMap specs;
+    QMap<QString, QString> ramSpecs = ram->backup();
+    foreach(QString key, ramSpecs.keys())
+    {
+        specs.insert(key, QVariant(ramSpecs.value(key)));
+    }
+    QVariantMap toWrite;
+    toWrite.insert("RAM", QVariant(specs));
+    QJsonDocument doc = QJsonDocument::fromVariant(QVariant(toWrite));
+    target->write(doc.toJson());
+    qDebug() << "Finished writing RAM";
+}
+
+void fileWriter::writeCooler(QFile *target, cooler *cooler)
+{
+    QVariantMap specs;
+    QMap<QString, QString> coolerSpecs = cooler->backup();
+    foreach(QString key, coolerSpecs.keys())
+    {
+        specs.insert(key, QVariant(coolerSpecs.value(key)));
+    }
+    QVariantMap toWrite;
+    toWrite.insert("Cooler", QVariant(specs));
+    QJsonDocument doc = QJsonDocument::fromVariant(QVariant(toWrite));
+    target->write(doc.toJson());
+    qDebug() << "Finished writing Cooler";
+}
+
+void fileWriter::writeStorage(QFile *target, QList<storage *> drives)
+{
+    QVariantMap driveMap;
+    QVariantMap specs;
+    foreach(storage *drive, drives)
+    {
+        QMap<QString, QString> driveSpecs = drive->backup();
+        foreach(QString key, driveSpecs.keys())
+        {
+            specs.insert(key, QVariant(driveSpecs.value(key)));
+        }
+        driveMap.insert(drive->getModel(), QVariant(specs));
+    }
+    QVariantMap toWrite;
+    toWrite.insert("Storage", QVariant(driveMap));
+    QJsonDocument doc = QJsonDocument::fromVariant(QVariant(toWrite));
+    target->write(doc.toJson());
+    qDebug() << "Finished writing Storage";
+}
+
+void fileWriter::writePSU(QFile *target, PSU *psu)
+{
+    QVariantMap specs;
+    QMap<QString, QString> psuSpecs = psu->backup();
+    foreach(QString key, psuSpecs.keys())
+    {
+        specs.insert(key, QVariant(psuSpecs.value(key)));
+    }
+    QVariantMap toWrite;
+    toWrite.insert("PSU", QVariant(specs));
+    QJsonDocument doc = QJsonDocument::fromVariant(QVariant(toWrite));
+    target->write(doc.toJson());
+    qDebug() << "Finished writing PSU";
+}
+
+void fileWriter::writeCase(QFile *target, pcCase *pcCase)
+{
+    QVariantMap specs;
+    QMap<QString, QString> caseSpecs = pcCase->backup();
+    foreach(QString key, caseSpecs.keys())
+    {
+        specs.insert(key, QVariant(caseSpecs.value(key)));
+    }
+    QVariantMap toWrite;
+    toWrite.insert("Case", QVariant(specs));
+    QJsonDocument doc = QJsonDocument::fromVariant(QVariant(toWrite));
+    target->write(doc.toJson());
+    qDebug() << "Finished writing Case";
+}
+
+void fileWriter::writeSpecs(QString target, CPU *cpu, QList<GPU *> gpus, motherboard *mobo, RAM *ram,
+                            cooler *cooler, QList<storage *> drives, PSU *psu, pcCase *pcCase)
+{
+    QFile f(target);
+    if (!f.open(QIODevice::WriteOnly))
+    {
+        qCritical() << "Could not write to file!";
+        qCritical() << f.errorString();
+        return;
+    }
+    writeCPU(&f, cpu);
+    writeGPUs(&f, gpus);
+    writeMobo(&f, mobo);
+    writeRAM(&f, ram);
+    writeStorage(&f, drives);
+    writeCooler(&f, cooler);
+    writePSU(&f, psu);
+    writeCase(&f, pcCase);
+    f.close();
+    qDebug() << "Finished writing specs! You can now open the file!";
+}
