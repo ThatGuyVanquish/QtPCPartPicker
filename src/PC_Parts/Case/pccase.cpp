@@ -153,7 +153,7 @@ int pcCase::calculateCaseVolume()
 
 bool pcCase::fitsCooler(cooler *cooler)
 {
-    if (cooler == nullptr) return false;
+    if (cooler == nullptr) return true;
     if (cooler->getRadiatorSize() <= 0)
         return cooler->getHeight() <= _maxCooler;
     else
@@ -162,7 +162,7 @@ bool pcCase::fitsCooler(cooler *cooler)
 
 bool pcCase::fitsMobo(motherboard *mobo)
 {
-    if (mobo == nullptr) return false;
+    if (mobo == nullptr) return true;
     foreach (QString ff, _moboFF)
     {
         if (ff == mobo->getFormFactor())
@@ -175,7 +175,7 @@ bool pcCase::fitsMobo(motherboard *mobo)
 
 bool pcCase::fitsGPU(GPU *gpu)
 {
-    if (gpu == nullptr) return false;
+    if (gpu == nullptr) return true;
     return gpu->getLength() <= _maxGPU && gpu->getHeight() <= _width;
 }
 
