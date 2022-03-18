@@ -70,6 +70,8 @@ add_executable(PCPartPicker
     src/Logic/specbuilder.cpp
     include/Logic/specobject.h
     src/Logic/specobject.cpp
+    include/Logic/pcpartpicker.h
+    src/Logic/pcpartpicker.cpp
 
     # Test classes
     Test/include/dbtests.h
