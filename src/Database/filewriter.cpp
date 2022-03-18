@@ -372,6 +372,7 @@ void fileWriter::writeGPUs(QFile *target, QList<GPU *> gpus)
 {
     QVariantMap gpuMap;
     QVariantMap specs;
+    int index = 0;
     foreach(GPU *gpu, gpus)
     {
         QMap<QString, QString> gpuSpecs = gpu->backup();
@@ -379,7 +380,8 @@ void fileWriter::writeGPUs(QFile *target, QList<GPU *> gpus)
         {
             specs.insert(key, QVariant(gpuSpecs.value(key)));
         }
-        gpuMap.insert(gpu->getModel(), QVariant(specs));
+        gpuMap.insert("GPU " + QString::number(index), QVariant(specs));
+        index++;
     }
     QVariantMap toWrite;
     toWrite.insert("GPUs", QVariant(gpuMap));
@@ -440,6 +442,7 @@ void fileWriter::writeStorage(QFile *target, QList<storage *> drives)
 {
     QVariantMap driveMap;
     QVariantMap specs;
+    int index;
     foreach(storage *drive, drives)
     {
         QMap<QString, QString> driveSpecs = drive->backup();
@@ -447,7 +450,8 @@ void fileWriter::writeStorage(QFile *target, QList<storage *> drives)
         {
             specs.insert(key, QVariant(driveSpecs.value(key)));
         }
-        driveMap.insert(drive->getModel(), QVariant(specs));
+        driveMap.insert("Drive " + QString::number(index), QVariant(specs));
+        index++;
     }
     QVariantMap toWrite;
     toWrite.insert("Storage", QVariant(driveMap));
