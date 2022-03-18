@@ -501,6 +501,7 @@ void fileWriter::writeSpecs(QString target, CPU *cpu, QList<GPU *> gpus, motherb
     writeCooler(&f, cooler);
     writePSU(&f, psu);
     writeCase(&f, pcCase);
+
     f.close();
     qDebug() << "Finished writing specs! You can now open the file!";
 }

@@ -21,8 +21,6 @@ public:
     void server(int budget);
     void office(int budget);
     void gaming(int budget);
-
-public slots:
     void build();
 
 signals:
