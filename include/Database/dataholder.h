@@ -35,8 +35,6 @@
 
 using namespace std;
 
-void toLower(string str);
-
 static void insertRAMBySpeed(QList<RAM*> v, RAM *toInsert);
 static void insertPSUByWattage(QList<PSU*> v, PSU *toInsert);
 

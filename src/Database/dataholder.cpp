@@ -366,7 +366,7 @@ void dataHolder::addMotherboard(motherboard* toInsert, string purpose)
     // Mapping by CPU manufacturer
     toInsert->getCPUManufacturer() == "Intel" ? moboMap["Intel"].push_back(toInsert) : moboMap["AMD"].push_back(toInsert);
     if (!purpose.empty())
-        toLower(purpose);
+        purpose = (QString::fromStdString(purpose).toLower()).toStdString();
         purpose == "mining" ? moboMap["Mining"].push_back(toInsert) : (purpose == "server" ? moboMap["Server"].push_back(toInsert) : moboMap["Overclocking"].push_back(toInsert));
 
     // Mapping to ram slot version
@@ -601,7 +601,7 @@ CPU *dataHolder::findCPU(int budget, QString manu, QString socket, QString purpo
         {
             if (cpu->getPrice() > budget)
                 return nullptr;
-            if (cpu->getManu().simplified() == manu.simplified() && cpu->getSocket() == socket)
+            if (cpu->getManu().toLower() == manu.toLower() && cpu->getSocket().toLower() == socket.toLower())
                 return cpu;
         }
     }
@@ -612,15 +612,15 @@ CPU *dataHolder::findCPU(int budget, QString manu, QString socket, QString purpo
             CPU *currentCPU = cpuMap["Price"].at(i);
             if (currentCPU->getPrice() > budget)
                 continue;
-            if (currentCPU->getManu().simplified() == manu.simplified())
+            if (currentCPU->getManu().toLower() == manu.toLower())
             {
-                if (manu == "amd")
+                if (manu.toLower() == "amd")
                 {
                     if (currentCPU->getSocket() == "EP1" || currentCPU->getSocket() == "EP2")
                         return currentCPU;
                     else continue;
                 }
-                if (manu == "intel")
+                if (manu.toLower() == "intel")
                 {
                     if (currentCPU->getSocket() == "IN1" || currentCPU->getSocket() == "IN2")
                         return currentCPU;
@@ -637,7 +637,7 @@ CPU *dataHolder::findCPU(int budget, QString manu, QString socket, QString purpo
         {
             if (currentCPU == nullptr || currentCPU->getPrice() > budget)
                 break;
-            if (currentCPU->getManu().simplified() == manu.simplified())
+            if (currentCPU->getManu().toLower() == manu.toLower())
             {
                 if (fastest.size() < 5)
                     fastest.append(currentCPU);
@@ -673,7 +673,7 @@ CPU *dataHolder::findCPU(int budget, QString manu, QString socket, QString purpo
                 return fastest;
             if (currentCPU->getPrice() > budget)
                 return fastest;
-            if (currentCPU->getManu().simplified() == manu.simplified())
+            if (currentCPU->getManu().toLower() == manu.toLower())
             {
                 if (fastest == nullptr)
                     fastest = currentCPU;
@@ -716,7 +716,7 @@ motherboard *dataHolder::findMobo(int budget, bool cheapest, QString manu, QStri
         {
             if (mobo == nullptr || mobo->getPrice() > budget)
                 return ret;
-            if (mobo->getCPUManufacturer().simplified() == manu.simplified() &&
+            if (mobo->getCPUManufacturer().toLower() == manu.toLower() &&
                     moboMap["Mining"].contains(mobo))
             {
                 if (ret == nullptr)
@@ -732,7 +732,7 @@ motherboard *dataHolder::findMobo(int budget, bool cheapest, QString manu, QStri
     {
         if (mobo == nullptr || mobo->getPrice() > budget)
             return ret;
-        if (mobo->getCPUManufacturer().simplified() == manu.simplified() &&
+        if (mobo->getCPUManufacturer().toLower() == manu.toLower() &&
                 mobo->getSocket() == socket)
         {
             if (purpose == "server" && !moboMap["Server"].contains(mobo))
@@ -1115,9 +1115,4 @@ void dataHolder::testCaseCompatibility(cooler *cooler)
 void dataHolder::testPSUCompatibility(CPU *cpu, QList<GPU *> gpus)
 {
     emit psuCompatibility(cpu, gpus);
-}
-
-void toLower(string str)
-{
-    transform(str.begin(), str.end(), str.begin(), [](unsigned char c){ return tolower(c);});
 }
