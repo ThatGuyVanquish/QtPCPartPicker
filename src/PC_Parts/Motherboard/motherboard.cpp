@@ -210,7 +210,7 @@ void motherboard::resetCPU()
 
 void motherboard::ramCompatibility(RAM *ram)
 {
-    _ramFits = ram->getModel() == _ramVersion;
+    _ramFits = ram->getVersion() == _ramVersion;
 }
 
 bool motherboard::ramFits()
