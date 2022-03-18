@@ -442,7 +442,7 @@ void fileWriter::writeStorage(QFile *target, QList<storage *> drives)
 {
     QVariantMap driveMap;
     QVariantMap specs;
-    int index;
+    int index = 0;
     foreach(storage *drive, drives)
     {
         QMap<QString, QString> driveSpecs = drive->backup();
