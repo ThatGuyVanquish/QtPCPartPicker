@@ -22,7 +22,8 @@ public:
     pcCase *m_case;
 
 public slots:
-    void specs(CPU *cpu, QList<GPU*> gpus, motherboard *mobo, RAM *ram, QList<storage*> storage, cooler *cooler, pcCase *pcCase);
+    void specs(CPU *cpu, QList<GPU*> gpus, motherboard *mobo, RAM *ram, QList<storage*> storage,
+               cooler *cooler, PSU *psu, pcCase *pcCase);
 
 };
 

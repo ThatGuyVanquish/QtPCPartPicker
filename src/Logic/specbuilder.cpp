@@ -17,12 +17,12 @@ void specbuilder::mining(int budget)
     int moboBudget = 0.2 * budget;
     RAM *ram;
     cooler *cooler;
-    QList<storage*> storage;
+    QList<storage*> drives;
     PSU *psu;
     pcCase *pcCase;
     int caseBudget = budget * 0.1;
-    storage.append(m_db->STORAGEMap()->value("Price").at(0));
-    remaining -= storage.at(0)->getPrice();
+    drives.append(m_db->STORAGEMap()->value("Price").at(0));
+    remaining -= drives.at(0)->getPrice();
     int firstBudget = budget;
     do {
         firstBudget = firstBudget * 0.35;
@@ -32,11 +32,11 @@ void specbuilder::mining(int budget)
         mobo = m_db->findMobo(moboBudget, false, desiredCPU, "mining");
         if (mobo == nullptr)
         {
-            storage.clear();
-            emit specs(nullptr, gpus, nullptr, nullptr, storage, nullptr, nullptr);
+            drives.clear();
+            emit specs(nullptr, gpus, nullptr, nullptr, drives, nullptr, nullptr, nullptr);
             return;
         }
-        if (!m_comp->testCompatibility(mobo, storage.at(0)))
+        if (!m_comp->testCompatibility(mobo, drives.at(0)))
         {
             moboBudget = mobo->getPrice() - 1;
             firstBudget = -1;
@@ -88,11 +88,11 @@ void specbuilder::mining(int budget)
         pcCase = m_db->findCase(caseBudget, "mining", mobo, gpus, cooler);
     if (pcCase == nullptr)
     {
-        storage.clear();
-        emit specs(nullptr, gpus, nullptr, nullptr, storage, nullptr, nullptr);
+        drives.clear();
+        emit specs(nullptr, gpus, nullptr, nullptr, drives, nullptr, nullptr, nullptr);
         return;
     }
-    if (!m_comp->testCompatibility(pcCase, mobo) || !m_comp->testCompatibility(pcCase, storage.at(0)) ||
+    if (!m_comp->testCompatibility(pcCase, mobo) || !m_comp->testCompatibility(pcCase, drives.at(0)) ||
             !m_comp->testCompatibility(pcCase, cooler))
     secondBudget -= pcCase->getPrice();
     psu = m_db->findPSU(secondBudget, "mining");
@@ -112,7 +112,7 @@ void specbuilder::mining(int budget)
                           pcCase->getMaxGPULength(), pcCase->getMaxGPUHeight(),
                           mobo->getPCIeSlots(), psu->getWattage() - cpu->getTDP());
 
-    emit specs(cpu, gpus, mobo, ram, storage, cooler, pcCase);
+    emit specs(cpu, gpus, mobo, ram, drives, cooler, psu, pcCase);
 }
 
 void specbuilder::server(int budget)
@@ -125,7 +125,7 @@ void specbuilder::server(int budget)
     motherboard *mobo;
     RAM *ram;
     cooler *cooler;
-    QList<storage*> storage;
+    QList<storage*> drives;
     PSU *psu;
     int psuBudget = budget * 0.1;
     pcCase *pcCase;
@@ -138,7 +138,7 @@ void specbuilder::server(int budget)
         cpu = m_db->findCPU(cpuBudget, desiredCPU, "server");
         if (cpu == nullptr)
         {
-            emit specs(nullptr, gpus, nullptr, nullptr, storage, nullptr, nullptr);
+            emit specs(nullptr, gpus, nullptr, nullptr, drives, nullptr, nullptr, nullptr);
             return;
         }
         firstBudget -= cpu->getPrice();
@@ -187,7 +187,7 @@ void specbuilder::server(int budget)
         psu = m_db->findPSU(psuBudget, "server");
         if (psu == nullptr || !m_comp->testCompatibility(psu, cpu, gpus))
         {
-            emit specs(nullptr, gpus, nullptr, nullptr, storage, nullptr, nullptr);
+            emit specs(nullptr, gpus, nullptr, nullptr, drives, nullptr, nullptr, nullptr);
             return;
         }
         secondBudget -= psu->getPrice();
@@ -204,9 +204,9 @@ void specbuilder::server(int budget)
 
     remaining -= budget * 0.2 - secondBudget;
 
-    storage = m_db->findStorage(remaining, "server", pcCase, mobo);
+    drives = m_db->findStorage(remaining, "server", pcCase, mobo);
 
-    emit specs(cpu, gpus, mobo, ram, storage, cooler, pcCase);
+    emit specs(cpu, gpus, mobo, ram, drives, cooler, psu, pcCase);
 }
 
 void specbuilder::office(int budget)
@@ -220,7 +220,7 @@ void specbuilder::office(int budget)
     int moboBudget = budget * 0.15;
     RAM *ram;
     cooler *cooler;
-    QList<storage*> storage;
+    QList<storage*> drives;
     PSU *psu;
     pcCase *pcCase;
     int caseBudget = budget * 0.1;
@@ -233,7 +233,7 @@ void specbuilder::office(int budget)
         cpu = m_db->findCPU(cpuBudget, desiredCPU, "office");
         if (cpu == nullptr)
         {
-            emit specs(nullptr, gpus, nullptr, nullptr, storage, nullptr, nullptr);
+            emit specs(nullptr, gpus, nullptr, nullptr, drives, nullptr, nullptr, nullptr);
             return;
         }
         if (!cpu->hasGraphics())
@@ -244,7 +244,7 @@ void specbuilder::office(int budget)
         if (mobo == nullptr || (mobo->getPCIeSlots() == 0 && gpus.size() != 0))
         {
             gpus.clear();
-            emit specs(nullptr, gpus, nullptr, nullptr, storage, nullptr, nullptr);
+            emit specs(nullptr, gpus, nullptr, nullptr, drives, nullptr, nullptr, nullptr);
             return;
         }
         firstBudget -= mobo->getPrice();
@@ -283,7 +283,7 @@ void specbuilder::office(int budget)
         if (pcCase == nullptr)
         {
             gpus.clear();
-            emit specs(nullptr, gpus, nullptr, nullptr, storage, nullptr, nullptr);
+            emit specs(nullptr, gpus, nullptr, nullptr, drives, nullptr, nullptr, nullptr);
             return;
         }
         secondBudget -= pcCase->getPrice();
@@ -304,9 +304,9 @@ void specbuilder::office(int budget)
 
     remaining -= budget * 0.25 - secondBudget;
 
-    storage = m_db->findStorage(remaining, "office", pcCase, mobo);
+    drives = m_db->findStorage(remaining, "office", pcCase, mobo);
 
-    emit specs(cpu, gpus, mobo, ram, storage, cooler, pcCase);
+    emit specs(cpu, gpus, mobo, ram, drives, cooler, psu, pcCase);
 }
 
 void specbuilder::gaming(int budget)
@@ -322,7 +322,7 @@ void specbuilder::gaming(int budget)
     RAM *ram;
     cooler *cooler;
     int coolerBudget = budget * 0.03;
-    QList<storage*> storage;
+    QList<storage*> drives;
     PSU *psu;
     pcCase *pcCase;
     int firstBudget;
@@ -334,7 +334,7 @@ void specbuilder::gaming(int budget)
         cpu = m_db->findCPU(cpuBudget, desiredCPU, "gaming");
         if (cpu == nullptr)
         {
-            emit specs(nullptr, gpus, nullptr, nullptr, storage, nullptr, nullptr);
+            emit specs(nullptr, gpus, nullptr, nullptr, drives, nullptr, nullptr, nullptr);
             return;
         }
         firstBudget -= cpu->getPrice();
@@ -377,10 +377,10 @@ void specbuilder::gaming(int budget)
     do
     {
         secondBudget = budget * 0.1;
-        storage = m_db->findStorage(secondBudget, "gaming", nullptr, mobo);
-        if (storage.size() == 0)
+        drives = m_db->findStorage(secondBudget, "gaming", nullptr, mobo);
+        if (drives.size() == 0)
         {
-            emit specs(nullptr, gpus, nullptr, nullptr, storage, nullptr, nullptr);
+            emit specs(nullptr, gpus, nullptr, nullptr, drives, nullptr, nullptr, nullptr);
             return;
         }
     }
@@ -408,8 +408,8 @@ void specbuilder::gaming(int budget)
         {
             if (gpus.at(0) == nullptr)
             {
-                storage.clear();
-                emit specs(nullptr, gpus, nullptr, nullptr, storage, nullptr, nullptr);
+                drives.clear();
+                emit specs(nullptr, gpus, nullptr, nullptr, drives, nullptr, nullptr, nullptr);
                 return;
             }
             gpuBudget = gpus.at(0)->getPrice() - 1;
@@ -429,14 +429,14 @@ void specbuilder::gaming(int budget)
             }
             else
             {
-                storage.clear();
-                emit specs(nullptr, gpus, nullptr, nullptr, storage, nullptr, nullptr);
+                drives.clear();
+                emit specs(nullptr, gpus, nullptr, nullptr, drives, nullptr, nullptr, nullptr);
                 return;
             }
         }
     }
     while (lastBudget < 0);
-    emit specs(cpu, gpus, mobo, ram, storage, cooler, pcCase);
+    emit specs(cpu, gpus, mobo, ram, drives, cooler, psu, pcCase);
 }
 
 void specbuilder::build()
@@ -446,9 +446,8 @@ void specbuilder::build()
     cin >> temp;
     int budget = atoi(temp.c_str());
     cout << "What is the purpose of your build?\r\n";
-    string purpose;
-    cin >> purpose;
-    toLower(purpose);
+    cin >> temp;
+    QString purpose = QString::fromStdString(temp).simplified().toLower();
     if (purpose == "gaming")
         gaming(budget);
     else if (purpose == "mining")
@@ -463,8 +462,7 @@ void specbuilder::build()
 QString requests()
 {
     string requests;
-    QStringList requestList;
     cout << "Per CPU, do you prefer Intel or AMD?\r\n";
     cin >> requests;
-    return QString::fromStdString(requests).simplified();
+    return QString::fromStdString(requests).simplified().toLower();
 }
