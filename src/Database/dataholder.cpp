@@ -655,11 +655,13 @@ CPU *dataHolder::findCPU(int budget, QString manu, QString socket, QString purpo
                 }
             }
         }
-        for(int i = 4; i >= 0; i--)
+        for(int i = fastest.size() - 1; i >= 0; i--)
             if (fastest.at(i)->hasGraphics())
                 return fastest.at(i);
+        if (gpuMap["Price"].size() == 0)
+            return nullptr;
         int cpuBudget = budget - gpuMap["Price"].at(0)->getPrice();
-        for(int i = 4; i >= 0; i--)
+        for(int i = fastest.size() - 1; i >= 0; i--)
             if (fastest.at(i)->getPrice() <= cpuBudget)
                 return fastest.at(i);
     }
@@ -669,6 +671,7 @@ CPU *dataHolder::findCPU(int budget, QString manu, QString socket, QString purpo
         CPU *fastest = nullptr;
         foreach(CPU *currentCPU, cpuMap["Price"])
         {
+            //cout << "testing cpu " + currentCPU->getModel().toStdString() << endl;
             if (currentCPU == nullptr)
                 return fastest;
             if (currentCPU->getPrice() > budget)
@@ -681,6 +684,7 @@ CPU *dataHolder::findCPU(int budget, QString manu, QString socket, QString purpo
                     fastest = currentCPU > fastest ? currentCPU : fastest;
             }
         }
+        return fastest;
     }
     return nullptr;
 }
@@ -1066,8 +1070,11 @@ pcCase *dataHolder::findCase(int budget, QString purpose, motherboard *mobo, QLi
         }
 
         if (purpose == "office" || purpose == "gaming")
-            if (pcCase->fitsCooler(cooler) && pcCase->fitsMobo(mobo) && pcCase->fitsGPU(gpus.at(0)))
-                return pcCase;
+            if (pcCase->fitsCooler(cooler) && pcCase->fitsMobo(mobo))
+            {
+                if (gpus.size() == 0 || pcCase->fitsGPU(gpus.at(0)))
+                    return pcCase;
+            }
     }
     return ret;
 }

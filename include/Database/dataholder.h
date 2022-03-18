@@ -32,6 +32,7 @@
 #include <QJsonArray>
 #include <QIODevice>
 #include <fstream>
+#include <iostream>
 
 using namespace std;
 
